@@ -1,68 +1,53 @@
 import React from "react"
 import { Link } from "gatsby"
 
-import { rhythm, scale } from "../utils/typography"
-
-const Layout = ({ location, title, children }) => {
-  const rootPath = `${__PATH_PREFIX__}/`
-  let header
-
-  if (location.pathname === rootPath) {
-    header = (
-      <h1
-        style={{
-          ...scale(1.5),
-          marginBottom: rhythm(1.5),
-          marginTop: 0,
-        }}
-      >
-        <Link
-          style={{
-            boxShadow: `none`,
-            color: `inherit`,
-          }}
-          to={`/`}
-        >
-          {title}
-        </Link>
-      </h1>
-    )
-  } else {
-    header = (
-      <h3
-        style={{
-          fontFamily: `Montserrat, sans-serif`,
-          marginTop: 0,
-        }}
-      >
-        <Link
-          style={{
-            boxShadow: `none`,
-            color: `inherit`,
-          }}
-          to={`/`}
-        >
-          {title}
-        </Link>
-      </h3>
-    )
-  }
+function Container({ children }) {
   return (
-    <div
-      style={{
-        marginLeft: `auto`,
-        marginRight: `auto`,
-        maxWidth: rhythm(24),
-        padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-      }}
-    >
-      <header>{header}</header>
+    <div className="mx-auto p-4 max-w-xl text-gray-900 leading-relaxed">
+      {children}
+    </div>
+  )
+}
+
+function Header({ title }) {
+  return (
+    <header className="flex items-center justify-between mb-12">
+      <span className="font-bold text-2xl">
+        <Link to={`/`}>{title}</Link>
+      </span>
+      <nav>
+        <ul className="flex items-center">
+          <li className="m-0 mr-3">
+            <Link to="/about">About</Link>
+          </li>
+          <li className="m-0 mr-3">
+            <Link to="/talks">Talks</Link>
+          </li>
+          <li className="m-0 mr-3">
+            <Link to="/contact">Contact</Link>
+          </li>
+
+          <li className="m-0">
+            <a target="_blank" href="https://twitter.com/peterpme">
+              Follow Me
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  )
+}
+
+const Layout = ({ title, children }) => {
+  return (
+    <Container>
+      <Header title={title} />
       <main>{children}</main>
-      <footer>
+      <footer className="pt-2 mt-2 border-t font-bold">
         © {new Date().getFullYear()}
         {` peterpme`}
       </footer>
-    </div>
+    </Container>
   )
 }
 

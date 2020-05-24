@@ -24,49 +24,22 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
       />
-      <article>
+      <article className="mb-10">
         <header>
-          <h1
-            style={{
-              marginTop: rhythm(1),
-              marginBottom: rhythm(1),
-            }}
-          >
+          <h1 className="font-bold text-lg mb-2 text-black">
             {post.frontmatter.title}
           </h1>
         </header>
         <section
-          style={{
-            marginBottom: rhythm(1),
-          }}
+          className="mb-12"
           dangerouslySetInnerHTML={{ __html: post.html }}
         />
-        <hr
-          style={{
-            marginBottom: rhythm(1),
-          }}
-        />
         <CommentCount config={disqusConfig} placeholder={"..."} />
+        <div className="my-2" />
         <Disqus config={disqusConfig} />
-        <hr
-          style={{
-            marginBottom: rhythm(1),
-          }}
-        />
-        <footer>
-          <Bio />
-        </footer>
       </article>
       <nav>
-        <ul
-          style={{
-            display: `flex`,
-            flexWrap: `wrap`,
-            justifyContent: `space-between`,
-            listStyle: `none`,
-            padding: 0,
-          }}
-        >
+        <ul className="flex flex-wrap justify-between list-none p-0">
           <li>
             {previous && (
               <Link to={previous.fields.slug} rel="prev">

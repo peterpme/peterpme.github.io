@@ -16,6 +16,7 @@
     "gatsby-plugin-manifest": "^2.4.2",
     "gatsby-plugin-netlify": "^2.3.2",
     "gatsby-plugin-offline": "^3.2.1",
+    "gatsby-plugin-postcss": "^2.3.2",
     "gatsby-plugin-react-helmet": "^3.3.1",
     "gatsby-plugin-sharp": "^2.6.2",
     "gatsby-plugin-sitemap": "^2.4.2",
@@ -27,6 +28,7 @@
     "gatsby-remark-responsive-iframe": "^2.4.2",
     "gatsby-remark-smartypants": "^2.3.1",
     "gatsby-source-filesystem": "^2.3.1",
+    "gatsby-transformer-json": "^2.4.3",
     "gatsby-transformer-remark": "^2.8.7",
     "gatsby-transformer-sharp": "^2.5.2",
     "prismjs": "^1.20.0",
@@ -40,7 +42,8 @@
     "typography-theme-github": "^0.16.19"
   },
   "devDependencies": {
-    "prettier": "2.0.5"
+    "prettier": "2.0.5",
+    "tailwindcss": "^1.4.6"
   },
   "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
   "keywords": [
