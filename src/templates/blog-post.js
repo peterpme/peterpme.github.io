@@ -24,14 +24,14 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
       />
-      <article className="mb-10">
+      <article className="mb-12">
         <header>
-          <h1 className="font-bold text-lg mb-2 text-black">
+          <h1 className="font-bold text-xl mb-2 text-black border-0">
             {post.frontmatter.title}
           </h1>
         </header>
         <section
-          className="mb-12"
+          className="markdown"
           dangerouslySetInnerHTML={{ __html: post.html }}
         />
         <CommentCount config={disqusConfig} placeholder={"..."} />
