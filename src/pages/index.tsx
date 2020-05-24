@@ -47,7 +47,7 @@ const BlogIndex = ({ data, location }: PageProps<Data>) => {
             </header>
             <section>
               <p
-                className="text-md font-regular"
+                className="text-base font-regular"
                 dangerouslySetInnerHTML={{
                   __html: node.frontmatter.description || node.excerpt,
                 }}

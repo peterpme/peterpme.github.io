@@ -85,9 +85,6 @@ function Header({ title }) {
           <li className="m-0 mr-3">
             <Link to="/talks">Talks</Link>
           </li>
-          <li className="m-0 mr-3">
-            <Link to="/contact">Contact</Link>
-          </li>
         </ul>
       </nav>
     </header>
