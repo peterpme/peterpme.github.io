@@ -1,52 +1,12 @@
 import React from "react"
 import { PageProps, graphql } from "gatsby"
 
-import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-import github from "../images/github.svg"
-import twitter from "../images/twitter.svg"
-import linkedin from "../images/linkedin.svg"
-import medium from "../images/medium.svg"
-import draftbit from "../images/draftbit.svg"
-import instagram from "../images/instagram.svg"
-
-const Talk = ({ year, title, venue, youtubeUrl, url, slideUrl }) => {
-  return (
-    <li className="mb-4">
-      <span className="block font-bold leading-tight text-white">
-        {year} • {venue}
-      </span>
-      {title}
-    </li>
-  )
-}
-
-function getIcon(name) {
-  switch (name) {
-    case "Instagram":
-      return instagram
-    case "Github":
-      return github
-    case "Medium":
-      return medium
-    case "Twitter":
-      return twitter
-    case "LinkedIn":
-      return linkedin
-    default:
-      return draftbit
-  }
-}
-
 function Ahref({ href, target = "_blank", children }) {
   return (
-    <a
-      target={target}
-      className="text-white border-b-2 border-gray-600"
-      href={href}
-    >
+    <a target={target} className="border-b-2 border-black" href={href}>
       {children}
     </a>
   )
@@ -55,21 +15,11 @@ function Ahref({ href, target = "_blank", children }) {
 function Section({ title, children }) {
   return (
     <section className="pb-2">
-      <h2 className="pt-3 pb-3 text-2xl font-bold leading-normal text-gray-200 font-headline">
+      <h2 className="pt-3 pb-3 text-2xl font-bold leading-normal font-headline border-0">
         {title}
       </h2>
       {children}
     </section>
-  )
-}
-
-function SocialProfile({ id, name, url }) {
-  return (
-    <li className="pr-3">
-      <a title={name} href={url} target="_blank" rel="nofollow noopener">
-        <img className="w-5 h-5" src={getIcon(name)} />
-      </a>
-    </li>
   )
 }
 
