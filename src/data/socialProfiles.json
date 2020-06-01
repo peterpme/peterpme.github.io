@@ -15,6 +15,11 @@
     "url": "https://www.linkedin.com/in/peterpme"
   },
   {
+    "id": "recCWDDizAvkJhgsl",
+    "name": "Medium",
+    "url": "https://medium.com/@peterpme"
+  },
+  {
     "id": "rec5KGdE78CKXV1B4",
     "name": "Draftbit",
     "url": "https://draftbit.com"
@@ -28,10 +33,5 @@
     "id": "recnO1KFF4OBdej5B",
     "name": "DEV",
     "url": "https://dev.to/peterpme"
-  },
-  {
-    "id": "recCWDDizAvkJhgsl",
-    "name": "Medium",
-    "url": "https://medium.com/@peterpme"
   }
 ]
