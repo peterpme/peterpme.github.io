@@ -7,7 +7,7 @@ import SEO from "../components/seo"
 function Section({ title, children }) {
   return (
     <section className="pb-2">
-      <h2 className="pt-3 pb-3 text-2xl font-bold leading-normal font-headline border-0">
+      <h2 className="text-2xl font-bold leading-normal font-headline border-0">
         {title}
       </h2>
       {children}
