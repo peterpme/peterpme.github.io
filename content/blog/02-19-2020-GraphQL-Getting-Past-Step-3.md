@@ -16,20 +16,17 @@ GraphQL is becoming one of the most popular data query libraries in the world. T
 
 Throwing stuff at the wall and hoping it sticks (it didn't)
 
-## We quickly realized we weren't doing things the right way so we started rewriting new features
+> We quickly realized we weren't doing things the right way so we started rewriting new features
 
-## Draftbit 1.1
-
+*Draftbit 1.1*
 - ReasonML on the client ✅
 
-## Draftbit 1.2
-
+*Draftbit 1.2*
 - TypeORM ✅
 - TypeScript on the Server ✅
 - Prisma ✅
 
-## Draftbit 1.3
-
+*Draftbit 1.3*
 - Dataloader ✅
 - Thinking about structuring our GraphQL queries more efficiently ✅✅✅
 - Writing Tests ✅✅✅
