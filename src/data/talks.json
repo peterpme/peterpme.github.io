@@ -1,5 +1,41 @@
 [
   {
+    "id": "recPaNIxEEFSlt5Ts",
+    "year": "2020",
+    "title": "Unifying React Native Across All Platforms",
+    "venue": "React Native London",
+    "youtubeUrl": "https://www.youtube.com/watch?v=UrjkNdVbOZk",
+    "createdAt": "2020-06-01T04:22:24.000Z",
+    "visible": true
+  },
+  {
+    "id": "rectdympAVFoui9RZ",
+    "year": "2020",
+    "title": "GraphQL: Getting Past Step 3",
+    "venue": "This Dot Media",
+    "youtubeUrl": "https://youtu.be/RCtqCDiNLvU?t=1701",
+    "createdAt": "2020-06-01T04:22:32.000Z",
+    "visible": true
+  },
+  {
+    "id": "recYxWMk4vs4A5p8N",
+    "year": "2020",
+    "title": "TypeScript vs. ReasonML - When Sh*t Gets Real",
+    "venue": "React Chicago",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7HkXVyYQ8ss",
+    "createdAt": "2020-06-01T04:22:34.000Z",
+    "visible": true
+  },
+  {
+    "id": "recTOiR3YI7JpLVl4",
+    "year": "2020",
+    "title": "Why You Should Consider Using ReasonML",
+    "venue": "Modern Web Podcasdt",
+    "youtubeUrl": "https://www.youtube.com/watch?v=LQGPMJJ-qdE&t=19s",
+    "createdAt": "2020-06-01T04:42:53.000Z",
+    "visible": true
+  },
+  {
     "id": "recJMDIG57jyuWR0t",
     "year": "2019",
     "title": "Building Apps Visually with Draftbit",
@@ -71,6 +107,15 @@
     "title": "Why building businesses is hard but lit at the same time",
     "venue": "UIUC Forge",
     "createdAt": "2019-11-27T18:50:04.000Z",
+    "visible": true
+  },
+  {
+    "id": "recfbvQJfeIIwoVfg",
+    "year": "2019",
+    "title": "Building Mobile & Expo Apps with Draftbit",
+    "venue": "React Native London",
+    "youtubeUrl": "https://www.youtube.com/watch?v=PBAaVWe5gnk",
+    "createdAt": "2020-06-01T04:39:34.000Z",
     "visible": true
   },
   {
