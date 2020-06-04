@@ -1,5 +1,6 @@
 ---
 title: Using async / await with reduce in Javascript
+date: 2020-06-04T00:54:35.875Z
 ---
 
 I got stumped trying to figure out how to use async / await. Here's how you do it: 
