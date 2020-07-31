@@ -73,8 +73,8 @@ function Container({ children }) {
 
 function Header({ title }) {
   return (
-    <header className="flex items-center justify-between mb-10">
-      <span className="font-bold text-2xl">
+    <header className="flex items-center justify-between mb-12">
+      <span className="font-bold text-3xl">
         <Link to={`/`}>{title}</Link>
       </span>
       <nav>

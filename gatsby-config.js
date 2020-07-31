@@ -5,10 +5,12 @@ module.exports = {
       name: `Peter Piekarczyk`,
       summary: `Building @draftbit`,
     },
-    description: `Blog of Peter Piekarczyk`,
+    description: `Co-Founder & CTO of @draftbit. @peterpme. Advising, Investing & Talking about Business & Software. Passionate about no-code low-code tools`,
+    keywords: `CTO, startups, Software Development, ReasonML, React, Node, Investing, Advising, No-Code, Low-Code`,
     siteUrl: `https://peterp.me`,
     social: {
       twitter: `peterpme`,
+      github: `peterpme`,
     },
   },
   plugins: [
