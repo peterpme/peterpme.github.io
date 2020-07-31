@@ -37,9 +37,9 @@ const BlogIndex = ({ data, location }: PageProps<Data>) => {
       {posts.map(({ node }) => {
         const title = node.frontmatter.title || node.fields.slug
         return (
-          <article key={node.fields.slug} className="mb-10">
+          <article key={node.fields.slug} className="mb-8">
             <header>
-              <h3 className="font-bold text-lg mb-2 text-black">
+              <h3 className="font-bold text-xl mb-1 text-black">
                 <Link style={{ boxShadow: `none` }} to={node.fields.slug}>
                   {title}
                 </Link>

@@ -65,7 +65,7 @@ function SocialProfileList() {
 
 function Container({ children }) {
   return (
-    <div className="mx-auto p-4 max-w-xl text-gray-900 leading-relaxed">
+    <div className="mx-auto p-4 max-w-2xl text-gray-900 leading-tight">
       {children}
     </div>
   )
@@ -73,7 +73,7 @@ function Container({ children }) {
 
 function Header({ title }) {
   return (
-    <header className="flex items-center justify-between mb-12">
+    <header className="flex items-center justify-between mb-10">
       <span className="font-bold text-2xl">
         <Link to={`/`}>{title}</Link>
       </span>
@@ -82,7 +82,7 @@ function Header({ title }) {
           <li className="m-0 mr-3">
             <Link to="/about">About</Link>
           </li>
-          <li className="m-0 mr-3">
+          <li className="m-0">
             <Link to="/talks">Talks</Link>
           </li>
         </ul>
