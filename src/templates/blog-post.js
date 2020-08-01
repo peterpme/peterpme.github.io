@@ -31,7 +31,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
           </h1>
         </header>
         <section
-          className="markdown"
+          className="markdown mb-20"
           dangerouslySetInnerHTML={{ __html: post.html }}
         />
         <CommentCount config={disqusConfig} placeholder={"..."} />
