@@ -53,9 +53,13 @@ function SocialProfileList() {
             title={profile.name}
             href={profile.url}
             target="_blank"
-            rel="nofollow noopener"
+            rel="nofollow noopener noreferrer"
           >
-            <img className="w-5 h-5" src={getIcon(profile.name)} />
+            <img
+              alt="Avatar for Peter"
+              className="w-5 h-5"
+              src={getIcon(profile.name)}
+            />
           </a>
         </li>
       ))}

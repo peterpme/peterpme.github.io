@@ -2,10 +2,8 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 import { Disqus, CommentCount } from "gatsby-plugin-disqus"
 
-import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import { rhythm, scale } from "../utils/typography"
 
 const BlogPostTemplate = ({ data, pageContext, location }) => {
   const post = data.markdownRemark
@@ -26,12 +24,12 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
       />
       <article className="mb-12">
         <header>
-          <h1 className="font-bold text-xl mb-2 text-black border-0">
+          <h1 className="mb-2 text-xl font-bold text-black border-0">
             {post.frontmatter.title}
           </h1>
         </header>
         <section
-          className="markdown mb-20"
+          className="mb-20 markdown"
           dangerouslySetInnerHTML={{ __html: post.html }}
         />
         <CommentCount config={disqusConfig} placeholder={"..."} />
