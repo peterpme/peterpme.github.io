@@ -11,12 +11,11 @@ If you've been scratching your head to figure out what happened, this (slightly 
 
 The Home Assistant team recently [decided to deprecate the installations](https://www.home-assistant.io/blog/2020/05/09/deprecating-home-assistant-supervised-on-generic-linux/) for generic Linux machines on May 9th.
 
-For better or for worse, the team doesn't collect any telemetry data and have never heard of simple community polls so surprise, surprise a week later they [decide to undo that decision](https://www.home-assistant.io/blog/2020/05/26/installation-methods-and-community-guides-wiki/) (after what must have been a stressful series of "wtfs" in the community).
-
+For better or for worse, the team doesn't collect any telemetry data so a week later they [undo that decision](https://www.home-assistant.io/blog/2020/05/26/installation-methods-and-community-guides-wiki/) (after what must have been a stressful series of "wtfs" in the community).
 
 ## I Still Love Home Assistant
 
-As frustrating as this is, it's hard to get upset at a group of folks who work so hard to release this amazing tool, in the open, for free. I'm sure they've learned a lot when it comes to managing an open source project and managing a business.
+As frustrating as this is, it's hard to get upset at a group of folks who work so hard to release this amazing platform, in the open, for free. I'm sure they've learned a lot when it comes to managing an open source project and managing a business.
 
 ## The New Problem
 
