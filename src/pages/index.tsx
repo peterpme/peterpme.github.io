@@ -41,7 +41,7 @@ const BlogIndex = ({ data, location }: PageProps<Data>) => {
             <header>
               <h3 className="font-bold text-xl mb-1 text-bold">
                 <Link
-                  className="no-underline hover:bg-gray-200"
+                  className="hover:no-underline hover:bg-gray-200"
                   to={node.fields.slug}
                 >
                   {title}
