@@ -22,12 +22,12 @@
 }
 
 /* Links */
-.markdown a {
-  @apply text-black;
+.markdown p a {
+    @apply text-indigo-600;
+    @apply bg-gray-100;
+    @apply p-1;
 }
-.markdown a:hover {
-  @apply underline;
-}
+
 /* Paragraph */
 .markdown p {
   @apply mb-4;
