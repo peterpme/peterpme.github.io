@@ -1,26 +1,35 @@
 ---
-title: Installing Home Assistant on Ubuntu 20.04
+title: Installing Home Assistant on Ubuntu, The New Way
 date: 2020-07-31T03:39:01.591Z
 ---
 
-Did you recently install Home Assistant on a new Ubuntu box and realize the "Supervisor" sidebar is missing? This salty article is for you.
+Have you recently tried installing Home Assistant on a new Ubuntu box? The installation docs are *totally* different and the thing that you're looking for is nowhere to be seen. Finally, you find the Docker installation and run the appropriate scripts only to realize the "Supervisor" sidebar went missing.
 
-Home Assistant recently deprecated all of their non raspberry pi install shit and maybe literally a day later realized that they didn't have any analytics and non-raspberry pi installations like on Ubuntu and Debian were really popular.
+If you've been scrambling to figure out wtf happened, this article is for you.
 
-The Home Assistant team crushes it so even though I'm shitting on them a little I absolutely respect the community they've been able to build.
+## What Happened?
 
-## The Problem
+The Home Assistant team recently [decided to deprecate the installations](https://www.home-assistant.io/blog/2020/05/09/deprecating-home-assistant-supervised-on-generic-linux/) for generic Linux machines on May 9th.
+
+For better or for worse, the team doesn't collect any telemetry data and have never heard of simple community polls so surprise, surprise a week later they [decide to undo that decision](https://www.home-assistant.io/blog/2020/05/26/installation-methods-and-community-guides-wiki/) (after what must have been a stressful series of "wtfs" in the community).
+
+It's hard to be upset at a group of folks who work so hard to release something in the open for free and I'm sure they've definitely learned the lessons when it comes to the power of the community.
+
+As frustrating as this is, it's hard to get upset at a group of folks who work so hard to release this amazing tool, in the open, for free. I'm sure they've learned a lot when it comes to managing an open source project and managing a business.
+
+## The New Problem
+
+Supervisor is actually completely separate than Home Assistant. Who knew!? Nobody.
 
 I'm sure, like me you spent the afternoon Googling wondering why "Supervisor" doesn't show up (the thing with all the add-ons) when you went through the [installation docs](https://www.home-assistant.io/docs/installation/docker/).
 
-Supervisor is actually completely separate than Home Assistant. Who knew! Nobody.
+The funny thing about all this is that Home Assistant still offically supports Debian but who the fk uses Debian!?
 
 ## Getting started
 
 Home Assistant's top [post](https://community.home-assistant.io/t/installing-home-assistant-supervised-on-ubuntu-18-04-4/200020) on their forums is Installing on Ubuntu. They no longer "officially support" Ubuntu but "support it in other ways".
 
 The process is pretty straight forward. The difference is that this awesome person Jason (Kanga-Who) forked the script and has been maintaining it. The reality of it is there isn't really that much maintenance to be done. Once you have this running you'll be able to use and upgrade Home Assistant the same way you've always been able to!
-
 
 I won't walk you through the process of setting up a USB stick to install Ubuntu. You can read about that [here](https://community.home-assistant.io/t/installing-home-assistant-supervised-on-ubuntu-18-04-4/200020)
 
@@ -56,7 +65,4 @@ The backup/snapshot directory on the other hand is located here:
 
 ## Exposing USB Devices
 
-You're probably wondering how you can expose those devices. This is a little complex. You'd think that this post should have all the answers but folks have cried to keep USB devices and installation separate so you'll immediately have to start googling after successfully getting this working (which is how you found this article!)
-
-Here's a [post](https://community.home-assistant.io/t/installing-home-assistant-supervised-on-ubuntu-18-04-4/200020/55) that walks you through it. To be honest I'm not there yet but expect an update to this post soon!
-
+In my experience all my devices started showing up properly and there was nothing else I needed to do! If you follow this same installation method, you'll totally be in the clear.
