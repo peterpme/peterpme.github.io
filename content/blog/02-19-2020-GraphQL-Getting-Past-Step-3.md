@@ -1,5 +1,6 @@
 ---
 title: GraphQL Getting Past Step 3
+date: 2020-02-19T06:00:00.000Z
 ---
 
 GraphQL is becoming one of the most popular data query libraries in the world. This is a talk that I've converted into an article. Enjoy!

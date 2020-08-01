@@ -1,5 +1,5 @@
 ---
-title: Painlessly Deleting Nested Files with fd
+title: Easily Deleting Deeply Nested Files with fd
 date: 2020-06-05T16:06:23.990Z
 ---
 
@@ -12,5 +12,7 @@ fd MyFile.js -x rm -rf
 ```
 
 It doesn't matter where `MyFile.js` lives, it can live `src/my/project/here/MyFile.js` and it'll find it and instantly delete it!
+
+Install it using brew: `brew install fd`
 
 Learn more about fd [here](https://github.com/sharkdp/fd)

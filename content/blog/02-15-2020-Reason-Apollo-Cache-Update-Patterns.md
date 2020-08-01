@@ -1,5 +1,6 @@
 ---
 title: Reason Apollo Cache Update Patterns
+date: 2020-02-15T06:00:00.000Z
 ---
 
 `refetchQueries` are great when you need to refetch data that's not easy to handle with cache updates. Updating the cache using an optimistic response reduces the amount of requests and lets you handle the whole operation on the client and updating / removing from a list of resources.
