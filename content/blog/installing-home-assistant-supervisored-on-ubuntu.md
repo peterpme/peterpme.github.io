@@ -3,9 +3,9 @@ title: Installing Home Assistant on Ubuntu, The New Way
 date: 2020-07-31T03:39:01.591Z
 ---
 
-Have you recently tried installing Home Assistant on a new Ubuntu box? The installation docs are *totally* different and the thing that you're looking for is nowhere to be seen. Finally, you find the Docker installation and run the appropriate scripts only to realize the "Supervisor" sidebar went missing.
+Have you recently tried installing Home Assistant on a new Ubuntu box? The installation docs are different and the thing that you're looking for is nowhere to be seen. Finally, you find the Docker installation and run the appropriate scripts only to realize the "Supervisor" sidebar went missing.
 
-If you've been scrambling to figure out wtf happened, this article is for you.
+If you've been scratching your head to figure out what happened, this (slightly salty) article is for you.
 
 ## What Happened?
 
@@ -13,7 +13,8 @@ The Home Assistant team recently [decided to deprecate the installations](https:
 
 For better or for worse, the team doesn't collect any telemetry data and have never heard of simple community polls so surprise, surprise a week later they [decide to undo that decision](https://www.home-assistant.io/blog/2020/05/26/installation-methods-and-community-guides-wiki/) (after what must have been a stressful series of "wtfs" in the community).
 
-It's hard to be upset at a group of folks who work so hard to release something in the open for free and I'm sure they've definitely learned the lessons when it comes to the power of the community.
+
+## I Still Love Home Assistant
 
 As frustrating as this is, it's hard to get upset at a group of folks who work so hard to release this amazing tool, in the open, for free. I'm sure they've learned a lot when it comes to managing an open source project and managing a business.
 
