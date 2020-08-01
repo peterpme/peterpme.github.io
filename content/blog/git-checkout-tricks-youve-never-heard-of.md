@@ -1,5 +1,5 @@
 ---
-title: Git Checkout Tricks
+title: "Git Checkout Tricks You've Never Heard Of"
 date: 2020-05-20T01:00:53.459Z
 ---
 

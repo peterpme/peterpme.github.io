@@ -1,5 +1,5 @@
 ---
-title: The Fastest Node Version Manager Ever
+title: "FNM: The Fastest Node Version Manager Ever"
 date: 2020-03-22T05:00:00.000Z
 categories: [Developer Tools, ReasonML]
 ---
