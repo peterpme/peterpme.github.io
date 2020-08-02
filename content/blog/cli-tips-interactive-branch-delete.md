@@ -21,3 +21,5 @@ fbd() {
   git branch -D $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 ```
+
+Thanks to [pgrepo on reddit](https://www.reddit.com/r/commandline/comments/i2229p/quickly_delete_old_git_branches_interactively/g02d8sn/) for pointing out that for this to work with remote branches that you need to add `[fetch] prune = true` into your `.gitconfig`
