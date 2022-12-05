@@ -20,6 +20,24 @@ xNFTs will create an ecosystem of decentralized apps using protocol-agnostic fra
 
 Backpack is launching with an app store that includes anything from games like Flappy Bird to NFT marketplaces & even developer tooling. These apps are all verified on chain. On-chain verification means the code you ship is the code your users will see. There’s no way nefarious actors will be able to bait & switch code or create fake URLs that look like a real project. This is one of the many efforts to create a safe and fun way to interact with a web3 world.
 
+### We already have some incredible xNFTs in our ecosystem:
+
+**[Double Diffusion](https://www.xnft.gg/app/9AmGmRkSQYSYAupbdKmr2et8nQkSg5bo8NAG1nmXgY6g)**
+
+Double Diffusion is Stable Diffusion powered by Solana. You have the ability to generate and mint anything and pay a low fee of 0.0025 (about 3 cents) per query. This gives the power back to the creator.
+
+**[2048](https://www.xnft.gg/app/7A3av8PDbqpGRfLzSujr9Dprw4SVgFbMCfJ5DXL4azRP)**
+
+An engineer's favorite, you slide numbered tiles on a grid to combine them to create the number 2048. A fun & free game.
+
+**[Releap](https://www.xnft.gg/app/De4UnwDoaRnPFpy4NXXZCvh4W7JrX5JNcxc6u9iZfZzp)
+
+Releap is a music NFT platform. This allows you to listen to your music NFTs anytime, anywhere
+
+**[Solend](https://www.xnft.gg/app/Hs78vTKzgK53qeRcYr6UFALzKB9SPNRfV79X5FtVgbKq)
+
+Solend is a DeFi protocol for lending and borrowing on the Solana blockchain. Think Aave or Compound on Solana. Solend allows anyone with an internet connection to earn interest by lending their crypto assets, and allows them to use their deposits as collateral for borrowing.
+
 Today, blockchain is something you need to understand to use correctly. Tomorrow, users won’t have to worry about which chain they’re using, how they need to transfer funds and whether the site they’re using is real. You don’t need to know how the internet works to use Facebook or Netflix. With Backpack, we’ll bring that same level of harmony to web3.
 
 Backpack is built by a world-class team. I’ve quickly realized I’m working with some of the most talented & smartest people in the world. Quite frankly, I’ve had a bit of imposter syndrome. I’m excited to learn, contribute to making Backpack the best portal and ecosystem in the world.
