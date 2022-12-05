@@ -10,7 +10,7 @@ I recently stepped down as Draftbit’s CTO and have been taking a break explori
 
 For those who may not be familiar, Backpack is a portal into web3: one-stop shop for all your DeFi apps, NFTs, games and much more.
 
-It’s no secret that the crypto world today is ridden with landmines. DeFi projects are constantly getting hacked or fake phishing sites are put up to confuse people. It can make sleeping at night quite difficult. I’m intellectually curious in crypto. I’ve been watching this space since 2014. It was about time to get involved. I knew that whatever I was going to work on, I needed to make sure it made life better for the every day person, not worse.
+It’s no secret that the crypto world today is ridden with landmines. DeFi projects are constantly getting hacked or fake phishing sites are put up to confuse people. It can make sleeping at night quite difficult. I’ve been watching the space since 2014. It was about time to get involved. I knew that whatever I was going to work on, I needed to make sure it made life better for the every day person, not worse.
 
 That’s where Backpack comes in. The driving feature behind Backpack is an xNFT. So, wtf is an xNFT?
 
