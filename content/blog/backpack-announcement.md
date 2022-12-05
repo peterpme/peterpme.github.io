@@ -17,14 +17,15 @@ According to Armani, the creator, X stands for eXecutable: tokenized code repres
 xNFTs will create an ecosystem of decentralized apps using protocol-agnostic frameworks that work across your all favorite chains including Ethereum, Solana & many more. The interface for all this is what we’re calling Backpack. Today, you can think of Backpack as a wallet but tomorrow, it will be so much more than that.
 
 Backpack is launching with an app store that includes anything from games like Flappy Bird to NFT marketplaces & even developer tooling. These apps are all verified on chain. On-chain verification means the code you ship is the code your users will see. There’s no way nefarious actors will be able to bait & switch code or create fake URLs that look like a real project. This is one of the many efforts to create a safe and fun way to interact with a web3 world.
- Today, blockchain is something you need to understand to use correctly. With Backpack, tomorrow, users won’t have to worry about which chain they’re using, how they need to transfer funds and whether the site they’re using is real. You don’t need to know how the internet works to use Facebook or Netflix. With Backpack, we’ll bring that same level of harmony to web3.
+
+Today, blockchain is something you need to understand to use correctly. With Backpack, tomorrow, users won’t have to worry about which chain they’re using, how they need to transfer funds and whether the site they’re using is real. You don’t need to know how the internet works to use Facebook or Netflix. With Backpack, we’ll bring that same level of harmony to web3.
 
 Backpack is built by a world-class team. I’ve quickly realized I’m working with some of the most talented & smartest people in the world. Quite frankly, I’ve had a bit of imposter syndrome. I’m excited to learn, contribute to making Backpack the best portal and ecosystem in the world.
 
 Lastly, why am I so excited about mobile? You’re probably reading this on your phone. Expect to interact with web3, blockchains & crypto the same way. I’m bullish on a safe & secure mobile wallet experience. There’s a lot we’re going to have to learn & build along the way, but I’m excited for the journey.
 
-WAO, Peter
- P.S. WAO = We Are One
+WAO, Peter
+P.S. WAO = We Are One
  
 ---
 
