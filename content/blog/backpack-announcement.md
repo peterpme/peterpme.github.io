@@ -33,7 +33,8 @@ There's a lot of work to be done, but I'm ready for the journey ahead!
 WAO, Peter
 P.S. WAO = We Are One
  
----
+
+Check us out:
 
 - [Backpack.app](https://backpack.app)
 - [xNFT App Store](https://www.xnft.gg)
