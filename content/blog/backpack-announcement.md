@@ -30,11 +30,11 @@ Double Diffusion is Stable Diffusion powered by Solana. You have the ability to 
 
 An engineer's favorite, you slide numbered tiles on a grid to combine them to create the number 2048. A fun & free game.
 
-**[Releap](https://www.xnft.gg/app/De4UnwDoaRnPFpy4NXXZCvh4W7JrX5JNcxc6u9iZfZzp)
+**[Releap](https://www.xnft.gg/app/De4UnwDoaRnPFpy4NXXZCvh4W7JrX5JNcxc6u9iZfZzp)**
 
 Releap is a music NFT platform. This allows you to listen to your music NFTs anytime, anywhere
 
-**[Solend](https://www.xnft.gg/app/Hs78vTKzgK53qeRcYr6UFALzKB9SPNRfV79X5FtVgbKq)
+**[Solend](https://www.xnft.gg/app/Hs78vTKzgK53qeRcYr6UFALzKB9SPNRfV79X5FtVgbKq)**
 
 Solend is a DeFi protocol for lending and borrowing on the Solana blockchain. Think Aave or Compound on Solana. Solend allows anyone with an internet connection to earn interest by lending their crypto assets, and allows them to use their deposits as collateral for borrowing.
 
