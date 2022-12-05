@@ -11,7 +11,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
   const { previous, next } = pageContext
 
   const disqusConfig = {
-    url: `${config.siteUrl+location.pathname}`,
+    url: `https://peterp.me+${location.pathname}`,
     identifier: post.id,
     title: post.title,
   }
