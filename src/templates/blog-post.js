@@ -13,7 +13,7 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
   const disqusConfig = {
     url: `https://peterp.me+${location.pathname}`,
     identifier: post.id,
-    title: post.title,
+    title: post.frontmatter.title,
   }
 
   return (
