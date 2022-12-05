@@ -14,6 +14,8 @@ It’s no secret that the crypto world today is ridden with landmines. DeFi proj
 
 That’s where Backpack comes in. The driving feature behind Backpack is an xNFT. So, wtf is an xNFT?
 
+### What's an xNFT?
+
 According to Armani, the creator, X stands for eXecutable: tokenized code representing ownership rights over its execution. In layman’s terms: instead of pointing a regular old NFT at a jpeg on S3, you can point it at some javascript and create an entirely new world.
 
 xNFTs will create an ecosystem of decentralized apps using protocol-agnostic frameworks that work across your all favorite chains including Ethereum, Solana & many more. The interface for all this is Backpack. Today, you can think of Backpack as a wallet but tomorrow, it will be so much more than that.
@@ -37,6 +39,8 @@ Releap is a music NFT platform. This allows you to listen to your music NFTs any
 **[Solend](https://www.xnft.gg/app/Hs78vTKzgK53qeRcYr6UFALzKB9SPNRfV79X5FtVgbKq)**
 
 Solend is a DeFi protocol for lending and borrowing on the Solana blockchain. Think Aave or Compound on Solana. Solend allows anyone with an internet connection to earn interest by lending their crypto assets, and allows them to use their deposits as collateral for borrowing.
+
+### Building a better ecosystem for the every day person
 
 Today, blockchain is something you need to understand to use correctly. Tomorrow, users won’t have to worry about which chain they’re using, how they need to transfer funds and whether the site they’re using is real. You don’t need to know how the internet works to use Facebook or Netflix. With Backpack, we’ll bring that same level of harmony to web3.
 
