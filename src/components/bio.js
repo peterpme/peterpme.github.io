@@ -38,7 +38,7 @@ const Bio = () => {
           Peter Piekarczyk
         </span>
         <span className="font-light leading-tight">
-          Co-founder & CTO of Draftbit
+         Building Backpack
         </span>
       </div>
     </aside>
