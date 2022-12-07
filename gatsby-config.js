@@ -3,9 +3,9 @@ module.exports = {
     title: `peterpme`,
     author: {
       name: `Peter Piekarczyk`,
-      summary: `Building @draftbit`,
+      summary: `Building @xNFT_Backpack`,
     },
-    description: `Co-Founder & CTO of @draftbit. @peterpme. Advising, Investing & Talking about Business & Software. Passionate about no-code low-code tools`,
+    description: `Building @xNFT_Backpack. Formerly founder @draftbit. @peterpme. Advising, Investing & Talking about Business & Software. Passionate about no-code low-code tools`,
     keywords: `CTO, startups, Software Development, ReasonML, React, Node, Investing, Advising, No-Code, Low-Code`,
     siteUrl: `https://peterp.me`,
     social: {
