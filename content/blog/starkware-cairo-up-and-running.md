@@ -1,6 +1,6 @@
 ---
 title: Getting Cairo, Starkware's Language Up and Running on an M1 Mac
-date: 2022-12-14T20:11:04.724Z
+date: 2022-12-14T22:11:04.724Z
 categories: [starkware, cairo]
 ---
 
