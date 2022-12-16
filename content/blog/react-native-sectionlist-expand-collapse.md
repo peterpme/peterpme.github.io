@@ -1,8 +1,11 @@
 ---
 title: React Native SectionList Expand & Collapse Guide
-date: 2022-12-016T06:00:00.000Z
+description: Getting a SectionList working with expand/collapse using the extraData prop and a Set data structure.
+date: 2022-12-16T18:01:28.487Z
 categories: [React Native]
 ---
+
+# SectionList with Expand/Collapse functionality
 
 A SectionList in React Native allows you to render sectioned lists efficiently.
 
