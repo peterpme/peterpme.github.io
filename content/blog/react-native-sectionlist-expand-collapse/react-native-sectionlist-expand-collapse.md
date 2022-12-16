@@ -5,17 +5,23 @@ date: 2022-12-16T18:01:28.487Z
 categories: [React Native]
 ---
 
-# SectionList with Expand/Collapse functionality
+React Native has a component called `SectionList` that will render things in sections. Think favorite foods:
 
-A SectionList in React Native allows you to render sectioned lists efficiently.
+- Deserts: ice cream, cheesecake
+- Drinks: water, coke, beer
 
-The one thing that might trip you up is the ability to be able to expand/collapse the sections. The guides out there are lackluster.
+[!sectionlist-example](./sectionlist-example.png)
 
-Getting it working is straight forward. The key is using the `extraData` prop for a SectionList. 
+The not-so-obvious part is how you can create a collapsible version of this. By collapsible I mean, being able to hide the individual items upon tapping the header:
+
+[!sectionlist-collapsed](./sectionlist-collapsed.png)
+
+
+Luckily for you, getting it working is straight forward. The key is using the `extraData` prop for a SectionList. 
 
 `extraData` just re-renders the list when you have to pass in new data somewhere (like changing the expand/collapse toggle state.
 
-After searching the internet for this demo, I wasn't able to find one so I put one together. Getting this working is straight forward:
+Then you can use `useState` and an array or a set to get it working. I use a `Set` here b/c it's easy, but in its purest form, here's all you need to know:
 
 ```javascript
  <SectionList
