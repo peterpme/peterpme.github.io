@@ -47,3 +47,6 @@ Then you can use `useState` and an array or a set to get it working. I use a `Se
 
 To see a working version of this, check out this [Snack](https://snack.expo.dev/@peterpme/sectionlist-expand-and-collapse-example).
 In the event the Snack stops working, here's a [gist](https://gist.github.com/peterpme/b818eca2b7faf0e06f2466ab3e84db62) you can copy/paste somewhere with the same code.
+
+<div data-snack-id="@peterpme/sectionlist-expand-and-collapse-example" data-snack-platform="web" data-snack-preview="true" data-snack-theme="dark" style="overflow:hidden;background:#212121;border:1px solid var(--color-border);border-radius:4px;height:505px;width:100%"></div>
+<script async src="https://snack.expo.dev/embed.js"></script>
