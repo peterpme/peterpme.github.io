@@ -10,11 +10,11 @@ React Native has a component called `SectionList` that will render things in sec
 - Deserts: ice cream, cheesecake
 - Drinks: water, coke, beer
 
-[!sectionlist-example](./sectionlist-example.png)
+![sectionlist-example](./sectionlist-example.png)
 
 The not-so-obvious part is how you can create a collapsible version of this. By collapsible I mean, being able to hide the individual items upon tapping the header:
 
-[!sectionlist-collapsed](./sectionlist-collapsed.png)
+![sectionlist-collapsed](./sectionlist-collapsed.png)
 
 
 Luckily for you, getting it working is straight forward. The key is using the `extraData` prop for a SectionList. 
