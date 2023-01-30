@@ -1,8 +1,8 @@
 import React from "react"
 import { PageProps, graphql } from "gatsby"
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import { Layout } from "../components/layout"
+import { SEO as Seo } from "../components/seo"
 
 function Section({ title, children }) {
   return (
@@ -55,9 +55,9 @@ export default function AboutPage({ data, location }) {
 
   return (
     <Layout location={location} title={siteTitle}>
-      <SEO title="Speaking & Appearances" />
+      <Seo title="Speaking & Appearances" />
       <Section title="Speaking & Appearances">
-        <ul className="list-horizontal">
+        <ul className="mt-4 list-horizontal">
           {talks.map(talk => (
             <Talk key={talk.id} {...talk} />
           ))}

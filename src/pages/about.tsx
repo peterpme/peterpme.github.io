@@ -1,8 +1,8 @@
 import React from "react"
 import { PageProps, graphql } from "gatsby"
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import { Layout } from "../components/layout"
+import { SEO as Seo } from "../components/seo"
 
 function Ahref({ href, target = "_blank", children }) {
   return (
@@ -51,7 +51,7 @@ export default function AboutPage({ data, location }) {
 
   return (
     <Layout location={location} title={siteTitle}>
-      <SEO title="About Peter Piekarczyk" />
+      <Seo title="About Peter Piekarczyk" />
       <Section title="Software & Startups">
         <p className="pb-3">
           I always knew I wanted to build things. At the age of 12 I started my
@@ -119,7 +119,7 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
       edges {
         node {
           excerpt

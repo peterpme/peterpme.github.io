@@ -7,18 +7,15 @@ exports.createPages = async ({ graphql, actions }) => {
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const result = await graphql(
     `
-      {
-        allMarkdownRemark(
-          sort: { fields: [frontmatter___date], order: DESC }
-          limit: 1000
-        ) {
+      query loadPagesQuery {
+        allMarkdownRemark {
           edges {
             node {
-              fields {
-                slug
-              }
               frontmatter {
                 title
+              }
+              fields {
+                slug
               }
             }
           }
@@ -50,6 +47,7 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 }
 
+// Creates under node { fields { slug }} and not frontmatter
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 

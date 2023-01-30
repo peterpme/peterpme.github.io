@@ -1,41 +1,12 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
-import { Disqus, CommentCount } from "gatsby-plugin-disqus"
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import { SEO as Seo } from "../components/seo"
+import { Layout } from "../components/layout"
 
-const BlogPostTemplate = ({ data, pageContext, location }) => {
-  const post = data.markdownRemark
-  const siteTitle = data.site.siteMetadata.title
-  const { previous, next } = pageContext
-
-  const disqusConfig = {
-    url: `https://peterp.me+${location.pathname}`,
-    identifier: post.id,
-    title: post.frontmatter.title,
-  }
-
-  return (
-    <Layout location={location} title={siteTitle}>
-      <SEO
-        title={post.frontmatter.title}
-        description={post.frontmatter.description || post.excerpt}
-      />
-      <article className="mb-12">
-        <header>
-          <h1 className="mb-2 text-xl font-bold text-black border-0">
-            {post.frontmatter.title}
-          </h1>
-        </header>
-        <section
-          className="mb-20 markdown"
-          dangerouslySetInnerHTML={{ __html: post.html }}
-        />
-        <CommentCount config={disqusConfig} placeholder={"..."} />
-        <div className="my-2" />
-        <Disqus config={disqusConfig} />
-      </article>
+function Navigator({ previous, next }) {
+  if (previous && next) {
+    return (
       <nav>
         <ul className="flex flex-wrap justify-between list-none p-0">
           <li>
@@ -54,13 +25,40 @@ const BlogPostTemplate = ({ data, pageContext, location }) => {
           </li>
         </ul>
       </nav>
+    )
+  }
+
+  return null
+}
+
+export default function BlogPost({ data, pageContext, location }) {
+  const post = data.markdownRemark
+  const siteTitle = data.site.siteMetadata.title
+  const { previous, next } = pageContext
+
+  return (
+    <Layout location={location} title={siteTitle}>
+      <Seo
+        title={post.frontmatter.title}
+        description={post.frontmatter.description || post.excerpt}
+      />
+      <article className="mb-12">
+        <header>
+          <h1 className="subpixel-antialiased mb-2 text-3xl font-sans font-bold ">
+            {post.frontmatter.title}
+          </h1>
+        </header>
+        <section
+          className="markdown font-sans font-regular leading-relaxed"
+          dangerouslySetInnerHTML={{ __html: post.html }}
+        />
+      </article>
+      <Navigator previous={previous} next={next} />
     </Layout>
   )
 }
 
-export default BlogPostTemplate
-
-export const pageQuery = graphql`
+export const query = graphql`
   query BlogPostBySlug($slug: String!) {
     site {
       siteMetadata {
@@ -69,13 +67,14 @@ export const pageQuery = graphql`
     }
     markdownRemark(fields: { slug: { eq: $slug } }) {
       id
-      excerpt(pruneLength: 160)
-      html
+      fields {
+        slug
+      }
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
-        description
       }
+      html
     }
   }
 `

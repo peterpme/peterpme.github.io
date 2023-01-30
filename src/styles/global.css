@@ -1,0 +1,186 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* purgecss start ignore */
+/* Markdown Styles */
+/* Markdown Global */
+.markdown {
+  @apply leading-relaxed text-base;
+}
+/* Headers */
+.markdown h1,
+.markdown h2 {
+  @apply text-2xl my-6 font-bold;
+}
+
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  @apply text-xl my-6 font-semibold;
+}
+
+/* Links */
+.markdown p a {
+  @apply text-sky-500;
+}
+
+/* Paragraph */
+.markdown p {
+  @apply mb-4;
+}
+/* Lists */
+.markdown ul,
+.markdown ol {
+  @apply mb-4 ml-8;
+}
+.markdown li > p,
+.markdown li > ul,
+.markdown li > ol {
+  @apply mb-0;
+}
+.markdown ol {
+  @apply list-decimal;
+}
+.markdown ul {
+  @apply list-disc;
+}
+/* Blockquotes */
+.markdown blockquote {
+  @apply p-0 py-2 pl-6 mr-6 mb-4 border-l-4 border-gray-400;
+}
+.markdown blockquote > p {
+  @apply mb-0;
+}
+/* Tables */
+.markdown td,
+.markdown th {
+  @apply px-2 py-1 border border-gray-400;
+}
+.markdown tr:nth-child(odd) {
+  @apply bg-gray-100;
+}
+.markdown table {
+  @apply mb-6;
+}
+.markdown anchor {
+  @apply pt-4;
+}
+
+.markdown code[class*="language-"],
+pre[class*="language-"] {
+  font-size: 16px;
+  line-height: 1.375;
+  font-weight: 400;
+  font-family: "Fira Code";
+  background-color: #fafafa;
+}
+
+/* PrismJS Fixes from Gatsby */
+.gatsby-highlight-code-line {
+  background-color: #fafafa;
+  display: block;
+  margin-right: -1em;
+  margin-left: -1em;
+  padding-right: 1em;
+  padding-left: 0.75em;
+  border-left: 0.25em solid #f99;
+}
+
+/**
+ * Add back the container background-color, border-radius, padding, margin
+ * and overflow that we removed from <pre>.
+ */
+.gatsby-highlight {
+  background-color: #fafafa;
+  border-radius: 0.3em;
+  margin: 0.5em 0;
+  padding: 1em;
+  overflow: auto;
+}
+
+/**
+ * Remove the default PrismJS theme background-color, border-radius, margin,
+ * padding and overflow.
+ * 1. Make the element just wide enough to fit its content.
+ * 2. Always fill the visible space in .gatsby-highlight.
+ * 3. Adjust the position of the line numbers
+ */
+.gatsby-highlight pre[class*="language-"] {
+  background-color: #fafafa;
+  margin: 0;
+  padding: 0;
+  overflow: initial;
+  float: left; /* 1 */
+  min-width: 100%; /* 2 */
+}
+
+/**
+ * If you already use line highlighting
+ */
+
+/* Adjust the position of the line numbers */
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  padding-left: 2.8em;
+}
+
+/**
+ * If you only want to use line numbering
+ */
+
+.gatsby-highlight {
+  background-color: #fafafa;
+  border-radius: 0.3em;
+  margin: 0.5em 0;
+  padding: 1em;
+  overflow: auto;
+}
+
+.gatsby-highlight pre[class*="language-"].line-numbers {
+  padding: 0;
+  padding-left: 2.8em;
+  overflow: initial;
+}
+
+/* adds a fancy prompt on anything with shell or bash */
+.command-line-prompt > span:before {
+  color: #999;
+  content: " ";
+  display: block;
+  padding-right: 0.8em;
+}
+
+/* Prompt for all users */
+.command-line-prompt > span[data-user]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] $";
+}
+
+/* Prompt for root */
+.command-line-prompt > span[data-user="root"]:before {
+  content: "[" attr(data-user) "@" attr(data-host) "] #";
+}
+
+.command-line-prompt > span[data-prompt]:before {
+  content: attr(data-prompt);
+}
+
+.bg-image {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .bg-image {
+    display: block;
+    position: fixed;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* purgecss end ignore */

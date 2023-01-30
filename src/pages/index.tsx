@@ -1,89 +1,72 @@
-import React from "react"
-import { PageProps, Link, graphql } from "gatsby"
+import * as React from "react"
+import type { HeadFC, PageProps } from "gatsby"
+import { graphql, Link } from "gatsby"
 
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import { SEO as Seo } from "../components/seo"
+import { Layout } from "../components/layout"
 
-type Data = {
-  site: {
-    siteMetadata: {
-      title: string
-    }
-  }
-  allMarkdownRemark: {
-    edges: {
-      node: {
-        excerpt: string
-        frontmatter: {
-          title: string
-          date: string
-          description: string
-        }
-        fields: {
-          slug: string
-        }
-      }
-    }[]
-  }
-}
-
-const BlogIndex = ({ data, location }: PageProps<Data>) => {
+const IndexPage: React.FC<PageProps> = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata.title
-  const posts = data.allMarkdownRemark.edges
-
   return (
     <Layout location={location} title={siteTitle}>
-      <SEO title="Peter Piekarczyk • Engineering • Startups • Leadership • Growth" />
-      {posts.map(({ node }) => {
-        const title = node.frontmatter.title || node.fields.slug
-        return (
-          <article key={node.fields.slug} className="mb-8">
-            <header>
-              <h3 className="font-bold text-xl mb-1 text-bold">
-                <Link
-                  className="hover:no-underline hover:bg-gray-200"
-                  to={node.fields.slug}
-                >
-                  {title}
-                </Link>
-              </h3>
-            </header>
-            <section>
-              <p
-                className="text-base font-regular"
-                dangerouslySetInnerHTML={{
-                  __html: node.frontmatter.description || node.excerpt,
-                }}
-              />
-            </section>
-          </article>
-        )
-      })}
+      <PostList posts={data.posts.nodes} />
     </Layout>
   )
 }
 
-export default BlogIndex
+export default IndexPage
+
+export const Head: HeadFC = () => <Seo />
+
+function PostList({ posts }): React.ReactNode {
+  return (
+    <ul>
+      {posts.map(post => {
+        return (
+          <li key={post.id} className="mb-8">
+            <h3 className="antialiased font-sans mb-1 font-bold text-lg">
+              <Link
+                className="hover:underline underline-offset-8 hover:text-sky-700"
+                to={post.fields.slug}
+              >
+                {post.frontmatter.title}
+              </Link>
+            </h3>
+            <p
+              className="subpixel-antialiased text-base font-sans font-regular"
+              dangerouslySetInnerHTML={{
+                __html: post.frontmatter.description || post.excerpt,
+              }}
+            />
+          </li>
+        )
+      })}
+    </ul>
+  )
+}
 
 export const pageQuery = graphql`
-  query {
+  query Index {
     site {
       siteMetadata {
         title
       }
     }
-    allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC }) {
-      edges {
-        node {
-          excerpt
-          fields {
-            slug
-          }
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            title
-            description
-          }
+    posts: allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
+      nodes {
+        id
+        excerpt(pruneLength: 120)
+        timeToRead
+        wordCount {
+          words
+        }
+        fields {
+          slug
+        }
+        frontmatter {
+          date(formatString: "MMMM DD, YYYY")
+          title
+          description
         }
       }
     }

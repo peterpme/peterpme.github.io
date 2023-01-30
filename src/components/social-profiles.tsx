@@ -1,7 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
 import { useStaticQuery, graphql } from "gatsby"
-import Bio from "./bio"
 
 import github from "../images/github.svg"
 import twitter from "../images/twitter.svg"
@@ -11,7 +9,7 @@ import draftbit from "../images/draftbit.svg"
 import instagram from "../images/instagram.svg"
 import devto from "../images/devto.svg"
 
-function getIcon(name) {
+function getIcon(name: string) {
   switch (name) {
     case "DEV":
       return devto
@@ -30,7 +28,7 @@ function getIcon(name) {
   }
 }
 
-function SocialProfileList() {
+export function SocialProfileList() {
   const data = useStaticQuery(graphql`
     query SocialProfiles {
       socialProfiles: allSocialProfilesJson {
@@ -66,51 +64,3 @@ function SocialProfileList() {
     </ul>
   )
 }
-
-function Container({ children }) {
-  return (
-    <div className="mx-auto p-4 max-w-2xl text-gray-900 leading-tight">
-      {children}
-    </div>
-  )
-}
-
-function Header({ title }) {
-  return (
-    <header className="flex items-center justify-between mb-12">
-      <span className="font-bold text-3xl">
-        <Link to={`/`}>{title}</Link>
-      </span>
-      <nav>
-        <ul className="flex items-center">
-          <li className="m-0 mr-3">
-            <Link to="/about">About</Link>
-          </li>
-          <li className="m-0">
-            <Link to="/talks">Talks</Link>
-          </li>
-        </ul>
-      </nav>
-    </header>
-  )
-}
-
-const Layout = ({ title, children }) => {
-  return (
-    <Container>
-      <Header title={title} />
-      <main>{children}</main>
-      <footer className="pt-2 mt-2 border-t font-bold">
-        <Bio />
-        <div className="flex items-center">
-          <span className="leading-tight block mr-4">
-            © {new Date().getFullYear()}
-          </span>
-          <SocialProfileList />
-        </div>
-      </footer>
-    </Container>
-  )
-}
-
-export default Layout
