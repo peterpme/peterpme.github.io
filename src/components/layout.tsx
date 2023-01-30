@@ -5,7 +5,11 @@ import { SocialProfileList } from "./social-profiles"
 import { Link } from "gatsby"
 
 function Container({ children }) {
-  return <div className="antialiased mx-auto p-6 max-w-2xl text-gray-900">{children}</div>
+  return (
+    <div className="antialiased mx-auto p-6 max-w-2xl text-gray-900">
+      {children}
+    </div>
+  )
 }
 
 function Header({ title }: { title: string }) {
@@ -29,19 +33,31 @@ function Header({ title }: { title: string }) {
 }
 
 export function Layout({ title, children }) {
+  // const data = useStaticQuery(graphql`
+  //   query BackgroundQuery {
+  //     bg: file(absolutePath: { regex: "/bg-plants.jpg/" }) {
+  //       bgImage: childImageSharp {
+  //         gatsbyImageData(layout: FIXED, height: 800)
+  //       }
+  //     }
+  //   }
+  // `)
+
   return (
-    <Container>
-      <Header title={title} />
-      <main>{children}</main>
-      <footer className="p-2 mt-2 border-t font-bold">
-        <Bio />
-        <div className="flex items-center">
-          <span className="leading-tight block mr-4">
-            © {new Date().getFullYear()}
-          </span>
-          <SocialProfileList />
-        </div>
-      </footer>
-    </Container>
+    <>
+      <Container>
+        <Header title={title} />
+        <main>{children}</main>
+        <footer className="p-2 mt-2 border-t font-bold">
+          <Bio />
+          <div className="flex items-center">
+            <span className="leading-tight block mr-4">
+              © {new Date().getFullYear()}
+            </span>
+            <SocialProfileList />
+          </div>
+        </footer>
+      </Container>
+    </>
   )
 }

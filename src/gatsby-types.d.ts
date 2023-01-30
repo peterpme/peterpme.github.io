@@ -3280,7 +3280,7 @@ type WebPOptions = {
 type BioQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type BioQueryQuery = { readonly avatar: { readonly childImageSharp: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null, readonly site: { readonly siteMetadata: { readonly author: { readonly name: string | null, readonly summary: string | null } | null } | null } | null };
+type BioQueryQuery = { readonly avatar: { readonly avatarImage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null, readonly site: { readonly siteMetadata: { readonly author: { readonly name: string | null, readonly summary: string | null } | null } | null } | null };
 
 type BlogPostBySlugQueryVariables = Exact<{
   slug: Scalars['String'];

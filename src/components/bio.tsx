@@ -6,7 +6,7 @@ export default function Bio() {
   const data = useStaticQuery(graphql`
     query BioQuery {
       avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
-        childImageSharp {
+        avatarImage: childImageSharp {
           gatsbyImageData(layout: FIXED, aspectRatio: 1, width: 44, height: 44)
         }
       }
@@ -20,15 +20,16 @@ export default function Bio() {
       }
     }
   `)
+  console.log("bio", data)
 
   const { author } = data.site.siteMetadata
 
   return (
     <aside className="antialiased font-sans flex items-center my-4">
       <GatsbyImage
-        image={data.avatar.childImageSharp.gatsbyImageData}
+        image={data.avatar.avatarImage.gatsbyImageData}
         alt={author.name}
-        className="w-12 h-12 mr-4 rounded-full"
+        className="w-12 h-12 mr-2 rounded-full"
       />
 
       <div className="flex flex-col justify-center">
