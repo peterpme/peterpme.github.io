@@ -57,7 +57,7 @@ export default function AboutPage({ data, location }) {
     <Layout location={location} title={siteTitle}>
       <Seo title="Speaking & Appearances" />
       <Section title="Speaking & Appearances">
-        <ul className="list-horizontal">
+        <ul className="mt-4 list-horizontal">
           {talks.map(talk => (
             <Talk key={talk.id} {...talk} />
           ))}

@@ -19,7 +19,6 @@
     "@mdx-js/react": "^2.2.1",
     "gatsby": "^5.5.0",
     "gatsby-omni-font-loader": "^2.0.2",
-    "gatsby-plugin-google-gtag": "^5.5.0",
     "gatsby-plugin-image": "^3.5.0",
     "gatsby-plugin-manifest": "^5.5.0",
     "gatsby-plugin-mdx": "^5.5.0",
