@@ -44,7 +44,7 @@ export default function BlogPost({ data, pageContext, location }) {
       />
       <article className="mb-12">
         <header>
-          <h1 className="subpixel-antialiased mb-2 text-3xl font-sans font-bold ">
+          <h1 className="subpixel-antialiased mb-4 text-3xl font-sans font-bold">
             {post.frontmatter.title}
           </h1>
         </header>
