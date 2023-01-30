@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Inter", "sans-serif"],
+        mono: ["Nanum Gothic Coding", "monospace"],
       },
     },
   },

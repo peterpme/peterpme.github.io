@@ -37,21 +37,13 @@ const config: GatsbyConfig = {
         ],
         web: [
           {
-            name: `Open Sans`,
-            file: `https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap`,
-          },
-          {
-            name: "Source Code Pro",
-            file: `https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@600&display=swap`,
-          },
-          {
-            name: "Libre Baskerville",
-            file: `https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap`,
-          },
-          {
             name: "Inter",
             file: `https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap`,
-          }
+          },
+          {
+            name: "Fira Code",
+            file: `https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap`,
+          },
         ],
       },
     },
@@ -107,29 +99,29 @@ const config: GatsbyConfig = {
     },
     {
       resolve: "gatsby-transformer-remark",
-      // options: {
-      //   plugins: [
-      //     {
-      //       resolve: "gatsby-remark-images",
-      //       options: {
-      //         maxWidth: 590,
-      //         withWebp: true,
-      //         showCaptions: true,
-      //         quality: 80,
-      //       },
-      //     },
-      //     {
-      //       resolve: "gatsby-remark-responsive-iframe",
-      //       options: {
-      //         wrapperStyle: "margin-bottom: 1.0725rem",
-      //       },
-      //     },
-      //     "gatsby-remark-prismjs",
-      //     "gatsby-remark-copy-linked-files",
-      //     "gatsby-remark-smartypants",
-      //     "gatsby-remark-autolink-headers",
-      //   ],
-      // },
+      options: {
+        plugins: [
+          {
+            resolve: "gatsby-remark-images",
+            options: {
+              maxWidth: 500,
+              withWebp: true,
+              // showCaptions: true,
+              quality: 80,
+            },
+          },
+          {
+            resolve: "gatsby-remark-responsive-iframe",
+            // options: {
+            //   wrapperStyle: "margin-bottom: 1.0725rem",
+            // },
+          },
+          "gatsby-remark-prismjs",
+          "gatsby-remark-copy-linked-files",
+          "gatsby-remark-smartypants",
+          "gatsby-remark-autolink-headers",
+        ],
+      },
     },
     "gatsby-plugin-postcss",
   ],

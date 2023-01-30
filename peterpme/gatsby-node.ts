@@ -11,6 +11,9 @@ exports.createPages = async ({ graphql, actions }) => {
         allMarkdownRemark {
           edges {
             node {
+              frontmatter {
+                title
+              }
               fields {
                 slug
               }
@@ -31,6 +34,8 @@ exports.createPages = async ({ graphql, actions }) => {
   posts.forEach((post, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node
     const next = index === 0 ? null : posts[index - 1].node
+
+    console.log("previous", previous)
 
     createPage({
       path: post.node.fields.slug,

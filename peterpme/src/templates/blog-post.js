@@ -1,11 +1,40 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { Link, graphql } from "gatsby"
 
 import { SEO as Seo } from "../components/seo"
 import { Layout } from "../components/layout"
 
-export default function BlogPost({ data }) {
+function Navigator({ previous, next }) {
+  if (previous && next) {
+    return (
+      <nav>
+        <ul className="flex flex-wrap justify-between list-none p-0">
+          <li>
+            {previous && (
+              <Link to={previous.fields.slug} rel="prev">
+                ← {previous.frontmatter.title}
+              </Link>
+            )}
+          </li>
+          <li>
+            {next && (
+              <Link to={next.fields.slug} rel="next">
+                {next.frontmatter.title} →
+              </Link>
+            )}
+          </li>
+        </ul>
+      </nav>
+    )
+  }
+
+  return null
+}
+
+export default function BlogPost({ data, pageContext }) {
+  console.log("page", pageContext)
   const post = data.markdownRemark
+  const { previous, next } = pageContext
 
   return (
     <Layout>
@@ -24,6 +53,7 @@ export default function BlogPost({ data }) {
           dangerouslySetInnerHTML={{ __html: post.html }}
         />
       </article>
+      <Navigator previous={previous} next={next} />
     </Layout>
   )
 }
