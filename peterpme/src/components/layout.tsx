@@ -5,7 +5,7 @@ import { SocialProfileList } from "./social-profiles"
 import { Link } from "gatsby"
 
 function Container({ children }) {
-  return <div className="mx-auto p-6 max-w-2xl text-gray-900">{children}</div>
+  return <div className="antialiased mx-auto p-6 max-w-2xl text-gray-900">{children}</div>
 }
 
 function Header({ title }: { title: string }) {

@@ -31,13 +31,13 @@ function Navigator({ previous, next }) {
   return null
 }
 
-export default function BlogPost({ data, pageContext }) {
-  console.log("page", pageContext)
+export default function BlogPost({ data, pageContext, location }) {
   const post = data.markdownRemark
+  const siteTitle = data.site.siteMetadata.title
   const { previous, next } = pageContext
 
   return (
-    <Layout>
+    <Layout location={location} title={siteTitle}>
       <Seo
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
@@ -60,6 +60,11 @@ export default function BlogPost({ data, pageContext }) {
 
 export const query = graphql`
   query BlogPostBySlug($slug: String!) {
+    site {
+      siteMetadata {
+        title
+      }
+    }
     markdownRemark(fields: { slug: { eq: $slug } }) {
       id
       fields {

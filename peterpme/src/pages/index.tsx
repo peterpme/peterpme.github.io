@@ -5,9 +5,10 @@ import { graphql, Link } from "gatsby"
 import { SEO as Seo } from "../components/seo"
 import { Layout } from "../components/layout"
 
-const IndexPage: React.FC<PageProps> = ({ data }) => {
+const IndexPage: React.FC<PageProps> = ({ data, location }) => {
+  const siteTitle = data.site.siteMetadata.title
   return (
-    <Layout>
+    <Layout location={location} title={siteTitle}>
       <PostList posts={data.posts.nodes} />
     </Layout>
   )
