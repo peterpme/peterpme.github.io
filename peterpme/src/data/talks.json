@@ -1,0 +1,219 @@
+[
+  {
+    "id": "recPaNIxEEFSlt5Ts",
+    "year": "2020",
+    "title": "Unifying React Native Across All Platforms",
+    "venue": "React Native London",
+    "youtubeUrl": "https://www.youtube.com/watch?v=UrjkNdVbOZk",
+    "createdAt": "2020-06-01T04:22:24.000Z",
+    "visible": true
+  },
+  {
+    "id": "rectdympAVFoui9RZ",
+    "year": "2020",
+    "title": "GraphQL: Getting Past Step 3",
+    "venue": "This Dot Media",
+    "youtubeUrl": "https://youtu.be/RCtqCDiNLvU?t=1701",
+    "createdAt": "2020-06-01T04:22:32.000Z",
+    "visible": true
+  },
+  {
+    "id": "recYxWMk4vs4A5p8N",
+    "year": "2020",
+    "title": "TypeScript vs. ReasonML - When Sh*t Gets Real",
+    "venue": "React Chicago",
+    "youtubeUrl": "https://www.youtube.com/watch?v=7HkXVyYQ8ss",
+    "createdAt": "2020-06-01T04:22:34.000Z",
+    "visible": true
+  },
+  {
+    "id": "recTOiR3YI7JpLVl4",
+    "year": "2020",
+    "title": "Why You Should Consider Using ReasonML",
+    "venue": "Modern Web Podcast",
+    "youtubeUrl": "https://www.youtube.com/watch?v=LQGPMJJ-qdE&t=19s",
+    "createdAt": "2020-06-01T04:42:53.000Z",
+    "visible": true
+  },
+  {
+    "id": "recJMDIG57jyuWR0t",
+    "year": "2019",
+    "title": "Building Apps Visually with Draftbit",
+    "venue": "App.js",
+    "youtubeUrl": "https://www.youtube.com/watch?v=HAz_WUqO62A",
+    "slideUrl": "https://speakerdeck.com/peterpme/2019-app-dot-js-conf-building-expo-and-react-native-apps-with-draftbit",
+    "createdAt": "2019-08-16T05:58:14.000Z",
+    "visible": true
+  },
+  {
+    "id": "rec98F0k1eYhf9hpA",
+    "year": "2019",
+    "title": "How ReasonML Has Helped our Hiring Process",
+    "venue": "Reason Conf Vienna",
+    "youtubeUrl": "https://www.youtube.com/watch?v=Hp4t-bMCVe4",
+    "slideUrl": "https://speakerdeck.com/peterpme/2019-reasonconf-reasonml-and-hiring-at-draftbit",
+    "createdAt": "2019-08-16T05:58:32.000Z",
+    "visible": true
+  },
+  {
+    "id": "recD0h71e7vYsYXFC",
+    "year": "2019",
+    "title": "Building Apps Visually with Draftbit",
+    "venue": "MagnoliaJS",
+    "slideUrl": "https://speakerdeck.com/peterpme/2019-magnoliajs-building-expo-apps-with-draftbit",
+    "createdAt": "2019-08-16T05:58:40.000Z",
+    "visible": true
+  },
+  {
+    "id": "recHnh5OAbycCW1HQ",
+    "year": "2019",
+    "title": "ReasonML & the Future of React",
+    "venue": "GOTO Conf",
+    "youtubeUrl": "https://www.youtube.com/watch?v=xGN4BMPbk7Q",
+    "slideUrl": "https://speakerdeck.com/peterpme/2019-goto-conf-future-of-react-and-reasonml",
+    "createdAt": "2019-08-16T05:58:47.000Z",
+    "visible": true
+  },
+  {
+    "id": "recUjMReXNbaDBsGt",
+    "year": "2019",
+    "title": "Becoming 10x the Engineer with ReasonML",
+    "venue": "Detroit Tech Watch",
+    "youtubeUrl": "https://www.youtube.com/watch?v=RKPijLl1n9o",
+    "slideUrl": "https://speakerdeck.com/peterpme/reasonml-the-future-of-react",
+    "createdAt": "2019-08-16T05:58:59.000Z",
+    "visible": true
+  },
+  {
+    "id": "rectYiu1cQBBXeTzL",
+    "year": "2019",
+    "title": "Building Next Generation Apps Visually with Draftbit",
+    "venue": "React Native EU",
+    "youtubeUrl": "https://www.youtube.com/watch?v=cx3uAEv-nD0&list=PLZ3MwD-soTTHy9_88QPLF8DEJkvoB5Tl-&index=16",
+    "createdAt": "2019-08-16T05:59:15.000Z",
+    "visible": true
+  },
+  {
+    "id": "recPbj44zoTTD7kTH",
+    "year": "2019",
+    "title": "What It's Like Building a Business",
+    "venue": "UIUC City Scholars",
+    "createdAt": "2019-11-27T18:49:55.000Z",
+    "visible": true
+  },
+  {
+    "id": "rec97CkWaIyN2Gg4J",
+    "year": "2019",
+    "title": "Why building businesses is hard but lit at the same time",
+    "venue": "UIUC Forge",
+    "createdAt": "2019-11-27T18:50:04.000Z",
+    "visible": true
+  },
+  {
+    "id": "recfbvQJfeIIwoVfg",
+    "year": "2019",
+    "title": "Building Mobile & Expo Apps with Draftbit",
+    "venue": "React Native London",
+    "youtubeUrl": "https://www.youtube.com/watch?v=PBAaVWe5gnk",
+    "createdAt": "2020-06-01T04:39:34.000Z",
+    "visible": true
+  },
+  {
+    "id": "rec2Ynf6T2GlJR5lz",
+    "year": "2018",
+    "title": "React & ReasonML: A Love Story",
+    "venue": "Chicago React",
+    "youtubeUrl": "https://www.youtube.com/watch?v=a8tm_bxiE48",
+    "slideUrl": "https://speakerdeck.com/peterpme/2018-react-chicago-reasonreact-a-love-story",
+    "createdAt": "2019-08-16T05:58:03.000Z",
+    "visible": true
+  },
+  {
+    "id": "recAFJ3lwaDeA8lb5",
+    "year": "2017",
+    "title": "Things I Wish I Knew About React Native When I Started",
+    "venue": "Chicago React Native",
+    "slideUrl": "https://speakerdeck.com/peterpme/things-i-wish-i-knew-about-react-native-when-i-started",
+    "createdAt": "2019-08-16T05:57:00.000Z",
+    "visible": true
+  },
+  {
+    "id": "recGF6OKZuwajOkzN",
+    "year": "2017",
+    "title": "Dealing with Stress & Anxiety as a Developer",
+    "venue": "Chicago Node.js",
+    "createdAt": "2019-08-16T05:57:22.000Z",
+    "visible": true
+  },
+  {
+    "id": "rec3wbXtCdiwqYaT1",
+    "year": "2017",
+    "title": "Stress & Anxiety as a Developer",
+    "venue": "DevOps Days",
+    "slideUrl": "https://speakerdeck.com/peterpme/devops-day-chicago-2017-your-bodys-configuration-is-important-too",
+    "createdAt": "2019-08-16T05:57:36.000Z",
+    "visible": true
+  },
+  {
+    "id": "recPvZQcYkfCvap1N",
+    "year": "2017",
+    "title": "Burnout, Stress & Anxiety as a Developer",
+    "venue": "Cross Cutting Concerns",
+    "createdAt": "2019-08-16T05:57:45.000Z",
+    "visible": true
+  },
+  {
+    "id": "rec7konyBYeFRwrGo",
+    "year": "2016",
+    "title": "Future of High Performance Node",
+    "venue": "Node Foundation",
+    "slideUrl": "https://speakerdeck.com/peterpme/future-of-high-performance-node",
+    "createdAt": "2019-08-16T05:55:46.000Z",
+    "visible": true
+  },
+  {
+    "id": "recSVSVBVsvPjQe2w",
+    "year": "2016",
+    "title": "Moving Practically",
+    "venue": "React Remote Conf",
+    "createdAt": "2019-08-16T05:56:11.000Z",
+    "visible": true
+  },
+  {
+    "id": "recAmXa04Jsx8VcJ9",
+    "year": "2016",
+    "title": "Realm & React Native",
+    "venue": "React Native Radio 24",
+    "createdAt": "2019-08-16T05:56:47.000Z",
+    "visible": true
+  },
+  {
+    "id": "recZWT6OCg0hmX2YM",
+    "year": "2015",
+    "title": "Backbone & React - Building a Hybrid Application",
+    "venue": "JSConf",
+    "youtubeUrl": "https://www.youtube.com/watch?v=X7njm67K6QA",
+    "slideUrl": "https://speakerdeck.com/peterpme/the-hybrid-backbone-and-react-app",
+    "createdAt": "2019-04-08T12:11:22.000Z",
+    "visible": true
+  },
+  {
+    "id": "rec7mQHGvlYThiElZ",
+    "year": "2015",
+    "title": "React & Web Audio Api: Building a MIDI Interface",
+    "venue": "React Rally",
+    "youtubeUrl": "https://www.youtube.com/watch?v=KE2GC9lm6jw",
+    "slideUrl": "https://speakerdeck.com/peterpme/audio-apis",
+    "createdAt": "2019-04-08T12:11:22.000Z",
+    "visible": true
+  },
+  {
+    "id": "recQO35SIfGTiDP0J",
+    "year": "2015",
+    "title": "What The Flux? React & Flux Primer",
+    "venue": "Code N Cans @ Braintree",
+    "slideUrl": "https://speakerdeck.com/peterpme/what-the-flux-a-quick-primer-on-react-and-flux",
+    "createdAt": "2019-04-08T12:11:22.000Z",
+    "visible": true
+  }
+]
