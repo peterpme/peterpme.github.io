@@ -7,7 +7,7 @@ import { Layout } from "../components/layout"
 function Navigator({ previous, next }) {
   if (previous && next) {
     return (
-      <nav>
+      <nav className="mb-4">
         <ul className="flex flex-wrap justify-between list-none p-0">
           <li>
             {previous && (
@@ -44,7 +44,7 @@ export default function BlogPost({ data, pageContext, location }) {
       />
       <article className="mb-12">
         <header>
-          <h1 className="subpixel-antialiased mb-4 text-3xl font-sans font-bold">
+          <h1 className="subpixel-antialiased mb-4 text-2xl font-sans font-bold">
             {post.frontmatter.title}
           </h1>
         </header>

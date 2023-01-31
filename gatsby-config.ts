@@ -10,7 +10,7 @@ const config: GatsbyConfig = {
     siteUrl: "https://peterp.me",
     author: {
       name: `Peter Piekarczyk`,
-      summary: `Building @xNFT_Backpack`,
+      summary: `Building Backpack`,
     },
     social: {
       twitter: `peterpme`,

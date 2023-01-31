@@ -6,10 +6,8 @@ import { SEO as Seo } from "../components/seo"
 
 function Section({ title, children }) {
   return (
-    <section className="pb-2">
-      <h2 className="text-2xl font-bold leading-normal font-headline border-0">
-        {title}
-      </h2>
+    <section className="pb-6 leading-relaxed">
+      <h2 className="mb-2 text-xl font-bold font-headline border-0">{title}</h2>
       {children}
     </section>
   )
@@ -40,11 +38,14 @@ type Data = {
 
 const Talk = ({ year, title, venue, youtubeUrl, url, slideUrl }) => {
   return (
-    <li className="mb-4">
-      <span className="block font-bold leading-tight">
-        {year} • {venue}
-      </span>
-      {title}
+    <li className="mb-4 last:mb-0">
+      <div className="flex items-center">
+        <span className="text-sm inline-block mr-2 text-indigo-500">
+          {year}
+        </span>
+        <span className="inline-block font-bold">{venue}</span>
+      </div>
+      <span className="block">{title}</span>
     </li>
   )
 }

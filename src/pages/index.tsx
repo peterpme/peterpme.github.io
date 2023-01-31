@@ -5,18 +5,16 @@ import { graphql, Link } from "gatsby"
 import { SEO as Seo } from "../components/seo"
 import { Layout } from "../components/layout"
 
-const IndexPage: React.FC<PageProps> = ({ data, location }) => {
+export default function IndexPage({ data, location }) {
   const siteTitle = data.site.siteMetadata.title
+  const siteDescription = data.site.siteMetadata.description
   return (
     <Layout location={location} title={siteTitle}>
+      <Seo title={siteTitle} description={siteDescription} />
       <PostList posts={data.posts.nodes} />
     </Layout>
   )
 }
-
-export default IndexPage
-
-export const Head: HeadFC = () => <Seo />
 
 function PostList({ posts }): React.ReactNode {
   return (
@@ -26,7 +24,7 @@ function PostList({ posts }): React.ReactNode {
           <li key={post.id} className="mb-8">
             <h3 className="antialiased font-sans mb-1 font-bold text-lg">
               <Link
-                className="hover:underline underline-offset-8 hover:text-sky-700"
+                className="transition-colors hover:text-indigo-500 hover:underline decoration-2 decoration-indigo-500 underline-offset-4"
                 to={post.fields.slug}
               >
                 {post.frontmatter.title}
@@ -50,6 +48,7 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         title
+        description
       }
     }
     posts: allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {

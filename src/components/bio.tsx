@@ -20,7 +20,6 @@ export default function Bio() {
       }
     }
   `)
-  console.log("bio", data)
 
   const { author } = data.site.siteMetadata
 
@@ -29,15 +28,14 @@ export default function Bio() {
       <GatsbyImage
         image={data.avatar.avatarImage.gatsbyImageData}
         alt={author.name}
-        className="w-12 h-12 mr-2 rounded-full"
+        className="w-12 h-12 mr-3 rounded-full"
       />
-
       <div className="flex flex-col justify-center">
-        <span className="pb-0 mb-0 text-2xl font-bold leading-tight font-headline">
-          Peter Piekarczyk
+        <span className="pb-0 mb-0 text-xl font-bold leading-tight font-headline">
+          {author.name}
         </span>
-        <span className="font-light leading-tight">
-          Co-founder & CTO of Draftbit
+        <span className="text-sm font-light leading-tight">
+          {author.summary}
         </span>
       </div>
     </aside>

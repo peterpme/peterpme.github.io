@@ -3318,7 +3318,7 @@ type GatsbyImageSharpFluidLimitPresentationSizeFragment = { readonly maxHeight: 
 type IndexQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type IndexQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null } | null } | null, readonly posts: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly excerpt: string | null, readonly timeToRead: number | null, readonly wordCount: { readonly words: number | null } | null, readonly fields: { readonly slug: string | null } | null, readonly frontmatter: { readonly date: string | null, readonly title: string | null, readonly description: string | null } | null }> } };
+type IndexQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null, readonly description: string | null } | null } | null, readonly posts: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly excerpt: string | null, readonly timeToRead: number | null, readonly wordCount: { readonly words: number | null } | null, readonly fields: { readonly slug: string | null } | null, readonly frontmatter: { readonly date: string | null, readonly title: string | null, readonly description: string | null } | null }> } };
 
 type SocialProfilesQueryVariables = Exact<{ [key: string]: never; }>;
 
