@@ -5,6 +5,12 @@
 /* purgecss start ignore */
 /* Markdown Styles */
 /* Markdown Global */
+.link-follow-me::after {
+  content: "✨";
+  margin-left: 5px;
+  font-size: 14px;
+}
+
 .markdown {
   @apply leading-relaxed text-base;
 }

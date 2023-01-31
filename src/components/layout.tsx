@@ -36,7 +36,7 @@ function Header({ title }: { title: string }) {
         </Link>
         <a
           href="https://twitter.com/peterpme"
-          className="hidden md:block p-2 text-sm text-slate-400"
+          className="link-follow-me hidden md:block px-3 text-sm text-slate-400 hover:text-indigo-500"
           target="_blank"
           title="Follow Peter on Twitter"
         >
