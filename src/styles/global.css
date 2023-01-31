@@ -23,7 +23,7 @@
 
 /* Links */
 .markdown p a {
-  @apply text-sky-500;
+  @apply text-indigo-500 underline decoration-1 decoration-indigo-500 underline-offset-4;
 }
 
 /* Paragraph */
