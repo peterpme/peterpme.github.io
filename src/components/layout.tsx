@@ -2,7 +2,8 @@ import * as React from "react"
 
 import Bio from "./bio"
 import { SocialProfileList } from "./social-profiles"
-import { Link } from "gatsby"
+import { Link, useStaticQuery, graphql } from "gatsby"
+import { GatsbyImage } from "gatsby-plugin-image"
 
 function Container({ children }: { children: React.ReactNode }) {
   return (
@@ -83,21 +84,34 @@ export function Layout({
   title: string
   children: React.ReactNode
 }) {
-  // const data = useStaticQuery(graphql`
-  //   query BackgroundQuery {
-  //     bg: file(absolutePath: { regex: "/bg-plants.jpg/" }) {
-  //       bgImage: childImageSharp {
-  //         gatsbyImageData(layout: FIXED, height: 800)
-  //       }
-  //     }
-  //   }
-  // `)
+  const data = useStaticQuery(graphql`
+    query BackgroundQuery {
+      bg: file(absolutePath: { regex: "/bg.png/" }) {
+        bgImage: childImageSharp {
+          gatsbyImageData(layout: FIXED, height: 800)
+        }
+      }
+    }
+  `)
 
   return (
-    <Container>
-      <Header title={title} />
-      <main>{children}</main>
-      <Footer />
-    </Container>
+    <>
+      <GatsbyImage
+        image={data.bg.bgImage.gatsbyImageData}
+        alt="background"
+        className="hidden lg:block"
+        style={{
+          position: "fixed",
+          bottom: 0,
+          right: 0,
+          zIndex: -1,
+        }}
+      />
+      <Container>
+        <Header title={title} />
+        <main>{children}</main>
+        <Footer />
+      </Container>
+    </>
   )
 }
