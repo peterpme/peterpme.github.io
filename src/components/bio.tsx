@@ -28,7 +28,7 @@ export default function Bio() {
       <GatsbyImage
         image={data.avatar.avatarImage.gatsbyImageData}
         alt={author.name}
-        className="w-12 h-12 mr-3 rounded-full"
+        className="w-12 h-12 mr-3 rounded-full overflow-hidden"
       />
       <div className="flex flex-col justify-center">
         <span className="pb-0 mb-0 text-xl font-bold leading-tight font-headline">
