@@ -2,8 +2,8 @@ import * as React from "react"
 
 import Bio from "./bio"
 import { SocialProfileList } from "./social-profiles"
-import { Link, useStaticQuery, graphql } from "gatsby"
-import { GatsbyImage } from "gatsby-plugin-image"
+import { Link } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
 
 function Container({ children }: { children: React.ReactNode }) {
   return (
@@ -71,12 +71,6 @@ function Footer() {
   )
 }
 
-// <div className="flex items-center">
-//   <span className="leading-tight block mr-4">
-//     © {new Date().getFullYear()}
-//   </span>
-// </div>
-
 export function Layout({
   title,
   children,
@@ -84,22 +78,15 @@ export function Layout({
   title: string
   children: React.ReactNode
 }) {
-  const data = useStaticQuery(graphql`
-    query BackgroundQuery {
-      bg: file(absolutePath: { regex: "/bg.png/" }) {
-        bgImage: childImageSharp {
-          gatsbyImageData(layout: FIXED, height: 800)
-        }
-      }
-    }
-  `)
-
   return (
     <>
-      <GatsbyImage
-        image={data.bg.bgImage.gatsbyImageData}
+      <StaticImage
+        src="../images/bg.png"
         alt="background"
         className="hidden lg:block"
+        height={800}
+        layout="fixed"
+        placeholder="none"
         style={{
           position: "fixed",
           bottom: 0,

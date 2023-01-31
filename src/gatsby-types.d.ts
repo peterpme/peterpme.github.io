@@ -3277,11 +3277,6 @@ type WebPOptions = {
   readonly quality: InputMaybe<Scalars['Int']>;
 };
 
-type BackgroundQueryQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-type BackgroundQueryQuery = { readonly bg: { readonly bgImage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null };
-
 type BioQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
