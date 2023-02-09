@@ -3,14 +3,15 @@ title: Simple Script for Expo's Eas Build Notifications in Slack
 description: >-
   Expo doesn't currently have a way to send updates when a build succeeds or fails. I created this simple script for Cloudflare Workers.
 date: 2023-02-09T20:11:04.724Z
-categories: [expo, cloudflare workers]
 ---
 
 Expo doesn't currently have a way to send updates when a build succeeds or fails. I created this simple script for Cloudflare Workers.
 
-That being said, the most important part is the `handleExpoStatus`. That handles creating the right response object for the Slack webhook event.
+That being said, if you want to run this somewhere else, the most important part is the `handleExpoStatus`.
+That handles creating the right response object for the Slack webhook event.
 
-Note: I'm not using the `SECRET_WEBHOOK_KEY` in this example.
+Note: I'm not using the `SECRET_WEBHOOK_KEY` in this example. According to [Expo's docs](https://docs.expo.dev/eas/webhooks/#webhook-server),
+you should be checking against a `SECRET_WEBHOOK_KEY` variable.
 
 If your URL isn't public, then you should be ok. I added a dumb check to make sure the object includes my team's metadata.
 That being said, if somebody discovers this URL, you'll quickly wake up to spam and change it :)
