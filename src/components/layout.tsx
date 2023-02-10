@@ -2,6 +2,7 @@ import * as React from "react"
 
 import Bio from "./bio"
 import { SocialProfileList } from "./social-profiles"
+import { useSiteMetadata } from "../hooks/use-site-metadata"
 import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 
@@ -71,13 +72,8 @@ function Footer() {
   )
 }
 
-export function Layout({
-  title,
-  children,
-}: {
-  title: string
-  children: React.ReactNode
-}) {
+export function Layout({ children }: { children: React.ReactNode }) {
+  const { title } = useSiteMetadata()
   return (
     <>
       <StaticImage

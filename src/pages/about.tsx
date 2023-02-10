@@ -1,8 +1,8 @@
 import React from "react"
-import { PageProps, graphql } from "gatsby"
+import { graphql } from "gatsby"
 
 import { Layout } from "../components/layout"
-import { SEO as Seo } from "../components/seo"
+import { Seo } from "../components/seo"
 
 function Ahref({ href, target = "_blank", children }) {
   return (
@@ -23,29 +23,6 @@ function Section({ title, children }) {
       {children}
     </section>
   )
-}
-
-type Data = {
-  site: {
-    siteMetadata: {
-      title: string
-    }
-  }
-  allMarkdownRemark: {
-    edges: {
-      node: {
-        excerpt: string
-        frontmatter: {
-          title: string
-          date: string
-          description: string
-        }
-        fields: {
-          slug: string
-        }
-      }
-    }[]
-  }
 }
 
 export default function AboutPage({ data, location }) {
@@ -70,8 +47,7 @@ export default function AboutPage({ data, location }) {
   ]
 
   return (
-    <Layout location={location} title={siteTitle}>
-      <Seo title="About Peter Piekarczyk" />
+    <Layout>
       <Section title="About Peter">
         <p className="pb-4">
           Hello! I'm working on building the best mobile wallet at{" "}
@@ -126,6 +102,8 @@ export default function AboutPage({ data, location }) {
     </Layout>
   )
 }
+
+export const Head = () => <Seo />
 
 export const pageQuery = graphql`
   query {

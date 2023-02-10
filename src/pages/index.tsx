@@ -1,16 +1,12 @@
 import * as React from "react"
-import type { HeadFC, PageProps } from "gatsby"
 import { graphql, Link } from "gatsby"
 
-import { SEO as Seo } from "../components/seo"
+import { Seo } from "../components/seo"
 import { Layout } from "../components/layout"
 
 export default function IndexPage({ data, location }) {
-  const siteTitle = data.site.siteMetadata.title
-  const siteDescription = data.site.siteMetadata.description
   return (
-    <Layout location={location} title={siteTitle}>
-      <Seo title={siteTitle} description={siteDescription} />
+    <Layout>
       <PostList posts={data.posts.nodes} />
     </Layout>
   )
@@ -43,14 +39,10 @@ function PostList({ posts }): React.ReactNode {
   )
 }
 
+export const Head = ({ location }) => <Seo location={location} />
+
 export const pageQuery = graphql`
-  query Index {
-    site {
-      siteMetadata {
-        title
-        description
-      }
-    }
+  query IndexPage {
     posts: allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
       nodes {
         id

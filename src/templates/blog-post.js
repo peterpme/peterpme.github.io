@@ -1,8 +1,7 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
-
-import { SEO as Seo } from "../components/seo"
 import { Layout } from "../components/layout"
+import { Seo } from "../components/seo"
 
 function Navigator({ previous, next }) {
   if (previous && next) {
@@ -31,17 +30,12 @@ function Navigator({ previous, next }) {
   return null
 }
 
-export default function BlogPost({ data, pageContext, location }) {
+export default function BlogPost({ data, pageContext }) {
   const post = data.markdownRemark
-  const siteTitle = data.site.siteMetadata.title
   const { previous, next } = pageContext
 
   return (
-    <Layout location={location} title={siteTitle}>
-      <Seo
-        title={post.frontmatter.title}
-        description={post.frontmatter.description || post.excerpt}
-      />
+    <Layout>
       <article className="mb-12">
         <header>
           <h1 className="subpixel-antialiased mb-4 text-xl font-sans font-bold">
@@ -58,13 +52,18 @@ export default function BlogPost({ data, pageContext, location }) {
   )
 }
 
+export const Head = ({ location, data }) => {
+  return (
+    <Seo
+      location={location}
+      title={data.markdownRemark.frontmatter.title}
+      description={data.markdownRemark.frontmatter.description}
+    />
+  )
+}
+
 export const query = graphql`
-  query BlogPostBySlug($slug: String!) {
-    site {
-      siteMetadata {
-        title
-      }
-    }
+  query BlogPostPage($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
       id
       fields {
@@ -72,6 +71,7 @@ export const query = graphql`
       }
       frontmatter {
         title
+        description
         date(formatString: "MMMM DD, YYYY")
       }
       html

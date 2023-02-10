@@ -1,13 +1,30 @@
 import React from "react"
 import { useSiteMetadata } from "../hooks/use-site-metadata"
 
-export const SEO = ({ title, description, pathname, children }) => {
+type Props = {
+  title?: string
+  description?: string
+  pathname?: string
+  children?: React.ReactNode
+  location?: any
+}
+
+export function Seo({
+  title,
+  description,
+  pathname,
+  children,
+  location,
+}: Props): JSX.Element {
+  console.log("title", title)
   const {
     title: defaultTitle,
-    description: defaultDescription,
-    image,
     siteUrl,
-    twitterUsername,
+    description: defaultDescription,
+    keywords,
+    og,
+    author,
+    image,
   } = useSiteMetadata()
 
   const seo = {
@@ -15,13 +32,18 @@ export const SEO = ({ title, description, pathname, children }) => {
     description: description || defaultDescription,
     image: `${siteUrl}${image}`,
     url: `${siteUrl}${pathname || ``}`,
-    twitterUsername,
+    keywords,
+    twitterUsername: author.name,
   }
+
+  const canonicalUrl = siteUrl + (location?.pathname ?? "")
 
   return (
     <>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>{seo.title}</title>
       <meta name="description" content={seo.description} />
+      <meta name="keywords" content={seo.keywords} />
       <meta name="image" content={seo.image} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={seo.title} />
@@ -29,6 +51,18 @@ export const SEO = ({ title, description, pathname, children }) => {
       <meta name="twitter:description" content={seo.description} />
       <meta name="twitter:image" content={seo.image} />
       <meta name="twitter:creator" content={seo.twitterUsername} />
+
+      {/* Open Graph */}
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:title" content={seo.title} />
+      <meta property="og:description" content={seo.description} />
+      <meta property="og:site_name" content={og.title} />
+      <meta property="og:type" content={og.type} />
+      <meta property="og:image" content={og.image.url} />
+      <meta property="og:image:alt" content={og.image.alt} />
+      <meta property="og:image:type" content={og.image.type} />
+      <meta property="og:image:width" content={og.image.width} />
+      <meta property="og:image:height" content={og.image.height} />
       {children}
     </>
   )

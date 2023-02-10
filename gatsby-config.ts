@@ -3,14 +3,27 @@ import type { GatsbyConfig } from "gatsby"
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `Peter Piekarczyk`,
-    description:
-      "Peter Piekarczyk - Co-founder of Draftbit. Investor & Advisor. Building Backpack for mobile",
-    twitterUsername: "@peterpme",
-    keywords: `CTO, startups, Software Development, ReasonML, React, Node, Investing, Advising, No-Code, Low-Code`,
     siteUrl: "https://peterp.me",
+    description:
+      "Peter Piekarczyk - Engineer, Investor, Advisor. Building Backpack for mobile",
+    twitterUsername: "@peterpme",
+    keywords:
+      "Startups, Engineering, Software Development, Investing, Advising, React, Node, Leadership, Automation",
+    titlePrefix: "",
+    titleSuffix: " | Peter Piekarczyk",
     author: {
       name: `Peter Piekarczyk`,
-      summary: `Building Backpack`,
+      summary: `Building Backpack for mobile`,
+    },
+    og: {
+      type: "website",
+      image: {
+        alt: "Peter Piekarczyk",
+        height: "630",
+        width: "1200",
+        type: "image/png",
+        url: "./src/images/og.png",
+      },
     },
     social: {
       twitter: `peterpme`,

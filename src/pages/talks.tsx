@@ -1,8 +1,8 @@
 import React from "react"
-import { PageProps, graphql } from "gatsby"
+import { graphql } from "gatsby"
 
 import { Layout } from "../components/layout"
-import { SEO as Seo } from "../components/seo"
+import { Seo } from "../components/seo"
 
 function Section({ title, children }) {
   return (
@@ -11,29 +11,6 @@ function Section({ title, children }) {
       {children}
     </section>
   )
-}
-
-type Data = {
-  site: {
-    siteMetadata: {
-      title: string
-    }
-  }
-  allMarkdownRemark: {
-    edges: {
-      node: {
-        excerpt: string
-        frontmatter: {
-          title: string
-          date: string
-          description: string
-        }
-        fields: {
-          slug: string
-        }
-      }
-    }[]
-  }
 }
 
 const Talk = ({ year, title, venue, youtubeUrl, url, slideUrl }) => {
@@ -51,12 +28,10 @@ const Talk = ({ year, title, venue, youtubeUrl, url, slideUrl }) => {
 }
 
 export default function AboutPage({ data, location }) {
-  const siteTitle = data.site.siteMetadata.title
   const talks = data.talks && data.talks.nodes
 
   return (
-    <Layout location={location} title={siteTitle}>
-      <Seo title="Speaking & Appearances" />
+    <Layout>
       <Section title="Speaking & Appearances">
         <ul className="mt-4 list-horizontal">
           {talks.map(talk => (
@@ -67,6 +42,8 @@ export default function AboutPage({ data, location }) {
     </Layout>
   )
 }
+
+export const Head = () => <Seo />
 
 export const pageQuery = graphql`
   query Talks {

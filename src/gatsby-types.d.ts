@@ -2909,9 +2909,12 @@ type SiteSiteMetadata = {
   readonly author: Maybe<SiteSiteMetadataAuthor>;
   readonly description: Maybe<Scalars['String']>;
   readonly keywords: Maybe<Scalars['String']>;
+  readonly og: Maybe<SiteSiteMetadataOg>;
   readonly siteUrl: Maybe<Scalars['String']>;
   readonly social: Maybe<SiteSiteMetadataSocial>;
   readonly title: Maybe<Scalars['String']>;
+  readonly titlePrefix: Maybe<Scalars['String']>;
+  readonly titleSuffix: Maybe<Scalars['String']>;
   readonly twitterUsername: Maybe<Scalars['String']>;
 };
 
@@ -2939,9 +2942,12 @@ type SiteSiteMetadataFieldSelector = {
   readonly author: InputMaybe<SiteSiteMetadataAuthorFieldSelector>;
   readonly description: InputMaybe<FieldSelectorEnum>;
   readonly keywords: InputMaybe<FieldSelectorEnum>;
+  readonly og: InputMaybe<SiteSiteMetadataOgFieldSelector>;
   readonly siteUrl: InputMaybe<FieldSelectorEnum>;
   readonly social: InputMaybe<SiteSiteMetadataSocialFieldSelector>;
   readonly title: InputMaybe<FieldSelectorEnum>;
+  readonly titlePrefix: InputMaybe<FieldSelectorEnum>;
+  readonly titleSuffix: InputMaybe<FieldSelectorEnum>;
   readonly twitterUsername: InputMaybe<FieldSelectorEnum>;
 };
 
@@ -2949,10 +2955,73 @@ type SiteSiteMetadataFilterInput = {
   readonly author: InputMaybe<SiteSiteMetadataAuthorFilterInput>;
   readonly description: InputMaybe<StringQueryOperatorInput>;
   readonly keywords: InputMaybe<StringQueryOperatorInput>;
+  readonly og: InputMaybe<SiteSiteMetadataOgFilterInput>;
   readonly siteUrl: InputMaybe<StringQueryOperatorInput>;
   readonly social: InputMaybe<SiteSiteMetadataSocialFilterInput>;
   readonly title: InputMaybe<StringQueryOperatorInput>;
+  readonly titlePrefix: InputMaybe<StringQueryOperatorInput>;
+  readonly titleSuffix: InputMaybe<StringQueryOperatorInput>;
   readonly twitterUsername: InputMaybe<StringQueryOperatorInput>;
+};
+
+type SiteSiteMetadataOg = {
+  readonly image: Maybe<SiteSiteMetadataOgImage>;
+  readonly type: Maybe<Scalars['String']>;
+};
+
+type SiteSiteMetadataOgFieldSelector = {
+  readonly image: InputMaybe<SiteSiteMetadataOgImageFieldSelector>;
+  readonly type: InputMaybe<FieldSelectorEnum>;
+};
+
+type SiteSiteMetadataOgFilterInput = {
+  readonly image: InputMaybe<SiteSiteMetadataOgImageFilterInput>;
+  readonly type: InputMaybe<StringQueryOperatorInput>;
+};
+
+type SiteSiteMetadataOgImage = {
+  readonly alt: Maybe<Scalars['String']>;
+  readonly height: Maybe<Scalars['String']>;
+  readonly type: Maybe<Scalars['String']>;
+  readonly url: Maybe<Scalars['String']>;
+  readonly width: Maybe<Scalars['Date']>;
+};
+
+
+type SiteSiteMetadataOgImage_widthArgs = {
+  difference: InputMaybe<Scalars['String']>;
+  formatString: InputMaybe<Scalars['String']>;
+  fromNow: InputMaybe<Scalars['Boolean']>;
+  locale: InputMaybe<Scalars['String']>;
+};
+
+type SiteSiteMetadataOgImageFieldSelector = {
+  readonly alt: InputMaybe<FieldSelectorEnum>;
+  readonly height: InputMaybe<FieldSelectorEnum>;
+  readonly type: InputMaybe<FieldSelectorEnum>;
+  readonly url: InputMaybe<FieldSelectorEnum>;
+  readonly width: InputMaybe<FieldSelectorEnum>;
+};
+
+type SiteSiteMetadataOgImageFilterInput = {
+  readonly alt: InputMaybe<StringQueryOperatorInput>;
+  readonly height: InputMaybe<StringQueryOperatorInput>;
+  readonly type: InputMaybe<StringQueryOperatorInput>;
+  readonly url: InputMaybe<StringQueryOperatorInput>;
+  readonly width: InputMaybe<DateQueryOperatorInput>;
+};
+
+type SiteSiteMetadataOgImageSortInput = {
+  readonly alt: InputMaybe<SortOrderEnum>;
+  readonly height: InputMaybe<SortOrderEnum>;
+  readonly type: InputMaybe<SortOrderEnum>;
+  readonly url: InputMaybe<SortOrderEnum>;
+  readonly width: InputMaybe<SortOrderEnum>;
+};
+
+type SiteSiteMetadataOgSortInput = {
+  readonly image: InputMaybe<SiteSiteMetadataOgImageSortInput>;
+  readonly type: InputMaybe<SortOrderEnum>;
 };
 
 type SiteSiteMetadataSocial = {
@@ -2983,9 +3052,12 @@ type SiteSiteMetadataSortInput = {
   readonly author: InputMaybe<SiteSiteMetadataAuthorSortInput>;
   readonly description: InputMaybe<SortOrderEnum>;
   readonly keywords: InputMaybe<SortOrderEnum>;
+  readonly og: InputMaybe<SiteSiteMetadataOgSortInput>;
   readonly siteUrl: InputMaybe<SortOrderEnum>;
   readonly social: InputMaybe<SiteSiteMetadataSocialSortInput>;
   readonly title: InputMaybe<SortOrderEnum>;
+  readonly titlePrefix: InputMaybe<SortOrderEnum>;
+  readonly titleSuffix: InputMaybe<SortOrderEnum>;
   readonly twitterUsername: InputMaybe<SortOrderEnum>;
 };
 
@@ -3638,12 +3710,12 @@ type BioQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 type BioQueryQuery = { readonly avatar: { readonly avatarImage: { readonly gatsbyImageData: import('gatsby-plugin-image').IGatsbyImageData } | null } | null, readonly site: { readonly siteMetadata: { readonly author: { readonly name: string | null, readonly summary: string | null } | null } | null } | null };
 
-type BlogPostBySlugQueryVariables = Exact<{
+type BlogPostPageQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
 
 
-type BlogPostBySlugQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null } | null } | null, readonly markdownRemark: { readonly id: string, readonly html: string | null, readonly fields: { readonly slug: string | null } | null, readonly frontmatter: { readonly title: string | null, readonly date: string | null } | null } | null };
+type BlogPostPageQuery = { readonly markdownRemark: { readonly id: string, readonly html: string | null, readonly fields: { readonly slug: string | null } | null, readonly frontmatter: { readonly title: string | null, readonly description: string | null, readonly date: string | null } | null } | null };
 
 type GatsbyImageSharpFixedFragment = { readonly base64: string | null, readonly width: number, readonly height: number, readonly src: string, readonly srcSet: string };
 
@@ -3671,10 +3743,15 @@ type GatsbyImageSharpFluid_withWebp_tracedSVGFragment = { readonly tracedSVG: st
 
 type GatsbyImageSharpFluidLimitPresentationSizeFragment = { readonly maxHeight: number, readonly maxWidth: number };
 
-type IndexQueryVariables = Exact<{ [key: string]: never; }>;
+type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type IndexQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null, readonly description: string | null } | null } | null, readonly posts: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly excerpt: string | null, readonly timeToRead: number | null, readonly wordCount: { readonly words: number | null } | null, readonly fields: { readonly slug: string | null } | null, readonly frontmatter: { readonly date: string | null, readonly title: string | null, readonly description: string | null } | null }> } };
+type IndexPageQuery = { readonly posts: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly excerpt: string | null, readonly timeToRead: number | null, readonly wordCount: { readonly words: number | null } | null, readonly fields: { readonly slug: string | null } | null, readonly frontmatter: { readonly date: string | null, readonly title: string | null, readonly description: string | null } | null }> } };
+
+type SiteMetadataQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type SiteMetadataQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null, readonly siteUrl: string | null, readonly description: string | null, readonly keywords: string | null, readonly titlePrefix: string | null, readonly titleSuffix: string | null, readonly og: { readonly type: string | null, readonly image: { readonly alt: string | null, readonly height: string | null, readonly width: string | null, readonly type: string | null, readonly url: string | null } | null } | null, readonly author: { readonly name: string | null, readonly summary: string | null } | null } | null } | null };
 
 type SocialProfilesQueryVariables = Exact<{ [key: string]: never; }>;
 
