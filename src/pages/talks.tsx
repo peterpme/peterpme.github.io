@@ -13,7 +13,31 @@ function Section({ title, children }) {
   )
 }
 
-const Talk = ({ year, title, venue, youtubeUrl, url, slideUrl }) => {
+function getType(youtubeUrl, slideUrl, title) {
+  if (youtubeUrl) {
+    return (
+      <a
+        title={title}
+        className="block hover:text-indigo-500 underline"
+        href={youtubeUrl}
+      >
+        {title}
+      </a>
+    )
+  }
+
+  if (slideUrl) {
+    return (
+      <a title={title} className="block hover:text-indigo-500" href={slideUrl}>
+        {title}
+      </a>
+    )
+  }
+
+  return <span className="block">{title}</span>
+}
+
+const Talk = ({ year, title, venue, youtubeUrl, slideUrl }) => {
   return (
     <li className="mb-4 last:mb-0">
       <div className="flex items-center">
@@ -22,7 +46,7 @@ const Talk = ({ year, title, venue, youtubeUrl, url, slideUrl }) => {
         </span>
         <span className="inline-block font-bold">{venue}</span>
       </div>
-      <span className="block">{title}</span>
+      {getType(youtubeUrl, slideUrl, title)}
     </li>
   )
 }
@@ -43,7 +67,7 @@ export default function AboutPage({ data, location }) {
   )
 }
 
-export const Head = () => <Seo />
+export const Head = () => <Seo title="Talks" />
 
 export const pageQuery = graphql`
   query Talks {

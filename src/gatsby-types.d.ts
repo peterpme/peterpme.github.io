@@ -2173,6 +2173,7 @@ type Query_talksJsonArgs = {
   parent: InputMaybe<NodeFilterInput>;
   slideUrl: InputMaybe<StringQueryOperatorInput>;
   title: InputMaybe<StringQueryOperatorInput>;
+  url: InputMaybe<StringQueryOperatorInput>;
   venue: InputMaybe<StringQueryOperatorInput>;
   visible: InputMaybe<BooleanQueryOperatorInput>;
   year: InputMaybe<DateQueryOperatorInput>;
@@ -3535,6 +3536,7 @@ type TalksJson = Node & {
   readonly parent: Maybe<Node>;
   readonly slideUrl: Maybe<Scalars['String']>;
   readonly title: Maybe<Scalars['String']>;
+  readonly url: Maybe<Scalars['String']>;
   readonly venue: Maybe<Scalars['String']>;
   readonly visible: Maybe<Scalars['Boolean']>;
   readonly year: Maybe<Scalars['Date']>;
@@ -3611,6 +3613,7 @@ type TalksJsonFieldSelector = {
   readonly parent: InputMaybe<NodeFieldSelector>;
   readonly slideUrl: InputMaybe<FieldSelectorEnum>;
   readonly title: InputMaybe<FieldSelectorEnum>;
+  readonly url: InputMaybe<FieldSelectorEnum>;
   readonly venue: InputMaybe<FieldSelectorEnum>;
   readonly visible: InputMaybe<FieldSelectorEnum>;
   readonly year: InputMaybe<FieldSelectorEnum>;
@@ -3626,6 +3629,7 @@ type TalksJsonFilterInput = {
   readonly parent: InputMaybe<NodeFilterInput>;
   readonly slideUrl: InputMaybe<StringQueryOperatorInput>;
   readonly title: InputMaybe<StringQueryOperatorInput>;
+  readonly url: InputMaybe<StringQueryOperatorInput>;
   readonly venue: InputMaybe<StringQueryOperatorInput>;
   readonly visible: InputMaybe<BooleanQueryOperatorInput>;
   readonly year: InputMaybe<DateQueryOperatorInput>;
@@ -3686,6 +3690,7 @@ type TalksJsonSortInput = {
   readonly parent: InputMaybe<NodeSortInput>;
   readonly slideUrl: InputMaybe<SortOrderEnum>;
   readonly title: InputMaybe<SortOrderEnum>;
+  readonly url: InputMaybe<SortOrderEnum>;
   readonly venue: InputMaybe<SortOrderEnum>;
   readonly visible: InputMaybe<SortOrderEnum>;
   readonly year: InputMaybe<SortOrderEnum>;
