@@ -16,7 +16,6 @@ export function Seo({
   children,
   location,
 }: Props): JSX.Element {
-  console.log("title", title)
   const {
     title: defaultTitle,
     siteUrl,
@@ -28,13 +27,14 @@ export function Seo({
   } = useSiteMetadata()
 
   const seo = {
-    title: title || defaultTitle,
+    title: title ? `${title} | ${defaultTitle}` : defaultTitle,
     description: description || defaultDescription,
     image: `${siteUrl}${image}`,
     url: `${siteUrl}${pathname || ``}`,
     keywords,
     twitterUsername: author.name,
   }
+  console.log("s.title", seo.title)
 
   const canonicalUrl = siteUrl + (location?.pathname ?? "")
 

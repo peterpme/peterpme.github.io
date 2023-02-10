@@ -75,16 +75,16 @@ export default function AboutPage({ data, location }) {
       <Section title="Favorites">
         <p>
           Some of the software and frameworks I've been obsessed with recently:
-          <ul className="mt-3">
-            {FAVORITES.map(favorite => {
-              return (
-                <li className="mb-1">
-                  <Ahref href={favorite.href}>{favorite.label}</Ahref>
-                </li>
-              )
-            })}
-          </ul>
         </p>
+        <ul className="mt-3">
+          {FAVORITES.map(favorite => {
+            return (
+              <li key={favorite.href} className="mb-1">
+                <Ahref href={favorite.href}>{favorite.label}</Ahref>
+              </li>
+            )
+          })}
+        </ul>
       </Section>
       <Section title="Community">
         <p>
