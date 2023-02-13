@@ -4,7 +4,15 @@ import { graphql } from "gatsby"
 import { Layout } from "../components/layout"
 import { Seo } from "../components/seo"
 
-function Ahref({ href, target = "_blank", children }) {
+function Ahref({
+  href,
+  target = "_blank",
+  children,
+}: {
+  href: string
+  target?: string
+  children: React.ReactNode
+}) {
   return (
     <a
       target={target}
@@ -16,45 +24,58 @@ function Ahref({ href, target = "_blank", children }) {
   )
 }
 
-function Section({ title, children }) {
+function Section({
+  title,
+  children,
+  noBottomMargin = false,
+}: {
+  title?: string
+  children: React.ReactNode
+  noBottomMargin?: boolean
+}) {
+  const classname = noBottomMargin ? "" : "mb-6"
   return (
-    <section className="pb-6 leading-relaxed">
-      <h2 className="mb-2 text-xl font-bold font-headline border-0">{title}</h2>
+    <section className={`leading-relaxed ${classname}`}>
+      {title ? (
+        <h2 className="mb-2 text-xl font-bold font-headline border-0">
+          {title}
+        </h2>
+      ) : null}
       {children}
     </section>
   )
 }
 
-export default function AboutPage({ data, location }) {
-  const siteTitle = data.site.siteMetadata.title
-  const FAVORITES = [
-    {
-      label: "Expo",
-      href: "https://expo.io/",
-    },
-    {
-      label: "React Native",
-      href: "https://reactnative.dev/",
-    },
-    {
-      label: "ChatGPT",
-      href: "https://chat.openai.com",
-    },
-    {
-      label: "Stable Diffusion",
-      href: "https://stable.ai/",
-    },
-  ]
+const FAVORITES = [
+  {
+    label: "Expo",
+    href: "https://expo.io/",
+  },
+  {
+    label: "React Native",
+    href: "https://reactnative.dev/",
+  },
+  {
+    label: "ChatGPT",
+    href: "https://chat.openai.com",
+  },
+  {
+    label: "Stable Diffusion",
+    href: "https://stable.ai/",
+  },
+]
 
+export default function AboutPage({ data, location }) {
   return (
-    <Layout>
-      <Section title="About Peter">
+    <Layout pageTitle="About Peter">
+      <Section>
         <p className="pb-4">
-          Hello! I'm working on building the best mobile wallet at{" "}
+          Hi there! I'm working on building the best mobile wallet at{" "}
           <Ahref href="https://backpack.app">Backpack</Ahref>. Prior to that, I
           was the co-founder & CTO of{" "}
           <Ahref href="https://draftbit.com">Draftbit</Ahref>.
         </p>
+        <p className="pb-4">My last name is pronounced "PIE-CAR-CHICK"</p>
         <p className="pb-4">
           I always knew I wanted to build things. At the age of 12 I started my
           first business selling templated logos and websites on Ebay. As you
@@ -103,7 +124,7 @@ export default function AboutPage({ data, location }) {
   )
 }
 
-export const Head = () => <Seo title="About" />
+export const Head = () => <Seo title="About Peter" />
 
 export const pageQuery = graphql`
   query {

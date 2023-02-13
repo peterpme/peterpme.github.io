@@ -6,9 +6,10 @@ import { Layout } from "../components/layout"
 
 export default function IdeasPage({ data, location }) {
   return (
-    <Layout>
+    <Layout pageTitle="Startup Ideas">
       <p>
-        A place for random ideas I come with but don't have the time to build
+        A place for random ideas I come with but don't have the time to build. I
+        will occasionally update ideas as I think of them.
       </p>
       <br />
       <PostList posts={data.posts.nodes} />
@@ -43,7 +44,9 @@ function PostList({ posts }): React.ReactNode {
   )
 }
 
-export const Head = ({ location }) => <Seo location={location} />
+export const Head = ({ location }) => (
+  <Seo title="Startup Ideas" location={location} />
+)
 
 export const pageQuery = graphql`
   query IdeasPage {

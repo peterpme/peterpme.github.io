@@ -29,7 +29,7 @@ const LINKS = [
   },
 ]
 
-function Header({ title }: { title: string }) {
+function NavHeader({ title }: { title: string }) {
   return (
     <header className="mb-8 flex items-center justify-between">
       <div className="flex items-center">
@@ -76,7 +76,13 @@ function Footer() {
   )
 }
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({
+  pageTitle,
+  children,
+}: {
+  pageTitle?: string
+  children: React.ReactNode
+}) {
   const { title } = useSiteMetadata()
   return (
     <>
@@ -95,8 +101,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         }}
       />
       <Container>
-        <Header title={title} />
-        <main>{children}</main>
+        <NavHeader title={title} />
+        {pageTitle ? (
+          <h1 className="mb-4 text-xl font-bold font-headline border-0">
+            {pageTitle}
+          </h1>
+        ) : null}
+        <main className="mb-6">{children}</main>
         <Footer />
       </Container>
     </>

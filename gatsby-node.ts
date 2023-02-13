@@ -7,7 +7,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const result = await graphql(
     `
-      query loadPagesQuery {
+      query LoadPagesQuery {
         allMarkdownRemark {
           edges {
             node {
@@ -54,11 +54,17 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
   if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
+    const isIdea = node.fileAbsolutePath.includes("ideas")
+    const value = createFilePath({
+      node,
+      getNode,
+      // basePath: isIdea ? "ideas" : "",
+    })
+
     createNodeField({
       name: `slug`,
       node,
-      value,
+      value: isIdea ? `/ideas${value}` : value,
     })
   }
 }

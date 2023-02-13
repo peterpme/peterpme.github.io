@@ -3772,15 +3772,15 @@ type SocialProfilesQueryVariables = Exact<{ [key: string]: never; }>;
 
 type SocialProfilesQuery = { readonly socialProfiles: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly name: string | null, readonly url: string | null }> } };
 
-type TalksQueryVariables = Exact<{ [key: string]: never; }>;
+type TalksPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type TalksQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null } | null } | null, readonly talks: { readonly nodes: ReadonlyArray<{ readonly slideUrl: string | null, readonly title: string | null, readonly venue: string | null, readonly visible: boolean | null, readonly year: string | null, readonly youtubeUrl: string | null }> } };
+type TalksPageQuery = { readonly site: { readonly siteMetadata: { readonly title: string | null } | null } | null, readonly talks: { readonly nodes: ReadonlyArray<{ readonly slideUrl: string | null, readonly title: string | null, readonly venue: string | null, readonly visible: boolean | null, readonly year: string | null, readonly youtubeUrl: string | null }> } };
 
-type loadPagesQueryQueryVariables = Exact<{ [key: string]: never; }>;
+type LoadPagesQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type loadPagesQueryQuery = { readonly allMarkdownRemark: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly fileAbsolutePath: string | null, readonly frontmatter: { readonly title: string | null } | null, readonly fields: { readonly slug: string | null } | null } }> } };
+type LoadPagesQueryQuery = { readonly allMarkdownRemark: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly fileAbsolutePath: string | null, readonly frontmatter: { readonly title: string | null } | null, readonly fields: { readonly slug: string | null } | null } }> } };
 
 
 }

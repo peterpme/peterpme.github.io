@@ -4,20 +4,12 @@ import { graphql } from "gatsby"
 import { Layout } from "../components/layout"
 import { Seo } from "../components/seo"
 
-function Section({ title, children }) {
-  return (
-    <section className="pb-6 leading-relaxed">
-      <h2 className="mb-2 text-xl font-bold font-headline border-0">{title}</h2>
-      {children}
-    </section>
-  )
-}
-
 function getType(youtubeUrl, slideUrl, title) {
   if (youtubeUrl) {
     return (
       <a
         title={title}
+        target="_blank"
         className="block hover:text-indigo-500 underline"
         href={youtubeUrl}
       >
@@ -28,7 +20,12 @@ function getType(youtubeUrl, slideUrl, title) {
 
   if (slideUrl) {
     return (
-      <a title={title} className="block hover:text-indigo-500" href={slideUrl}>
+      <a
+        title={title}
+        target="_blank"
+        className="block hover:text-indigo-500"
+        href={slideUrl}
+      >
         {title}
       </a>
     )
@@ -51,26 +48,24 @@ const Talk = ({ year, title, venue, youtubeUrl, slideUrl }) => {
   )
 }
 
-export default function AboutPage({ data, location }) {
+export default function TalksPage({ data, location }) {
   const talks = data.talks && data.talks.nodes
 
   return (
-    <Layout>
-      <Section title="Speaking & Appearances">
-        <ul className="mt-4 list-horizontal">
-          {talks.map(talk => (
-            <Talk key={talk.id} {...talk} />
-          ))}
-        </ul>
-      </Section>
+    <Layout pageTitle="Speaking & Appearances">
+      <ul className="mt-4 list-horizontal">
+        {talks.map(talk => (
+          <Talk key={talk.id} {...talk} />
+        ))}
+      </ul>
     </Layout>
   )
 }
 
-export const Head = () => <Seo title="Talks" />
+export const Head = () => <Seo title="Speaking & Appearances" />
 
 export const pageQuery = graphql`
-  query Talks {
+  query TalksPage {
     site {
       siteMetadata {
         title
