@@ -108,7 +108,6 @@ const config: GatsbyConfig = {
       },
       __key: "pages",
     },
-
     {
       resolve: "gatsby-source-filesystem",
       options: {
@@ -116,6 +115,14 @@ const config: GatsbyConfig = {
         path: "./src/content/blog",
       },
       __key: "blog",
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "ideas",
+        path: "./src/content/ideas",
+      },
+      __key: "ideas",
     },
     {
       resolve: "gatsby-source-filesystem",

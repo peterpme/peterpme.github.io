@@ -4,9 +4,13 @@ import { graphql, Link } from "gatsby"
 import { Seo } from "../components/seo"
 import { Layout } from "../components/layout"
 
-export default function IndexPage({ data, location }) {
+export default function IdeasPage({ data, location }) {
   return (
     <Layout>
+      <p>
+        A place for random ideas I come with but don't have the time to build
+      </p>
+      <br />
       <PostList posts={data.posts.nodes} />
     </Layout>
   )
@@ -42,10 +46,10 @@ function PostList({ posts }): React.ReactNode {
 export const Head = ({ location }) => <Seo location={location} />
 
 export const pageQuery = graphql`
-  query IndexPage {
+  query IdeasPage {
     posts: allMarkdownRemark(
       sort: { frontmatter: { date: DESC } }
-      filter: { fileAbsolutePath: { regex: "/blog/" } }
+      filter: { fileAbsolutePath: { regex: "/ideas/" } }
     ) {
       nodes {
         id

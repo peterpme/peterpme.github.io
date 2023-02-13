@@ -1459,6 +1459,7 @@ type MarkdownRemarkFrontmatter = {
   readonly description: Maybe<Scalars['String']>;
   readonly slug: Maybe<Scalars['String']>;
   readonly title: Maybe<Scalars['String']>;
+  readonly type: Maybe<Scalars['String']>;
 };
 
 
@@ -1474,6 +1475,7 @@ type MarkdownRemarkFrontmatterFieldSelector = {
   readonly description: InputMaybe<FieldSelectorEnum>;
   readonly slug: InputMaybe<FieldSelectorEnum>;
   readonly title: InputMaybe<FieldSelectorEnum>;
+  readonly type: InputMaybe<FieldSelectorEnum>;
 };
 
 type MarkdownRemarkFrontmatterFilterInput = {
@@ -1481,6 +1483,7 @@ type MarkdownRemarkFrontmatterFilterInput = {
   readonly description: InputMaybe<StringQueryOperatorInput>;
   readonly slug: InputMaybe<StringQueryOperatorInput>;
   readonly title: InputMaybe<StringQueryOperatorInput>;
+  readonly type: InputMaybe<StringQueryOperatorInput>;
 };
 
 type MarkdownRemarkFrontmatterSortInput = {
@@ -1488,6 +1491,7 @@ type MarkdownRemarkFrontmatterSortInput = {
   readonly description: InputMaybe<SortOrderEnum>;
   readonly slug: InputMaybe<SortOrderEnum>;
   readonly title: InputMaybe<SortOrderEnum>;
+  readonly type: InputMaybe<SortOrderEnum>;
 };
 
 type MarkdownRemarkGroupConnection = {
@@ -3748,6 +3752,11 @@ type GatsbyImageSharpFluid_withWebp_tracedSVGFragment = { readonly tracedSVG: st
 
 type GatsbyImageSharpFluidLimitPresentationSizeFragment = { readonly maxHeight: number, readonly maxWidth: number };
 
+type IdeasPageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+type IdeasPageQuery = { readonly posts: { readonly nodes: ReadonlyArray<{ readonly id: string, readonly excerpt: string | null, readonly timeToRead: number | null, readonly wordCount: { readonly words: number | null } | null, readonly fields: { readonly slug: string | null } | null, readonly frontmatter: { readonly date: string | null, readonly title: string | null, readonly description: string | null } | null }> } };
+
 type IndexPageQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3771,7 +3780,7 @@ type TalksQuery = { readonly site: { readonly siteMetadata: { readonly title: st
 type loadPagesQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-type loadPagesQueryQuery = { readonly allMarkdownRemark: { readonly edges: ReadonlyArray<{ readonly node: { readonly frontmatter: { readonly title: string | null } | null, readonly fields: { readonly slug: string | null } | null } }> } };
+type loadPagesQueryQuery = { readonly allMarkdownRemark: { readonly edges: ReadonlyArray<{ readonly node: { readonly id: string, readonly fileAbsolutePath: string | null, readonly frontmatter: { readonly title: string | null } | null, readonly fields: { readonly slug: string | null } | null } }> } };
 
 
 }

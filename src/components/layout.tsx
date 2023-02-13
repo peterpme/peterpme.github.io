@@ -23,6 +23,10 @@ const LINKS = [
     label: "Talks",
     path: "/talks",
   },
+  {
+    label: "Ideas",
+    path: "/ideas",
+  },
 ]
 
 function Header({ title }: { title: string }) {

@@ -11,6 +11,8 @@ exports.createPages = async ({ graphql, actions }) => {
         allMarkdownRemark {
           edges {
             node {
+              id
+              fileAbsolutePath
               frontmatter {
                 title
               }
