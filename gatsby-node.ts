@@ -2,7 +2,7 @@ const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
+  const { createPage, createRedirect } = actions
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const result = await graphql(
@@ -46,6 +46,13 @@ exports.createPages = async ({ graphql, actions }) => {
         next,
       },
     })
+
+    if (!post.node.fileAbsolutePath.includes("ideas")) {
+      createRedirect({
+        fromPath: post.node.fields.slug,
+        toPath: `/articles${post.node.fields.slug}`,
+      })
+    }
   })
 }
 
@@ -58,13 +65,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     const value = createFilePath({
       node,
       getNode,
-      // basePath: isIdea ? "ideas" : "",
     })
 
     createNodeField({
       name: `slug`,
       node,
-      value: isIdea ? `/ideas${value}` : value,
+      value: isIdea ? `/ideas${value}` : `/articles${value}`,
     })
   }
 }

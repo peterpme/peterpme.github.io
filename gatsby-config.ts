@@ -112,7 +112,7 @@ const config: GatsbyConfig = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "blog",
-        path: "./src/content/blog",
+        path: "./content/blog",
       },
       __key: "blog",
     },
@@ -120,7 +120,7 @@ const config: GatsbyConfig = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "ideas",
-        path: "./src/content/ideas",
+        path: "./content/ideas",
       },
       __key: "ideas",
     },
@@ -128,7 +128,7 @@ const config: GatsbyConfig = {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "assets",
-        path: "./src/content/assets",
+        path: "./content/assets",
       },
       __key: "assets",
     },
