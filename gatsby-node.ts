@@ -48,9 +48,11 @@ exports.createPages = async ({ graphql, actions }) => {
     })
 
     if (!post.node.fileAbsolutePath.includes("ideas")) {
+      const slugBefore = post.node.fields.slug?.replace("/articles/", "")
+      const slugAfter = `/articles/${slugBefore}`
       createRedirect({
-        fromPath: post.node.fields.slug,
-        toPath: `/articles${post.node.fields.slug}`,
+        fromPath: `/${slugBefore}`,
+        toPath: slugAfter,
       })
     }
   })
