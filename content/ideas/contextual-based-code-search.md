@@ -10,6 +10,8 @@ Contextual Based Code Search is a phrase (I think) I'm coining that makes search
 I'm sure you've used Github Search in the past. I think it's one of the best ways to learn how people write code.
 Not only am I always poking around a codebase, I'm also (frantically) using it to search for solutions.
 
+![github search]("./github-search.png")
+
 Github Search on its own, is much more powerful when you start using filters like language, path, filename, etc:
 
 ```sh
