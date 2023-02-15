@@ -19,16 +19,20 @@ language:typescript path: src/index.ts return res.send(202)
 This one feature alone will help you narrow down to the specific language and specific path of the code you're looking for. That's great, but what about
 the more nuanced examples? What happens when I want to:
 
-Find all places that call `return res.send(202)`
-- in a monorepo?
-- in a Deno application?
+Find all places that call "return res.send(202)":
+
+- in a monorepo using turbo
+- in a Deno application
 - Using ESM (Node's new modules)
+- in a monorepo that includes an expo app
 
 This is where the idea for Contextual Based Code Search comes from.
 
 I would love to be able to write a query like "An example using turbo, expo, jest in a monorepo".
 
-The results should return the same format Github search returns, with a variety of _real-world_ repos that are using all of the technologies.
+The results should return the same format Github search returns, with a variety of _real-world_ repos that are using all of the technologies I'm looking for, in the specific environment I'm looking for.
 
-There are plenty of boilerplates out there that try to do the same but are typically out of date or got something wrong. Having multiple examples is 
-the key to solving an engineer's problem whose on the hunt. It's not often that the first StackOverflow question returns exactly what you need.
+There are plenty of boilerplates out there that try to do the same but are typically out of date or got something wrong. Having multiple examples is
+the key to solving an engineer's problem whose on the hunt.
+
+It's not often that the first StackOverflow answer returns exactly what you need.

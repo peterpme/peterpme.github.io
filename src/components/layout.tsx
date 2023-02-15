@@ -35,7 +35,7 @@ function NavHeader({ title }: { title: string }) {
       <div className="flex items-center">
         <Link
           to={`/`}
-          className="transition-colors font-bold text-xl p-2 bg-black hover:bg-indigo-500 text-white"
+          className="transition-colors font-bold text-l md:text-xl py-2 px-4 md:px-2 bg-black hover:bg-indigo-500 text-white"
         >
           {title}
         </Link>

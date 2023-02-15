@@ -34,7 +34,6 @@ export function Seo({
     keywords,
     twitterUsername: author.name,
   }
-  console.log("s.title", seo.title)
 
   const canonicalUrl = siteUrl + (location?.pathname ?? "")
 

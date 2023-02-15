@@ -11,7 +11,7 @@ export default function IdeasPage({ data, location }) {
         A place for random ideas I come with but don't have the time to build. I
         will occasionally update ideas as I think of them.
       </p>
-      <br />
+      <hr className="my-6" />
       <PostList posts={data.posts.nodes} />
     </Layout>
   )
