@@ -1,5 +1,5 @@
 ---
-title: reactnative.help: A community built around supporting React Native
+title: reactnative.help, A community built around supporting React Native
 description: reactnative.help is a community built for supporting the present & future state of React Native.
 date: 2023-03-22T20:11:04.724Z
 categories: [idea]
