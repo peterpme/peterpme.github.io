@@ -22,3 +22,10 @@ Links could have a "helpful or not" feature. It's not about upvoting the way you
 The website can expand into job boards, a consulting funnel, etc. We can eventually work with Sebastian on a special "This Week in React Native".
 
 The website doesn't need to serve millions of people. It just needs to serve the every day person looking to find answers to less-than-obvious answers
+
+## Sections
+
+- Help: tutorials like reactnativeexpress.com and will's "can it be built with react native" series on youtube
+- Showcase: what are the big companies using React Native? (Shopify, Coinbase, Backpack, etc)
+- Hiring: whose hiring?
+- Looking for work: who wants to find a job?
