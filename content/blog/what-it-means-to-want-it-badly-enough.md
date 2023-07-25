@@ -53,9 +53,13 @@ Some folks figure it out early. Some folks figure it out faster. Some folks get 
 So what does "wanting it badly enough" mean?
 
 Wanting it badly enough means instead of watching Netflix tonight, watch a "how to" Youtube video.
+
 Wanting it badly enough means instead of going to the bar, going to bed early and getting a head start on your day tomorrow.
+
 Wanting it badly enough means looking past the uphill battles and life's inevitable unfairness.
+
 Wanting it badly enough means not feeling sorry for yourself and being resentful at the world for the easy choices that YOU'RE choosing to make.
+
 Wanting it badly enough means putting in the work every single day.
 
 I still haven't figured it out, but I'm working hard to get there making sure every day counts.
