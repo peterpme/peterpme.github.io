@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legend List — Engine Simulator</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3248;
+    --text: #e2e8f0;
+    --text-muted: #7c85a2;
+    --accent: #6366f1;
+    --accent-dim: rgba(99,102,241,0.15);
+
+    --zone-viewport: #22c55e;
+    --zone-buffer: #f59e0b;
+    --zone-draw: #6366f1;
+    --zone-dead: #374151;
+
+    --zone-viewport-bg: rgba(34,197,94,0.12);
+    --zone-buffer-bg: rgba(245,158,11,0.12);
+    --zone-draw-bg: rgba(99,102,241,0.10);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 12px;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 48px 1fr;
+    overflow: hidden;
+  }
+
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 12px;
+  }
+
+  header h1 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  header .badge {
+    background: var(--accent-dim);
+    color: var(--accent);
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 260px 1fr 240px;
+    overflow: hidden;
+  }
+
+  /* ── Controls ── */
+  .controls {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .section-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .control {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .control label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-muted);
+    font-size: 11px;
+  }
+
+  .control label span.val {
+    color: var(--text);
+    font-weight: 600;
+    min-width: 40px;
+    text-align: right;
+  }
+
+  input[type=range] {
+    width: 100%;
+    height: 4px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--border);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+
+  input[type=range]::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--pct, 0%), var(--border) var(--pct, 0%), var(--border) 100%);
+    border-radius: 2px;
+  }
+
+  .speed-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+  }
+
+  .speed-btn {
+    padding: 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s;
+  }
+
+  .speed-btn:hover { border-color: var(--accent); color: var(--text); }
+  .speed-btn.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .toggle-label {
+    color: var(--text-muted);
+    font-size: 11px;
+  }
+
+  .toggle {
+    position: relative;
+    width: 32px;
+    height: 18px;
+  }
+
+  .toggle input { opacity: 0; width: 0; height: 0; }
+
+  .toggle-track {
+    position: absolute;
+    inset: 0;
+    background: var(--border);
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .toggle-track::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: white;
+    top: 3px;
+    left: 3px;
+    transition: transform 0.2s;
+  }
+
+  .toggle input:checked + .toggle-track { background: var(--accent); }
+  .toggle input:checked + .toggle-track::after { transform: translateX(14px); }
+
+  /* ── Visualization ── */
+  .viz {
+    display: grid;
+    grid-template-columns: 80px 96px 1fr;
+    gap: 0;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  .minimap-wrap {
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .pool-column {
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .pool-column-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 6px 4px 4px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .pool-column-counts {
+    font-size: 9px;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 4px 4px 6px;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.4;
+  }
+
+  .pool-column-grid {
+    flex: 1;
+    overflow-y: auto;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    align-items: stretch;
+  }
+
+  .minimap-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 6px 0 4px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .minimap-canvas-wrap {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #minimap {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .screen-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 24px 24px 16px;
+    gap: 10px;
+    overflow-y: auto;
+  }
+
+  .screen-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    align-self: flex-start;
+  }
+
+  .phone {
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    background: #0a0c14;
+    box-shadow: 0 0 0 6px var(--surface), 0 20px 60px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+  }
+
+  .phone-viewport {
+    overflow: hidden;
+    position: relative;
+  }
+
+  .phone-scroll-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .item-block {
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+    font-size: 10px;
+    font-weight: 600;
+    transition: background 0.1s;
+    overflow: hidden;
+  }
+
+  .item-index {
+    opacity: 0.6;
+    font-size: 9px;
+  }
+
+  .item-container {
+    background: rgba(255,255,255,0.08);
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-size: 9px;
+  }
+
+  .zone-band {
+    position: absolute;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-self: flex-start;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    color: var(--text-muted);
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .pool-slot {
+    height: 18px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    font-weight: 700;
+    border: 1px solid transparent;
+    transition: background 0.15s, border-color 0.15s;
+    flex-shrink: 0;
+  }
+
+  /* ── Metrics ── */
+  .metrics {
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .metric-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+    padding: 5px 8px;
+    background: var(--surface2);
+    border-radius: 6px;
+    border: 1px solid transparent;
+  }
+
+  .metric-row.highlight {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  .metric-name {
+    color: var(--text-muted);
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .metric-value {
+    color: var(--text);
+    font-weight: 700;
+    font-size: 11px;
+    text-align: right;
+  }
+
+  .metric-value.green { color: var(--zone-viewport); }
+  .metric-value.amber { color: var(--zone-buffer); }
+  .metric-value.indigo { color: var(--zone-draw); }
+
+  .formula-block {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .formula-block .formula-title {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .formula-line {
+    font-size: 10px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .formula-line strong {
+    color: var(--text);
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Legend List</h1>
+  <span class="badge">Engine Simulator</span>
+  <span style="margin-left:auto;color:var(--text-muted);font-size:10px;">Drag the minimap or scroll slider to simulate scroll position</span>
+</header>
+
+<div class="layout">
+
+  <!-- ── Controls ── -->
+  <div class="controls">
+
+    <div>
+      <div class="section-title">Props</div>
+      <div class="control-group">
+        <div class="control">
+          <label>data.length <span class="val" id="val-numItems">50</span></label>
+          <input type="range" id="numItems" min="5" max="300" value="50" step="1">
+        </div>
+        <div class="control">
+          <label>estimatedItemSize <span class="val" id="val-itemSize">60</span></label>
+          <input type="range" id="itemSize" min="20" max="250" value="60" step="2">
+        </div>
+        <div class="control">
+          <label>numColumns <span class="val" id="val-numColumns">1</span></label>
+          <input type="range" id="numColumns" min="1" max="4" value="1" step="1">
+        </div>
+        <div class="control">
+          <label>drawDistance <span class="val" id="val-drawDistance">250</span></label>
+          <input type="range" id="drawDistance" min="0" max="800" value="250" step="10">
+        </div>
+        <div class="control">
+          <label>initialContainerPoolRatio <span class="val" id="val-poolRatio">1.5</span></label>
+          <input type="range" id="poolRatio" min="1.0" max="4.0" value="1.5" step="0.1">
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">Variable item sizes</span>
+          <label class="toggle">
+            <input type="checkbox" id="variableSizes">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title" style="color:var(--text-muted);opacity:0.7;">Environment <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:9px;">(from layout, not props)</span></div>
+      <div class="control-group">
+        <div class="control">
+          <label>viewport height <span class="val" id="val-scrollLength">600</span></label>
+          <input type="range" id="scrollLength" min="200" max="1000" value="600" step="10">
+        </div>
+        <div class="control">
+          <label>headerSize <span class="val" id="val-headerSize">0</span></label>
+          <input type="range" id="headerSize" min="0" max="300" value="0" step="4">
+        </div>
+        <div class="control">
+          <label>stylePaddingTop <span class="val" id="val-paddingTop">0</span></label>
+          <input type="range" id="paddingTop" min="0" max="100" value="0" step="2">
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">Scroll State</div>
+      <div class="control-group">
+        <div class="control">
+          <label>scroll position <span class="val" id="val-scroll">0</span></label>
+          <input type="range" id="scroll" min="0" max="3000" value="0" step="1">
+        </div>
+        <div>
+          <div style="color:var(--text-muted);font-size:11px;margin-bottom:6px;">scroll speed (direction)</div>
+          <div class="speed-buttons">
+            <button class="speed-btn" data-speed="-1">↑ Up</button>
+            <button class="speed-btn active" data-speed="0">● Stop</button>
+            <button class="speed-btn" data-speed="1">↓ Down</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Visualization ── -->
+  <div class="viz">
+
+    <div class="minimap-wrap">
+      <div class="minimap-label">Minimap</div>
+      <div class="minimap-canvas-wrap">
+        <canvas id="minimap"></canvas>
+      </div>
+    </div>
+
+    <div class="pool-column">
+      <div class="pool-column-label">Containers</div>
+      <div class="pool-column-counts" id="pool-counts">—</div>
+      <div class="pool-column-grid" id="poolGrid"></div>
+    </div>
+
+    <div class="screen-wrap">
+      <div class="screen-title">Viewport View</div>
+
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--zone-viewport);"></div>In viewport</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--zone-buffer);"></div>drawDistance zone</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--zone-draw);"></div>maxVisibleArea</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--zone-dead);"></div>Not rendered</div>
+      </div>
+
+      <div class="phone" id="phone">
+        <div class="phone-viewport" id="phoneViewport">
+          <div class="phone-scroll-area" id="scrollArea"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Metrics ── -->
+  <div class="metrics">
+    <div>
+      <div class="section-title">Container Allocation</div>
+      <div class="metric-group">
+        <div class="metric-row highlight">
+          <span class="metric-name">numContainers</span>
+          <span class="metric-value indigo" id="m-numContainers">—</span>
+        </div>
+        <div class="metric-row highlight">
+          <span class="metric-name">numContainersPooled</span>
+          <span class="metric-value indigo" id="m-numContainersPooled">—</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">averageItemSize</span>
+          <span class="metric-value" id="m-averageItemSize">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div>
+      <div class="section-title">Scroll Zones</div>
+      <div class="metric-group">
+        <div class="metric-row">
+          <span class="metric-name">scrollBufferTop</span>
+          <span class="metric-value amber" id="m-scrollBufferTop">—</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">scrollBufferBottom</span>
+          <span class="metric-value amber" id="m-scrollBufferBottom">—</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">scrollTopBuffered</span>
+          <span class="metric-value" id="m-scrollTopBuffered">—</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">scrollBottomBuffered</span>
+          <span class="metric-value" id="m-scrollBottomBuffered">—</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">maxVisibleArea</span>
+          <span class="metric-value indigo" id="m-maxVisibleArea">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div>
+      <div class="section-title">Content Size</div>
+      <div class="metric-group">
+        <div class="metric-row">
+          <span class="metric-name">totalSize</span>
+          <span class="metric-value" id="m-totalSize">—</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">contentSize</span>
+          <span class="metric-value" id="m-contentSize">—</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">alignItemsPaddingTop</span>
+          <span class="metric-value" id="m-alignPaddingTop">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div>
+      <div class="section-title">Items In Range</div>
+      <div class="metric-group">
+        <div class="metric-row">
+          <span class="metric-name">in viewport</span>
+          <span class="metric-value green" id="m-inViewport">—</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">in drawDistance</span>
+          <span class="metric-value amber" id="m-inBuffer">—</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">in maxVisibleArea</span>
+          <span class="metric-value indigo" id="m-inVisible">—</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">total items</span>
+          <span class="metric-value" id="m-total">—</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="formula-block">
+      <div class="formula-title">Formula Reference</div>
+      <div class="formula-line">
+        <strong>numContainers</strong> =<br>
+        ceil(((scrollLength − headerSize<br>
+        + drawDistance×2) / avgItemSize) × numCols)
+      </div>
+    </div>
+
+    <div class="formula-block">
+      <div class="formula-title">Buffer Asymmetry</div>
+      <div class="formula-line" id="formula-buffer">—</div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+// ─── State ────────────────────────────────────────────────────────────────────
+
+const state = {
+  scrollLength: 600,
+  headerSize: 0,
+  paddingTop: 0,
+  numItems: 50,
+  itemSize: 60,
+  numColumns: 1,
+  variableSizes: false,
+  drawDistance: 250,
+  poolRatio: 1.5,
+  scroll: 0,
+  speed: 0,
+};
+
+// Pre-generate random size multipliers so they're stable
+const sizeSeeds = Array.from({ length: 500 }, (_, i) => {
+  // Deterministic pseudo-random: 0.5x to 2x
+  const x = Math.sin(i * 7.3 + 13.7) * 0.5 + 0.5; // 0–1
+  return 0.5 + x * 1.5; // 0.5–2.0
+});
+
+function getItemSize(i) {
+  if (!state.variableSizes) return state.itemSize;
+  return Math.round(state.itemSize * sizeSeeds[i % sizeSeeds.length]);
+}
+
+// ─── Formulas ─────────────────────────────────────────────────────────────────
+
+function compute() {
+  const { scrollLength, headerSize, paddingTop, numItems, numColumns, drawDistance, poolRatio, scroll, speed } = state;
+  const scrollBuffer = drawDistance || 1;
+
+  // averageItemSize: sample up to first 20 items
+  const sampleCount = Math.min(20, numItems);
+  let totalSample = 0;
+  for (let i = 0; i < sampleCount; i++) totalSample += getItemSize(i);
+  const averageItemSize = sampleCount > 0 ? totalSample / sampleCount : state.itemSize;
+
+  // numContainers
+  const numContainers = Math.ceil(
+    ((scrollLength - headerSize + scrollBuffer * 2) / averageItemSize) * numColumns
+  );
+  const numContainersPooled = numContainers * poolRatio;
+
+  // Item positions
+  const positions = [];
+  let rowTop = 0;
+  let col = 1;
+  let maxInRow = 0;
+  for (let i = 0; i < numItems; i++) {
+    const size = getItemSize(i);
+    positions.push({ top: rowTop, size });
+    if (numColumns > 1) {
+      if (size > maxInRow) maxInRow = size;
+      col++;
+      if (col > numColumns) {
+        rowTop += maxInRow;
+        col = 1;
+        maxInRow = 0;
+      }
+    } else {
+      rowTop += size;
+    }
+  }
+  // finish last row
+  if (numColumns > 1 && col > 1) rowTop += maxInRow;
+
+  const totalSize = rowTop;
+  const topPad = headerSize + paddingTop;
+  const contentSize = topPad + totalSize;
+
+  // Raw scroll → item-coordinate scroll (matches calculateItemsInView: scroll = scrollState - topPad)
+  const rawScroll = scroll;
+  const itemScroll = rawScroll - topPad;
+  // Clamp like the real engine: if scroll+scrollLength > totalSize, clamp
+  const itemScrollClamped = Math.max(0, Math.min(itemScroll, Math.max(0, totalSize - scrollLength)));
+
+  // Scroll buffer asymmetry
+  const isForward = speed > 0 || (speed === 0 && itemScrollClamped < Math.max(50, scrollBuffer));
+  const scrollBufferTop = isForward ? scrollBuffer * 0.5 : scrollBuffer * 1.5;
+  const scrollBufferBottom = isForward ? scrollBuffer * 1.5 : scrollBuffer * 0.5;
+
+  const scrollTopBuffered = itemScrollClamped - scrollBufferTop;
+  const scrollBottom = Math.max(0, itemScrollClamped + scrollLength);
+  const scrollBottomBuffered = scrollBottom + scrollBufferBottom;
+  const maxVisibleArea = scrollBottomBuffered + 1000;
+
+  // alignItemsPaddingTop
+  const alignItemsPaddingTop = Math.max(0, Math.floor(scrollLength - contentSize));
+
+  // Count items by zone (item-coordinate space)
+  let inViewport = 0, inBuffer = 0, inVisible = 0;
+  for (const p of positions) {
+    const itemTop = p.top;
+    const itemBottom = itemTop + p.size;
+    const visBottom = itemScrollClamped + scrollLength;
+
+    if (itemBottom > itemScrollClamped && itemTop < visBottom) inViewport++;
+    else if (itemBottom > scrollTopBuffered && itemTop < scrollBottomBuffered) inBuffer++;
+    else if (itemBottom > 0 && itemTop < maxVisibleArea) inVisible++;
+  }
+
+  return {
+    averageItemSize,
+    numContainers,
+    numContainersPooled,
+    totalSize,
+    contentSize,
+    topPad,
+    rawScroll,
+    itemScrollClamped,
+    scrollBufferTop,
+    scrollBufferBottom,
+    scrollTopBuffered,
+    scrollBottomBuffered,
+    maxVisibleArea,
+    alignItemsPaddingTop,
+    inViewport,
+    inBuffer,
+    inVisible,
+    positions,
+    isForward,
+  };
+}
+
+// ─── Rendering ────────────────────────────────────────────────────────────────
+
+const PHONE_WIDTH = 200;
+const PHONE_HEIGHT = 400;
+
+function render() {
+  const c = compute();
+
+  // Update metrics
+  const fmt = (n) => typeof n === 'number' ? (Number.isInteger(n) ? n : n.toFixed(1)) : n;
+  document.getElementById('m-numContainers').textContent = fmt(c.numContainers);
+  document.getElementById('m-numContainersPooled').textContent = fmt(c.numContainersPooled);
+  document.getElementById('m-averageItemSize').textContent = fmt(c.averageItemSize) + 'px';
+  document.getElementById('m-scrollBufferTop').textContent = fmt(c.scrollBufferTop) + 'px';
+  document.getElementById('m-scrollBufferBottom').textContent = fmt(c.scrollBufferBottom) + 'px';
+  document.getElementById('m-scrollTopBuffered').textContent = fmt(c.scrollTopBuffered) + 'px';
+  document.getElementById('m-scrollBottomBuffered').textContent = fmt(c.scrollBottomBuffered) + 'px';
+  document.getElementById('m-maxVisibleArea').textContent = fmt(c.maxVisibleArea) + 'px';
+  document.getElementById('m-totalSize').textContent = fmt(c.totalSize) + 'px';
+  document.getElementById('m-contentSize').textContent = fmt(c.contentSize) + 'px';
+  document.getElementById('m-alignPaddingTop').textContent = fmt(c.alignItemsPaddingTop) + 'px';
+  document.getElementById('m-inViewport').textContent = c.inViewport;
+  document.getElementById('m-inBuffer').textContent = c.inBuffer;
+  document.getElementById('m-inVisible').textContent = c.inVisible;
+  document.getElementById('m-total').textContent = state.numItems;
+
+  // Formula buffer text
+  const dir = c.isForward ? 'scrolling forward ↓' : 'scrolling backward ↑';
+  document.getElementById('formula-buffer').innerHTML =
+    `Direction: <strong>${dir}</strong><br>` +
+    `bufTop = drawDistance × ${c.isForward ? '0.5' : '1.5'} = <strong>${fmt(c.scrollBufferTop)}</strong><br>` +
+    `bufBot = drawDistance × ${c.isForward ? '1.5' : '0.5'} = <strong>${fmt(c.scrollBufferBottom)}</strong>`;
+
+  // Update scroll range — max raw scroll = contentSize - scrollLength
+  const maxScroll = Math.max(0, c.contentSize - state.scrollLength);
+  const scrollSlider = document.getElementById('scroll');
+  scrollSlider.max = Math.ceil(maxScroll);
+  if (state.scroll > maxScroll) {
+    state.scroll = maxScroll;
+    scrollSlider.value = state.scroll;
+    updateLabel('scroll', state.scroll, Math.round);
+  }
+
+  // ── Phone viewport ──
+  const phone = document.getElementById('phone');
+  const viewport = document.getElementById('phoneViewport');
+  const scrollArea = document.getElementById('scrollArea');
+
+  phone.style.width = PHONE_WIDTH + 'px';
+  phone.style.height = PHONE_HEIGHT + 'px';
+  viewport.style.width = PHONE_WIDTH + 'px';
+  viewport.style.height = PHONE_HEIGHT + 'px';
+
+  // Scale: map real pixels to phone display pixels
+  const scale = PHONE_HEIGHT / state.scrollLength;
+
+  // scrollArea covers entire content (header + padding + items)
+  scrollArea.style.height = (c.contentSize * scale) + 'px';
+  // Offset by raw scroll (not item-adjusted)
+  scrollArea.style.top = (-c.rawScroll * scale) + 'px';
+
+  // Clear children
+  while (scrollArea.firstChild) scrollArea.removeChild(scrollArea.firstChild);
+
+  const { topPad, rawScroll, itemScrollClamped } = c;
+
+  // Zone bands — display space: item coord + topPad, viewport uses rawScroll
+  const zones = [
+    { top: topPad + c.scrollTopBuffered - 1000, bottom: topPad + c.maxVisibleArea, color: 'rgba(99,102,241,0.06)' },
+    { top: topPad + c.scrollTopBuffered, bottom: topPad + itemScrollClamped, color: 'rgba(245,158,11,0.12)' },
+    { top: topPad + itemScrollClamped + state.scrollLength, bottom: topPad + c.scrollBottomBuffered, color: 'rgba(245,158,11,0.12)' },
+    { top: rawScroll, bottom: rawScroll + state.scrollLength, color: 'rgba(34,197,94,0.06)' },
+  ];
+
+  for (const z of zones) {
+    const el = document.createElement('div');
+    el.className = 'zone-band';
+    el.style.top = (z.top * scale) + 'px';
+    el.style.height = Math.max(0, (z.bottom - z.top) * scale) + 'px';
+    el.style.background = z.color;
+    scrollArea.appendChild(el);
+  }
+
+  // Header block
+  if (state.headerSize > 0) {
+    const header = document.createElement('div');
+    header.style.cssText = `position:absolute;left:0;right:0;top:0;height:${state.headerSize * scale}px;` +
+      `background:rgba(139,92,246,0.22);border-bottom:1px solid rgba(139,92,246,0.45);` +
+      `display:flex;align-items:center;justify-content:center;color:#a78bfa;font-size:10px;font-weight:700;letter-spacing:.05em;`;
+    header.textContent = `HEADER  ${state.headerSize}px`;
+    scrollArea.appendChild(header);
+  }
+
+  // Padding spacer
+  if (state.paddingTop > 0) {
+    const pad = document.createElement('div');
+    pad.style.cssText = `position:absolute;left:0;right:0;top:${state.headerSize * scale}px;height:${state.paddingTop * scale}px;` +
+      `background:rgba(75,85,99,0.18);border-bottom:1px dashed rgba(75,85,99,0.4);` +
+      `display:flex;align-items:center;justify-content:center;color:#6b7280;font-size:9px;`;
+    pad.textContent = `paddingTop  ${state.paddingTop}px`;
+    scrollArea.appendChild(pad);
+  }
+
+  // Container assignment (round-robin recycling simulation)
+  const activeItems = [];
+  const visBottom = itemScrollClamped + state.scrollLength;
+
+  for (let i = 0; i < state.numItems; i++) {
+    const p = c.positions[i];
+    const itemTop = p.top;
+    const itemBottom = itemTop + p.size;
+
+    let zone = 'dead';
+    if (itemBottom > itemScrollClamped && itemTop < visBottom) zone = 'viewport';
+    else if (itemBottom > c.scrollTopBuffered && itemTop < c.scrollBottomBuffered) zone = 'buffer';
+    else if (itemBottom > 0 && itemTop < c.maxVisibleArea) zone = 'visible';
+
+    if (zone !== 'dead') {
+      activeItems.push({ i, p, zone });
+    }
+  }
+
+  // Assign container indices (cyclic)
+  const numC = c.numContainers;
+  activeItems.forEach((item, idx) => {
+    item.containerIdx = idx % numC;
+  });
+
+  const zoneColors = {
+    viewport: { bg: 'rgba(34,197,94,0.18)', border: 'rgba(34,197,94,0.5)', text: '#4ade80' },
+    buffer:   { bg: 'rgba(245,158,11,0.15)', border: 'rgba(245,158,11,0.4)', text: '#fbbf24' },
+    visible:  { bg: 'rgba(99,102,241,0.12)', border: 'rgba(99,102,241,0.3)', text: '#818cf8' },
+  };
+
+  for (const { i, p, zone, containerIdx } of activeItems) {
+    const el = document.createElement('div');
+    el.className = 'item-block';
+    const col = zoneColors[zone];
+    // Items start after header + paddingTop in display space
+    el.style.top = ((topPad + p.top) * scale + 2) + 'px';
+    el.style.height = Math.max(2, p.size * scale - 4) + 'px';
+    el.style.background = col.bg;
+    el.style.border = '1px solid ' + col.border;
+    el.style.color = col.text;
+
+    const gap = Math.max(2, p.size * scale - 4);
+    if (gap > 14) {
+      el.innerHTML = `<span class="item-index">#${i}</span><span class="item-container" style="background:rgba(255,255,255,0.08)">c${containerIdx}</span>`;
+    }
+    scrollArea.appendChild(el);
+  }
+
+  // ── Container Pool ──
+  const poolGrid = document.getElementById('poolGrid');
+  while (poolGrid.firstChild) poolGrid.removeChild(poolGrid.firstChild);
+
+  const totalPooled = Math.round(c.numContainersPooled);
+  const activeCount = activeItems.length;
+
+  const containerZoneMap = new Map();
+  for (const { zone, containerIdx } of activeItems) {
+    containerZoneMap.set(containerIdx, zone);
+  }
+
+  const slotColors = {
+    viewport: { bg: 'rgba(34,197,94,0.22)', border: 'rgba(34,197,94,0.6)', text: '#4ade80' },
+    buffer:   { bg: 'rgba(245,158,11,0.18)', border: 'rgba(245,158,11,0.5)', text: '#fbbf24' },
+    visible:  { bg: 'rgba(99,102,241,0.15)', border: 'rgba(99,102,241,0.4)', text: '#818cf8' },
+    idle:     { bg: 'rgba(255,255,255,0.03)', border: 'rgba(255,255,255,0.08)', text: '#374151' },
+  };
+
+  for (let i = 0; i < totalPooled; i++) {
+    const zone = containerZoneMap.has(i) ? containerZoneMap.get(i) : 'idle';
+    const col = slotColors[zone];
+    const slot = document.createElement('div');
+    slot.className = 'pool-slot';
+    slot.style.background = col.bg;
+    slot.style.borderColor = col.border;
+    slot.style.color = col.text;
+    slot.textContent = `c${i}`;
+    slot.title = zone === 'idle' ? `c${i}: idle` : `c${i}: ${zone}`;
+    poolGrid.appendChild(slot);
+  }
+
+  const idleCount = totalPooled - activeCount;
+  document.getElementById('pool-counts').textContent =
+    `${activeCount} active\n${idleCount} idle`;
+
+  // ── Minimap ──
+  renderMinimap(c);
+}
+
+function renderMinimap(c) {
+  const canvas = document.getElementById('minimap');
+  const wrap = canvas.parentElement;
+  const W = wrap.clientWidth || 80;
+  const H = wrap.clientHeight || 400;
+  canvas.width = W;
+  canvas.height = H;
+
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+
+  const totalH = c.contentSize;
+  if (totalH <= 0) return;
+
+  // Scale entire content (header + padding + items) to minimap height
+  const scale = H / totalH;
+  const { topPad, rawScroll, itemScrollClamped } = c;
+
+  // Background
+  ctx.fillStyle = '#0a0c14';
+  ctx.fillRect(0, 0, W, H);
+
+  // maxVisibleArea band (display coords = topPad + itemCoord)
+  const mvTop = Math.max(0, (topPad + c.scrollTopBuffered - 1000) * scale);
+  const mvBot = Math.min(H, (topPad + c.maxVisibleArea) * scale);
+  ctx.fillStyle = 'rgba(99,102,241,0.08)';
+  ctx.fillRect(0, mvTop, W, Math.max(0, mvBot - mvTop));
+
+  // Buffer bands
+  const bufTopStart = Math.max(0, (topPad + c.scrollTopBuffered) * scale);
+  const bufTopEnd = Math.max(0, (topPad + itemScrollClamped) * scale);
+  ctx.fillStyle = 'rgba(245,158,11,0.18)';
+  ctx.fillRect(0, bufTopStart, W, Math.max(0, bufTopEnd - bufTopStart));
+
+  const bufBotStart = Math.min(H, (topPad + itemScrollClamped + state.scrollLength) * scale);
+  const bufBotEnd = Math.min(H, (topPad + c.scrollBottomBuffered) * scale);
+  ctx.fillStyle = 'rgba(245,158,11,0.18)';
+  ctx.fillRect(0, bufBotStart, W, Math.max(0, bufBotEnd - bufBotStart));
+
+  // Header block
+  if (state.headerSize > 0) {
+    ctx.fillStyle = 'rgba(139,92,246,0.25)';
+    ctx.fillRect(0, 0, W, state.headerSize * scale);
+    ctx.strokeStyle = 'rgba(139,92,246,0.5)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(0, 0, W, state.headerSize * scale);
+  }
+
+  // Padding block
+  if (state.paddingTop > 0) {
+    ctx.fillStyle = 'rgba(75,85,99,0.2)';
+    ctx.fillRect(0, state.headerSize * scale, W, state.paddingTop * scale);
+  }
+
+  // Item strips (display coords = topPad + p.top)
+  const visBottom = itemScrollClamped + state.scrollLength;
+  for (let i = 0; i < state.numItems; i++) {
+    const p = c.positions[i];
+    const dispTop = (topPad + p.top) * scale;
+    const dispH = Math.max(1, p.size * scale - 1);
+    let color;
+    if (p.top + p.size > itemScrollClamped && p.top < visBottom) {
+      color = 'rgba(34,197,94,0.6)';
+    } else if (p.top + p.size > c.scrollTopBuffered && p.top < c.scrollBottomBuffered) {
+      color = 'rgba(245,158,11,0.5)';
+    } else if (p.top < c.maxVisibleArea) {
+      color = 'rgba(99,102,241,0.35)';
+    } else {
+      color = 'rgba(255,255,255,0.06)';
+    }
+    ctx.fillStyle = color;
+    ctx.fillRect(2, dispTop, W - 4, dispH);
+  }
+
+  // Viewport rectangle (rawScroll in display space)
+  const vpTop = rawScroll * scale;
+  const vpH = state.scrollLength * scale;
+  ctx.strokeStyle = 'rgba(34,197,94,0.9)';
+  ctx.lineWidth = 1.5;
+  ctx.strokeRect(1, vpTop, W - 2, vpH);
+
+  ctx.fillStyle = 'rgba(34,197,94,0.04)';
+  ctx.fillRect(1, vpTop, W - 2, vpH);
+}
+
+// ─── Controls wiring ──────────────────────────────────────────────────────────
+
+function updateLabel(id, value, fmt = (v) => v) {
+  const el = document.getElementById('val-' + id);
+  if (el) el.textContent = fmt(value);
+}
+
+function updateSliderTrack(el) {
+  const min = parseFloat(el.min) || 0;
+  const max = parseFloat(el.max) || 100;
+  const val = parseFloat(el.value);
+  const pct = ((val - min) / (max - min)) * 100;
+  el.style.setProperty('--pct', pct + '%');
+}
+
+function wire(id, stateKey, parse = parseFloat, fmt = (v) => v) {
+  const el = document.getElementById(id);
+  el.addEventListener('input', () => {
+    const v = parse(el.value);
+    state[stateKey] = v;
+    updateLabel(id, v, fmt);
+    updateSliderTrack(el);
+    render();
+  });
+  updateSliderTrack(el);
+}
+
+wire('scrollLength', 'scrollLength', parseInt, Math.round);
+wire('headerSize', 'headerSize', parseInt, Math.round);
+wire('paddingTop', 'paddingTop', parseInt, Math.round);
+wire('numItems', 'numItems', parseInt, Math.round);
+wire('itemSize', 'itemSize', parseInt, Math.round);
+wire('numColumns', 'numColumns', parseInt, Math.round);
+wire('drawDistance', 'drawDistance', parseInt, Math.round);
+wire('poolRatio', 'poolRatio', parseFloat, (v) => v.toFixed(1));
+wire('scroll', 'scroll', parseInt, Math.round);
+
+document.getElementById('variableSizes').addEventListener('change', (e) => {
+  state.variableSizes = e.target.checked;
+  render();
+});
+
+document.querySelectorAll('.speed-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.speed = parseInt(btn.dataset.speed);
+    document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  });
+});
+
+// ─── Minimap drag-to-scroll ────────────────────────────────────────────────────
+
+const minimap = document.getElementById('minimap');
+let minimapDragging = false;
+
+function minimapSetScroll(e) {
+  const rect = minimap.getBoundingClientRect();
+  const y = (e.clientY || e.touches?.[0]?.clientY || 0) - rect.top;
+  const frac = Math.max(0, Math.min(1, y / rect.height));
+  const c = compute();
+  const maxScroll = Math.max(0, c.contentSize - state.scrollLength);
+  state.scroll = Math.round(frac * maxScroll);
+  const slider = document.getElementById('scroll');
+  slider.value = state.scroll;
+  updateLabel('scroll', state.scroll, Math.round);
+  updateSliderTrack(slider);
+  render();
+}
+
+minimap.addEventListener('mousedown', (e) => { minimapDragging = true; minimapSetScroll(e); });
+minimap.addEventListener('mousemove', (e) => { if (minimapDragging) minimapSetScroll(e); });
+window.addEventListener('mouseup', () => { minimapDragging = false; });
+minimap.addEventListener('touchstart', minimapSetScroll, { passive: true });
+minimap.addEventListener('touchmove', minimapSetScroll, { passive: true });
+
+// ─── Resize observer ──────────────────────────────────────────────────────────
+
+const ro = new ResizeObserver(() => render());
+ro.observe(document.getElementById('minimap').parentElement);
+
+// ─── Initial render ───────────────────────────────────────────────────────────
+
+// Init all slider tracks
+document.querySelectorAll('input[type=range]').forEach(updateSliderTrack);
+render();
+</script>
+</body>
+</html>
