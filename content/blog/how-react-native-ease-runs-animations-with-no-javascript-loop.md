@@ -5,6 +5,8 @@ date: 2026-04-29T06:00:00.000Z
 categories: React Native
 ---
 
+The [AppAndFlow](https://appandflow.com/) team released an amazing animation library called [react-native-ease](https://github.com/AppAndFlow/react-native-ease). Here's a deep dive into how it works under the hood.
+
 Most React Native animation libraries work the same way under the hood: a JavaScript timer drives a value, that value crosses the bridge (or JSI) every frame, and the native view updates in response. It works, but animation fidelity is tied to the health of the JS thread. Drop a frame processing a list, and your animation stutters.
 
 react-native-ease takes a different approach. Once you hand it a prop change, JavaScript is done. The animation runs entirely on the native side using Core Animation on iOS and ObjectAnimator and SpringAnimation on Android, with no JS involvement per frame.
