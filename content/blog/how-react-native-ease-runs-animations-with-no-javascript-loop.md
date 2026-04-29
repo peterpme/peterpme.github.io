@@ -4,9 +4,9 @@ date: 2026-04-29T06:00:00.000Z
 categories: React Native
 ---
 
-Most React Native animation libraries work the same way under the hood: a JavaScript timer drives a value, that value crosses the bridge (or JSI) every frame, and the native view updates in response. It works, but it means animation fidelity is tied to the health of the JS thread. Drop a frame processing a list, and your animation stutters.
+Most React Native animation libraries work the same way under the hood: a JavaScript timer drives a value, that value crosses the bridge (or JSI) every frame, and the native view updates in response. It works, but animation fidelity is tied to the health of the JS thread. Drop a frame processing a list, and your animation stutters.
 
-react-native-ease takes a different approach. Once you hand it a prop change, JavaScript is done. The animation runs entirely on the native side -- Core Animation on iOS, ObjectAnimator and SpringAnimation on Android -- with no JS involvement per frame.
+react-native-ease takes a different approach. Once you hand it a prop change, JavaScript is done. The animation runs entirely on the native side using Core Animation on iOS and ObjectAnimator and SpringAnimation on Android, with no JS involvement per frame.
 
 Here's how it actually works.
 
@@ -34,11 +34,11 @@ There's no `useEffect`, no `useRef`, no animation state. It's a prop resolver. T
 
 ### The bitmask
 
-React Native's codegen doesn't support nullable primitives cleanly -- you can't send `null` for a `Float` prop. So when `opacity` isn't in your `animate` prop, JS still has to send *something* for `animateOpacity`. It sends the identity value: `1.0`.
+React Native's codegen doesn't support nullable primitives cleanly. You can't send `null` for a `Float` prop. So when `opacity` isn't in your `animate` prop, JS still has to send *something* for `animateOpacity`. It sends the identity value: `1.0`.
 
 But now native has a problem: it can't tell whether `animateOpacity: 1.0` means "the user animated opacity to 1" or "the user didn't animate opacity at all and this is just the default." Both look identical.
 
-The solution is a single extra `Int32` prop -- `animatedProperties` -- where each bit flags one property:
+The solution is a single extra `Int32` prop called `animatedProperties`, where each bit flags one property:
 
 ```
 bit 0 = opacity
@@ -56,7 +56,7 @@ The iOS native view (`EaseView.mm`) is a Fabric `RCTViewComponentView`. The main
 
 ### Model layer vs. presentation layer
 
-Core Animation maintains two parallel copies of every layer. The *model layer* is what your code sets -- it always holds the final target value. The *presentation layer* is what's actually visible on screen during an animation. They're separate objects.
+Core Animation maintains two parallel copies of every layer. The *model layer* is what your code sets and always holds the final target value. The *presentation layer* is what's actually visible on screen during an animation. They're separate objects.
 
 This distinction is critical for smooth interruption. If the user triggers a new animation while one is already running, the code reads the current visual position from the presentation layer:
 
@@ -68,23 +68,23 @@ If it read from the model layer instead, the interrupted animation would snap to
 
 ### Why transforms use individual key-paths
 
-All transform properties -- scale, rotation, translation -- could theoretically be combined into a single `CATransform3D` matrix and animated as one. The code explicitly does not do this, and for a good reason.
+All transform properties (scale, rotation, translation) could theoretically be combined into a single `CATransform3D` matrix and animated as one. The code explicitly does not do this, and for a good reason.
 
-Core Animation interpolates matrices by decomposing them back into components. This decomposition is ambiguous in certain cases. A rotation from 0° to 360° produces the same matrix at both endpoints -- Core Animation sees no change and does nothing. A combined scale+rotation can decompose differently depending on the order of operations, producing unexpected visual results.
+Core Animation interpolates matrices by decomposing them back into components. This decomposition is ambiguous in certain cases. A rotation from 0° to 360° produces the same matrix at both endpoints, so Core Animation sees no change and does nothing. A combined scale+rotation can decompose differently depending on the order of operations, producing unexpected visual results.
 
-By animating individual key-paths -- `"transform.rotation.z"`, `"transform.scale.x"`, `"transform.translation.x"` -- each component is interpolated as a plain scalar. 0 to 6.28 radians is unambiguous. The animations compose correctly on the layer without any matrix decomposition.
+By animating individual key-paths like `"transform.rotation.z"`, `"transform.scale.x"`, and `"transform.translation.x"`, each component is interpolated as a plain scalar. 0 to 6.28 radians is unambiguous. The animations compose correctly on the layer without any matrix decomposition.
 
 ### The first mount problem
 
-Enter animations (where `initialAnimate` differs from `animate`) can't fire immediately when `updateProps:` is called on first mount. At that point, Fabric hasn't finished laying out the view -- its frame isn't set yet. Animating before layout is settled means animating from wrong coordinates.
+Enter animations (where `initialAnimate` differs from `animate`) can't fire immediately when `updateProps:` is called on first mount. At that point, Fabric hasn't finished laying out the view and its frame isn't set yet. Animating before layout is settled means animating from wrong coordinates.
 
-So the code defers: it sets a flag in `updateProps:` and waits for `finalizeUpdates:` and `didMoveToWindow` -- both of which fire after the view is fully laid out and attached to the window -- before applying the enter animation.
+So the code defers. It sets a flag in `updateProps:` and waits for `finalizeUpdates:` and `didMoveToWindow`, both of which fire after the view is fully laid out and attached to the window, before applying the enter animation.
 
 ### Reading the room: overriding invalidateLayer
 
-Fabric has a method on `RCTViewComponentView` called `invalidateLayer`. It's called internally whenever Fabric needs to re-sync style props back onto the `CALayer` -- things like `opacity`, `backgroundColor`, and `cornerRadius` after a layout pass. It's a reliable, consistent hook that fires exactly when you need it.
+Fabric has a method on `RCTViewComponentView` called `invalidateLayer`. It's called internally whenever Fabric needs to re-sync style props back onto the `CALayer`, things like `opacity`, `backgroundColor`, and `cornerRadius` after a layout pass. It's a reliable, consistent hook that fires exactly when you need it.
 
-The challenge: that sync clobbers whatever the animation system put there. A background color mid-transition gets reset to the style value.
+The challenge is that sync clobbers whatever the animation system put there. A background color mid-transition gets reset to the style value.
 
 Rather than fighting the system, `EaseView` joins it. It overrides `invalidateLayer`, lets super do its job, then re-stamps the animated values:
 
@@ -95,21 +95,21 @@ Rather than fighting the system, `EaseView` joins it. It overrides `invalidateLa
 }
 ```
 
-Fabric tells you when the layer needs updating -- so use that signal. It's a clean handshake between two systems that both want to own the same properties, and it works because the override respects the contract rather than trying to prevent Fabric from running at all.
+Fabric tells you when the layer needs updating, so use that signal. It's a clean handshake between two systems that both want to own the same properties, and it works because the override respects the contract rather than trying to prevent Fabric from running at all.
 
 ## Android: ObjectAnimator, SpringAnimation, and some physics
 
-The Android side uses `ObjectAnimator` for timing-based animations and `androidx.dynamicanimation.SpringAnimation` for physics springs. But getting them to match iOS behavior requires a few non-obvious steps.
+The Android side uses `ObjectAnimator` for timing-based animations and `androidx.dynamicanimation.SpringAnimation` for physics springs. Getting them to match iOS behavior requires a few non-obvious steps.
 
 ### Props are batched, not applied immediately
 
 On Android, `@ReactProp` setters in `EaseViewManager` don't trigger animations directly. They write to `pending*` fields on the view. Then `onAfterUpdateTransaction` flushes them all at once via `applyPendingAnimateValues()`.
 
-This batching is essential. A single React render might change opacity, scale, and translateX simultaneously. Without batching, each `@ReactProp` setter would fire a separate animation decision. With batching, all three changes are seen together -- the same way `updateProps:oldProps:` on iOS sees the full old and new props as a pair.
+This batching is essential. A single React render might change opacity, scale, and translateX simultaneously. Without batching, each `@ReactProp` setter would fire a separate animation decision. With batching, all three changes are seen together, just like how `updateProps:oldProps:` on iOS receives the full old and new props as a pair.
 
 ### Deriving the spring damping ratio
 
-iOS's `CASpringAnimation` takes raw physical parameters: `damping` (friction coefficient), `stiffness`, and `mass`. Android's `SpringForce` takes a `dampingRatio` -- a dimensionless 0-1 value where 1.0 means critically damped.
+iOS's `CASpringAnimation` takes raw physical parameters: `damping` (friction coefficient), `stiffness`, and `mass`. Android's `SpringForce` takes a `dampingRatio`, a dimensionless 0-1 value where 1.0 means critically damped.
 
 They're different quantities, but they describe the same physics. The conversion is:
 
@@ -121,7 +121,7 @@ This is the formula from classical harmonic oscillator mechanics. It means the s
 
 ### Border radius via ViewOutlineProvider
 
-Android has no direct equivalent of `CALayer.cornerRadius`. Instead, the library uses `ViewOutlineProvider` -- a system API where you supply an outline shape, set `clipToOutline = true`, and the render system uses that outline for clipping and shadow rendering.
+Android has no direct equivalent of `CALayer.cornerRadius`. Instead, the library uses `ViewOutlineProvider`, a system API where you supply an outline shape, set `clipToOutline = true`, and the render system uses that outline for clipping and shadow rendering.
 
 ```kotlin
 val animatedOutlineProvider = object : ViewOutlineProvider() {
@@ -135,7 +135,7 @@ The outline provider reads `_borderRadius` dynamically and is invalidated every 
 
 ### Camera distance normalization
 
-For 3D rotations (`rotateX`, `rotateY`), Android's API takes a `cameraDistance` value that controls perspective. The conversion from the CSS `perspective` prop isn't just a direct pass-through:
+For 3D rotations (`rotateX`, `rotateY`), Android's API takes a `cameraDistance` value that controls perspective. The conversion from the CSS `perspective` prop isn't a direct pass-through:
 
 ```kotlin
 cameraDistance = density * density * perspective * sqrt(5)
@@ -147,4 +147,4 @@ The `sqrt(5)` factor matches a specific normalization React Native applies inter
 
 No JS animation loop. No worklets. No C++ runtime. When a prop change arrives at native, one of two things happens: a `CAAnimation` gets added to a `CALayer`, or an `ObjectAnimator` starts running. From that point, the render thread handles everything. The JS thread can be completely blocked and the animation continues uninterrupted.
 
-The tradeoff is that the animatable property set is fixed -- you can only animate what the native layer understands natively. But for the properties that matter most (opacity, transform, color, border radius), it's about as low-level as you can get in React Native without writing a custom renderer.
+The tradeoff is that the animatable property set is fixed. You can only animate what the native layer understands natively. But for the properties that matter most (opacity, transform, color, border radius), it's about as low-level as you can get in React Native without writing a custom renderer.
