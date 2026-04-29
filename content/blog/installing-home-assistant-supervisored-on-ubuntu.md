@@ -1,5 +1,6 @@
 ---
 title: Installing Home Assistant on Ubuntu, The New Way
+description: "How to correctly install Home Assistant Supervised on Ubuntu after the documentation changed and the Supervisor panel went missing from Docker installs."
 date: 2020-07-31T03:39:01.591Z
 ---
 

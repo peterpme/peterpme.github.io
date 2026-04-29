@@ -1,5 +1,6 @@
 ---
 title: Adding Spotify to Home Assistant
+description: "Step-by-step guide to integrating Spotify with Home Assistant after the configuration change introduced in version 106 and later."
 date: 2020-03-02T06:00:00.000Z
 categories: Home Assistant
 ---

@@ -1,5 +1,6 @@
 ---
 title: Reason Apollo Cache Update Patterns
+description: "Practical patterns for managing Apollo cache updates in ReasonML — optimistic responses, refetchQueries, and manually updating lists after mutations."
 date: 2020-02-15T06:00:00.000Z
 ---
 

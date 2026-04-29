@@ -1,5 +1,6 @@
 ---
 title: What it means to want it badly enough
+description: "What 'wanting it badly enough' actually means in practice for founders and builders — turning abstract motivation into concrete, consistent action."
 date: 2023-07-26T05:00:00.000Z
 ---
 

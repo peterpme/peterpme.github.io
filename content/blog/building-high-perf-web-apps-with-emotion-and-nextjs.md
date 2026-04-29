@@ -1,5 +1,6 @@
 ---
 title: Building High Performance Web Apps with Emotion and Next.js
+description: "How to use Emotion, one of the fastest CSS-in-JS libraries, with Next.js to ship performant server-rendered styles with an API similar to styled-components."
 date: 2017-06-07T05:00:00.000Z
 categories: [Emotion, Styled Components]
 ---

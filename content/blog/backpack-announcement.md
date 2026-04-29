@@ -1,5 +1,6 @@
 ---
 title: "Joining Backpack"
+description: "Announcing that I've joined Backpack to lead mobile engineering and build the future of crypto on mobile."
 date: 2022-12-05T05:00:00.000Z
 categories: [Announcements]
 ---

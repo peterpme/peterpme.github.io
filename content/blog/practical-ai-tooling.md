@@ -1,5 +1,6 @@
 ---
 title: Some thoughts about Practical AI Tooling
+description: "Early ideas on what practical AI tooling infrastructure might look like — model hosting, evaluation pipelines, and the product gaps that still exist."
 date: 2023-07-06T00:54:35.875Z
 ---
 

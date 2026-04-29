@@ -1,5 +1,6 @@
 ---
 title: "Git Checkout Tricks You've Never Heard Of"
+description: "Lesser-known git checkout tricks for cleanly removing committed files and cherrypicking changes without the hassle of revert or cherry-pick."
 date: 2020-05-20T01:00:53.459Z
 ---
 

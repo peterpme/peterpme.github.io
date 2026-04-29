@@ -1,5 +1,6 @@
 ---
 title: Getting Cairo, Starkware's Language Up and Running on an M1 Mac
+description: "A practical guide to getting StarkWare's Cairo language installed and running on an Apple M1 Mac, filling in the gaps the official docs leave out."
 date: 2022-12-14T22:11:04.724Z
 categories: [starkware, cairo]
 ---

@@ -1,5 +1,6 @@
 ---
 title: "Quickly delete old git branches with fzf and zsh"
+description: "A short zsh function using fzf that lets you interactively select and delete old Git branches without hunting through git branch output."
 date: 2020-08-01T05:00:00.000Z
 ---
 

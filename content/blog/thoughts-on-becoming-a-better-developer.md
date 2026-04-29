@@ -1,5 +1,6 @@
 ---
 title: Thoughts on Becoming a Better Developer
+description: "Reflections on what separates truly great engineers — deliberate practice, deep thinking before coding, and lessons from watching world-class developers work."
 date: 2016-06-12T05:00:00.000Z
 ---
 

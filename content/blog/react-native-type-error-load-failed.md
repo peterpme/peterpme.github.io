@@ -1,5 +1,6 @@
 ---
 title: Troubleshooting Type Error Load Failed in React Native
+description: "How I tracked down and fixed the cryptic TypeError: Load Failed error in a React Native app — what causes it and how to resolve it."
 date: 2023-02-13T06:00:00.000Z
 categories: [React Native, Safari]
 ---

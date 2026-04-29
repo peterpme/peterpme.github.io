@@ -1,5 +1,6 @@
 ---
 title: Setting up Ikea Fyrtur Blinds in HomeAssistant without a Gateway
+description: "How to connect IKEA Fyrtur smart blinds to Home Assistant without the IKEA gateway, keeping your existing remote and repeater setup intact."
 date: 2020-11-27T16:06:23.990Z
 ---
 

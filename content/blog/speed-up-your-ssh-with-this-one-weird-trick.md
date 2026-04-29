@@ -1,5 +1,6 @@
 ---
 title: Speeding up Git with SSH Config
+description: "A simple SSH config trick borrowed from Paul Irish's dotfiles that noticeably speeds up Git operations over SSH connections."
 date: 2016-11-11T17:09:37.633Z
 categories: [Developer Tools]
 ---

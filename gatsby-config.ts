@@ -22,7 +22,7 @@ const config: GatsbyConfig = {
         height: "630",
         width: "1200",
         type: "image/png",
-        url: "./src/images/og.png",
+        url: "https://peterp.me/og.png",
       },
     },
     social: {

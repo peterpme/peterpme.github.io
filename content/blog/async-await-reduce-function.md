@@ -1,5 +1,6 @@
 ---
 title: Using async / await with reduce in Javascript
+description: "A quick, practical example showing how to correctly use async/await inside JavaScript's Array reduce function without losing resolved values."
 date: 2020-06-04T00:54:35.875Z
 ---
 

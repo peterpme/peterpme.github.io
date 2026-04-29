@@ -1,5 +1,6 @@
 ---
 title: Working with an array of refs in React
+description: "How to manage an array of React refs for a dynamic list of inputs, including a pattern for forwarding focus to the next TextInput."
 date: 2023-06-11T06:00:00.000Z
 categories: react
 ---

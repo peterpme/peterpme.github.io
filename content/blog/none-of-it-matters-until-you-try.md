@@ -1,5 +1,6 @@
 ---
 title: None of it matters until you try
+description: "Why the only real way to learn if your business idea works is to stop planning and start trying — even when you feel unprepared."
 date: 2023-08-09T05:00:00.000Z
 ---
 

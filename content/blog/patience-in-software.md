@@ -1,5 +1,6 @@
 ---
 title: The Power of patience in software
+description: "The underrated skill that separates good engineers from great ones: slowing down to fully understand a problem before jumping to a solution."
 date: 2023-08-04T19:19:12.213Z
 ---
 

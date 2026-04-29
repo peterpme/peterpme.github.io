@@ -1,5 +1,6 @@
 ---
 title: My Thoughts on Messari's 2023 Thesis
+description: "My personal reflections and reactions to Messari's 2023 crypto thesis, covering the macro trends and bets I agree and disagree with."
 date: 2022-12-29T06:00:00.000Z
 categories: [Crypto, Messari]
 ---

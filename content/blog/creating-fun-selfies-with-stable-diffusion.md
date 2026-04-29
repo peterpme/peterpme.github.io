@@ -1,5 +1,6 @@
 ---
 title: Creating Fun Selfies with Stable Diffusion
+description: "How I used Stable Diffusion to generate creative selfie-style images, including the prompts and settings that produced the best results."
 date: 2022-12-14T06:00:00.000Z
 categories: Stable Diffusion
 ---

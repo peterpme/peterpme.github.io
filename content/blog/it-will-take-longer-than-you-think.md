@@ -1,5 +1,6 @@
 ---
 title: It will take much longer than you think to build a company
+description: "An honest look at how founders consistently underestimate timelines — from landing the first customer to building something truly sustainable."
 date: 2023-08-09T05:00:00.000Z
 ---
 

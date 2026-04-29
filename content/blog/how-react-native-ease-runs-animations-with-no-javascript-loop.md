@@ -1,5 +1,6 @@
 ---
 title: How react-native-ease runs animations with no JavaScript loop
+description: "A deep dive into how react-native-ease hands animations entirely to Core Animation on iOS and ObjectAnimator on Android, with zero per-frame JavaScript involvement."
 date: 2026-04-29T06:00:00.000Z
 categories: React Native
 ---

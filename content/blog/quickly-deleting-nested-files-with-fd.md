@@ -1,5 +1,6 @@
 ---
 title: Easily Deleting Deeply Nested Files with fd
+description: "How to use fd, the modern find replacement, to quickly locate and delete deeply nested files across a project without complex glob syntax."
 date: 2020-06-05T16:06:23.990Z
 ---
 

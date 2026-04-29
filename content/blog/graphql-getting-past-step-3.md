@@ -1,5 +1,6 @@
 ---
 title: GraphQL Getting Past Step 3
+description: "Practical patterns for moving beyond the GraphQL basics: cache updates, optimistic responses, and structuring queries in a real production app."
 date: 2020-02-19T06:00:00.000Z
 ---
 
