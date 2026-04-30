@@ -769,11 +769,18 @@ function compute() {
   for (let i = 0; i < sampleCount; i++) totalSample += getItemSize(i);
   const averageItemSize = sampleCount > 0 ? totalSample / sampleCount : state.itemSize;
 
-  // numContainers
-  const numContainers = Math.ceil(
+  // numContainers — initial allocation from doInitialAllocateContainers. The
+  // engine then grows this monotonically when the buffered range demands more
+  // (calculateItemsInView.ts: containerIndex >= numContainers → numContainers = containerIndex + 1).
+  const initialNumContainers = Math.ceil(
     ((scrollLength - headerSize + scrollBuffer * 2) / averageItemSize) * numColumns
   );
-  const numContainersPooled = numContainers * poolRatio;
+  // Reset the high-water mark when initial allocation changes (prop slider moved).
+  if (state._lastInitial !== initialNumContainers) {
+    state._lastInitial = initialNumContainers;
+    state._numContainersHWM = initialNumContainers;
+    state._numContainersPooledHWM = initialNumContainers * poolRatio;
+  }
 
   // Item positions
   const positions = [];
@@ -823,15 +830,29 @@ function compute() {
 
   // Count items by zone (item-coordinate space)
   let inViewport = 0, inBuffer = 0, inVisible = 0;
+  let inBufferedRange = 0;
   for (const p of positions) {
     const itemTop = p.top;
     const itemBottom = itemTop + p.size;
     const visBottom = itemScrollClamped + scrollLength;
 
-    if (itemBottom > itemScrollClamped && itemTop < visBottom) inViewport++;
-    else if (itemBottom > scrollTopBuffered && itemTop < scrollBottomBuffered) inBuffer++;
+    const isViewport = itemBottom > itemScrollClamped && itemTop < visBottom;
+    const isBuffered = itemBottom > scrollTopBuffered && itemTop < scrollBottomBuffered;
+    if (isViewport) inViewport++;
+    else if (isBuffered) inBuffer++;
     else if (itemBottom > 0 && itemTop < maxVisibleArea) inVisible++;
+    if (isViewport || isBuffered) inBufferedRange++;
   }
+
+  // Grow the high-water mark to match real engine behavior.
+  if (inBufferedRange > state._numContainersHWM) {
+    state._numContainersHWM = inBufferedRange;
+    if (inBufferedRange > state._numContainersPooledHWM) {
+      state._numContainersPooledHWM = Math.ceil(inBufferedRange * 1.5);
+    }
+  }
+  const numContainers = state._numContainersHWM;
+  const numContainersPooled = state._numContainersPooledHWM;
 
   return {
     averageItemSize,
@@ -978,9 +999,11 @@ function render() {
     }
   }
 
-  // Assign container indices (cyclic)
+  // Containers are only allocated for viewport + buffered range; items in the
+  // maxVisibleArea zone are tracked but don't hold a container slot.
+  const containerHolders = activeItems.filter(it => it.zone === 'viewport' || it.zone === 'buffer');
   const numC = c.numContainers;
-  activeItems.forEach((item, idx) => {
+  containerHolders.forEach((item, idx) => {
     item.containerIdx = idx % numC;
   });
 
@@ -991,6 +1014,7 @@ function render() {
   };
 
   for (const { i, p, zone, containerIdx } of activeItems) {
+    const hasContainer = containerIdx !== undefined;
     const el = document.createElement('div');
     el.className = 'item-block';
     const col = zoneColors[zone];
@@ -1003,7 +1027,8 @@ function render() {
 
     const gap = Math.max(2, p.size * scale - 4);
     if (gap > 14) {
-      el.innerHTML = `<span class="item-index">#${i}</span><span class="item-container" style="background:rgba(255,255,255,0.08)">c${containerIdx}</span>`;
+      const cTag = hasContainer ? `c${containerIdx}` : '—';
+      el.innerHTML = `<span class="item-index">#${i}</span><span class="item-container" style="background:rgba(255,255,255,0.08)">${cTag}</span>`;
     }
     scrollArea.appendChild(el);
   }
@@ -1013,11 +1038,11 @@ function render() {
   while (poolGrid.firstChild) poolGrid.removeChild(poolGrid.firstChild);
 
   const totalPooled = Math.round(c.numContainersPooled);
-  const activeCount = activeItems.length;
+  const activeCount = Math.min(containerHolders.length, totalPooled);
 
   const containerZoneMap = new Map();
-  for (const { zone, containerIdx } of activeItems) {
-    containerZoneMap.set(containerIdx, zone);
+  for (const { zone, containerIdx } of containerHolders) {
+    if (containerIdx < totalPooled) containerZoneMap.set(containerIdx, zone);
   }
 
   const slotColors = {
@@ -1040,7 +1065,7 @@ function render() {
     poolGrid.appendChild(slot);
   }
 
-  const idleCount = totalPooled - activeCount;
+  const idleCount = Math.max(0, totalPooled - activeCount);
   document.getElementById('pool-counts').textContent =
     `${activeCount} active\n${idleCount} idle`;
 
