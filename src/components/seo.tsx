@@ -40,6 +40,12 @@ export function Seo({
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>{seo.title}</title>
       <link rel="canonical" href={canonicalUrl} />
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title={`${defaultTitle} RSS Feed`}
+        href={`${siteUrl}/rss.xml`}
+      />
       <meta name="description" content={seo.description} />
       <meta name="keywords" content={seo.keywords} />
       <meta name="twitter:card" content="summary_large_image" />

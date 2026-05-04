@@ -38,6 +38,66 @@ const config: GatsbyConfig = {
   plugins: [
     "gatsby-plugin-image",
     "gatsby-plugin-sitemap",
+    {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize: ({ query: { site, allMarkdownRemark } }: any) => {
+              return allMarkdownRemark.nodes.map((node: any) => {
+                const url = `${site.siteMetadata.siteUrl}${node.fields.slug}`
+
+                return {
+                  title: node.frontmatter.title,
+                  description: node.frontmatter.description || node.excerpt,
+                  date: node.frontmatter.date,
+                  url,
+                  guid: url,
+                  author: "Peter Piekarczyk",
+                  custom_elements: [{ "content:encoded": node.html }],
+                }
+              })
+            },
+            query: `
+              {
+                allMarkdownRemark(
+                  sort: { frontmatter: { date: DESC } }
+                  filter: { fileAbsolutePath: { regex: "/blog/" } }
+                ) {
+                  nodes {
+                    excerpt
+                    html
+                    fields {
+                      slug
+                    }
+                    frontmatter {
+                      title
+                      description
+                      date
+                    }
+                  }
+                }
+              }
+            `,
+            output: "/rss.xml",
+            title: "Peter Piekarczyk RSS Feed",
+            site_url: "https://peterp.me",
+            feed_url: "https://peterp.me/rss.xml",
+          },
+        ],
+      },
+    },
     "gatsby-transformer-json",
     {
       resolve: `gatsby-omni-font-loader`,
