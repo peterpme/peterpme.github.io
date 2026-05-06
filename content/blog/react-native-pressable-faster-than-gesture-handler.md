@@ -25,7 +25,7 @@ Four implementations were tested. All on the same Android device, same modal, 10
 
 **V3 Vanilla** is the floor: plain `Pressable` from React Native, `onPressIn`/`onPressOut` wired to an inline style, no reanimated at all. The visual feedback is an instant opacity change with no easing.
 
-**V4 CssApi** uses reanimated 4's CSS transition API: `createCSSAnimatedComponent(Pressable)` from `react-native-reanimated/css`, where the Pressable is the plain React Native one, with a `useState` for pressed state and `transitionProperty`, `transitionDuration`, `transitionTimingFunction` in the style. No worklets, no shared values. Under the hood, `createCSSAnimatedComponent` uses a completely separate component class from the regular reanimated one — it attaches a `CSSManager` that watches for style-prop changes and drives the animation through the CSS pipeline, not the worklet runtime.
+**V4 CssApi** uses reanimated 4's CSS transition API: `createCSSAnimatedComponent(Pressable)` from `react-native-reanimated/css`, where the Pressable is the plain React Native one, with a `useState` for pressed state and `transitionProperty`, `transitionDuration`, `transitionTimingFunction` in the style. No worklets, no shared values. `createCSSAnimatedComponent` is a completely separate component class from the regular reanimated one. It attaches a `CSSManager` that watches for style-prop changes and drives the animation through the CSS pipeline instead of the worklet runtime.
 
 ## The results
 
@@ -48,7 +48,7 @@ The split is not worklets vs. no worklets. It's Gesture Handler vs. no Gesture H
 
 V1 and V2 both register a native gesture handler per instance. V1 uses RNGH's `Pressable`, V2 uses `GestureDetector`. Both cluster around 770 ms painted. V3 uses plain React Native `Pressable` with no animation, and V4 uses plain React Native `Pressable` with reanimated 4's CSS transition. Both cluster around 455 ms.
 
-V4 is essentially V3 with smooth press animations, and they're statistically tied on speed. The painted means differ by 2.5 ms. V3's standard deviation was 61.5 ms, V4's was 106.7 ms, so V3 is slightly more consistent run-to-run — but V3 has no easing, just an instant opacity snap. V4 gets you the same mount speed with actual animation fidelity, which makes it the obvious pick.
+V4 is essentially V3 with smooth press animations and they're statistically tied on speed. The painted means differ by 2.5 ms. V3's standard deviation was 61.5 ms, V4's was 106.7 ms, so V3 is slightly more consistent run-to-run. But V3 has no easing, just an instant opacity snap. V4 gets you the same mount speed with actual animation fidelity, which makes it the obvious pick.
 
 ## Why Gesture Handler adds mount cost
 
