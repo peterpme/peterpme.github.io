@@ -128,25 +128,7 @@ When `.unbox()` is called, it calls `hybridObject->toObject(runtime)`, passing i
 
 ## The full flow
 
-```
-Main JS Runtime                      Worklet Runtime
-─────────────────────────────────    ──────────────────────────────────
-NitroFetch singleton
-  [JS object]
-  └── jsi::NativeState ──────────►  C++ NitroFetch instance (heap)
-                                              ▲
-NitroModules.box(singleton)                   │ std::shared_ptr
-  [BoxedHybridObject HostObject]              │
-  └── shared_ptr ──────────────────────────── ┘
-       │
-       │  (HostObject: serializable across runtimes)
-       ▼
-                                     boxedNitroFetch lands here
-                                     .unbox()
-                                       └── toObject(workletRuntime)
-                                           └── setNativeState(...)  ← new binding
-                                     unboxedNitroFetch.createClient()  ✅
-```
+![Box and unbox flow diagram](../assets/nitro-box-unbox-flow.png)
 
 The C++ object is never copied. The `shared_ptr` just gets a new JS wrapper pointing at it, created fresh in the worklet runtime.
 
