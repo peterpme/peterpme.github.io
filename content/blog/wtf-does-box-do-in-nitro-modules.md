@@ -151,28 +151,27 @@ The `'worklet'` directive tells the worklet compiler to bundle this function int
 
 ## Is this still necessary?
 
-The short answer is: less and less.
+This is where it gets interesting, because nitro-fetch is not an old codebase. It's on nitro-modules `0.35.2` and worklets `0.8.1`, both from early 2026. At those versions, `installWorkletsSupport()` is called automatically when `react-native-nitro-modules` is imported, and worklets 0.8.x ships `registerCustomSerializable`. The automation infrastructure is fully in place.
 
-Software Mansion added `registerCustomSerializable` to `react-native-worklets` in early 2025. It lets any library register custom pack/unpack logic for objects that can't be trivially serialized. Nitro used it almost immediately. As of Nitro 0.33.2 (January 2026), importing `react-native-nitro-modules` automatically calls `installWorkletsSupport()`, which registers all `HybridObject`s as custom serializables:
+Yet the manual `box`/`unbox` is still there. The reason is subtle.
+
+`nitroFetchOnWorklet` doesn't run on the standard UI worklet context. It spins up its own named background runtime:
 
 ```ts
-registerCustomSerializable({
-  name: 'nitro.HybridObject',
-  determine(value) { 'worklet'; return nitroProxy.isHybridObject(value) },
-  pack(value)      { 'worklet'; return nitroProxy.box(value) },
-  unpack(value)    { 'worklet'; return value.unbox() },
-})
+nitroRuntime = createWorkletRuntime('nitro-fetch')
 ```
 
-That means if you're on current versions of both libraries, you can close over a `HybridObject` in a worklet closure and the serializer handles the boxing and unboxing for you. You don't write `box`/`unbox` by hand anymore.
+`installWorkletsSupport()` registers the custom serializable at import time, before this runtime is created. Whether that registration propagates to a runtime that didn't exist yet isn't guaranteed. Beyond that, `boxedNitroFetch` is a module-level constant accessed by name inside the worklet closure. Relying on the auto-serializer to correctly handle it in a dynamically-created named runtime is a bet the author chose not to make.
 
-The code in nitro-fetch is doing it manually because it was written before that automation existed, or because `react-native-worklets` (not `react-native-worklets-core`) doesn't have the hook wired up yet.
+Manual boxing is explicit and guaranteed to work regardless. The `shared_ptr` inside `BoxedHybridObject` is just C++ heap memory. It doesn't care about runtime registration, timing, or which runtime was created when.
 
-Nitro's own original docs for that September 2024 commit said it plainly:
+So the answer is: the automation exists, but this code has a good reason to stay explicit.
+
+For the standard case — closing over a `HybridObject` in a regular `runOnUI` worklet — you shouldn't need `box`/`unbox` by hand on current versions. Nitro's original docs for that September 2024 commit said:
 
 > "In future versions of react-native-worklets-core or react-native-reanimated we expect fully automatic jsi::NativeState support, which will make boxing obsolete."
 
-That future is arriving, one piece at a time. The mechanism is the same `HostObject` wrapper and `shared_ptr` trick either way. It's just getting automated.
+That future mostly arrived. The mechanism is the same `HostObject` wrapper and `shared_ptr` trick either way. It's just getting automated for the common path.
 
 ## The timeline
 
