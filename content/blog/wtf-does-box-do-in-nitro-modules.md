@@ -26,9 +26,19 @@ export const boxedNitroFetch = NitroModules.box(NitroFetch);
 
 I had no idea what `box` and `unbox` were. They sound like they should be obvious but nothing clicked. Here's what they actually are, from the source up.
 
+## Where setNativeState comes from
+
+Before getting into box and unbox, it helps to know where `setNativeState` actually comes from, because it's the root of the whole problem.
+
+It came from Hermes. The Facebook team designed it there first, then it got standardized into JSI, the engine-agnostic C++ interface that sits between React Native and any JS engine. JSI is what lets React Native swap between Hermes and JSC without rewriting every native module. So `setNativeState` lives in React Native core, but Hermes invented it.
+
+JSC didn't support it until late 2023. Before that, the JSC implementation literally threw `std::logic_error("Not implemented")` if you tried to call it. Third-party library authors were hitting 2-4x performance regressions because they had to fall back to the slower `HostObject` approach on JSC. React Native's own internals didn't roll it out internally until October 2023.
+
+Nitro uses `NativeState` as the foundation for `HybridObject`. It didn't create the API, it just went all-in on it early.
+
 ## What a HybridObject is made of
 
-A Nitro `HybridObject` is a C++ object exposed to JavaScript through JSI, React Native's C++ engine interface. In JSI, it's represented as two things glued together:
+A Nitro `HybridObject` is a C++ object exposed to JavaScript through JSI. In JSI, it's represented as two things glued together:
 
 1. A **prototype chain**: the JS methods like `createClient`, `requestSync`, etc.
 2. A **`jsi::NativeState`** pointer: the actual C++ instance, attached directly to the JS object
@@ -50,7 +60,7 @@ jsi::Value HybridObject::toObject(jsi::Runtime& runtime) {
 }
 ```
 
-`setNativeState` is the key line. It's a relatively newer JSI API that attaches an arbitrary C++ pointer to a JS object. When JS calls a method on that object, JSI looks up the `NativeState` pointer and dispatches the call to the right C++ method. It's clean, fast, and type-safe.
+`setNativeState` attaches a C++ pointer to a JS object. When JS calls a method on that object, JSI looks up the `NativeState` pointer and dispatches the call to the right C++ method. It's clean, fast, and type-safe.
 
 But it has one critical constraint: that `NativeState` is bound to the specific `jsi::Runtime` that created it. It is not portable.
 
@@ -114,6 +124,8 @@ jsi::Value BoxedHybridObject::get(jsi::Runtime& runtime, const jsi::PropNameID& 
 
 When `.unbox()` is called, it calls `hybridObject->toObject(runtime)`, passing in the new runtime. That's the same `toObject` from earlier, which calls `setNativeState` on the current runtime. The result is a fully wired `HybridObject` rooted in the worklet runtime, backed by the same C++ instance.
 
+`box` and `unbox` were added to Nitro in a single commit in September 2024, titled explicitly: "Add NitroModules.box(...) to support using Nitro Modules from any Runtime/Worklets context." Worklets were the entire reason it was built.
+
 ## The full flow
 
 ```
@@ -155,14 +167,39 @@ function buildNitroRequestPure(input, init) {
 
 The `'worklet'` directive tells the worklet compiler to bundle this function into the worklet runtime's code. Functions without it can't be called from a worklet closure.
 
-## Is this a common pattern?
+## Is this still necessary?
 
-Not by the name "box/unbox." But the concept has analogues:
+The short answer is: less and less.
 
-- **`Transferable` in Web Workers**: `ArrayBuffer` can't be shared between workers but can be transferred. Same idea. Use an explicit handoff mechanism instead of trying to copy the raw object.
-- **`Arc<Mutex<T>>` in Rust**: the wrapper is what gets moved across threads, not the inner value directly.
-- **Structured clone in workers**: browsers serialize objects to cross worker boundaries. Box/unbox is the same concept but for native C++ objects where serialization isn't possible, so you pass the pointer wrapper instead.
+Software Mansion added `registerCustomSerializable` to `react-native-worklets` in early 2025. It lets any library register custom pack/unpack logic for objects that can't be trivially serialized. Nitro used it almost immediately. As of Nitro 0.33.2 (January 2026), importing `react-native-nitro-modules` automatically calls `installWorkletsSupport()`, which registers all `HybridObject`s as custom serializables:
 
-The reason you haven't seen it elsewhere: it's a narrow problem that only exists at the intersection of JSI's `NativeState` API, multi-runtime worklets, and a library that uses the newer JSI APIs. Nitro predates worklet libraries having native support for `NativeState` objects, so `box`/`unbox` is the shim that bridges the gap.
+```ts
+registerCustomSerializable({
+  name: 'nitro.HybridObject',
+  determine(value) { 'worklet'; return nitroProxy.isHybridObject(value) },
+  pack(value)      { 'worklet'; return nitroProxy.box(value) },
+  unpack(value)    { 'worklet'; return value.unbox() },
+})
+```
+
+That means if you're on current versions of both libraries, you can close over a `HybridObject` in a worklet closure and the serializer handles the boxing and unboxing for you. You don't write `box`/`unbox` by hand anymore.
+
+The code in nitro-fetch is doing it manually because it was written before that automation existed, or because `react-native-worklets` (not `react-native-worklets-core`) doesn't have the hook wired up yet.
+
+Nitro's own original docs for that September 2024 commit said it plainly:
+
+> "In future versions of react-native-worklets-core or react-native-reanimated we expect fully automatic jsi::NativeState support, which will make boxing obsolete."
+
+That future is arriving, one piece at a time. The mechanism is the same `HostObject` wrapper and `shared_ptr` trick either way. It's just getting automated.
+
+## The timeline
+
+- **Hermes ~2021**: `NativeState` is invented in Hermes
+- **JSC late 2023**: JSC finally implements `setNativeState` (it was throwing "Not implemented" before this)
+- **October 2023**: React Native rolls out `NativeState` in its own internals
+- **September 2024**: Nitro adds `box`/`unbox` as a manual worklet workaround
+- **Worklets 0.7.1, early 2025**: `registerCustomSerializable` lands, worklets get a hook for custom types
+- **Nitro 0.33.2, January 2026**: Nitro uses that hook, `HybridObjects` now auto-serialize without manual boxing
+- **Future**: full native `NativeState` support in worklets makes the whole thing transparent
 
 The `HostObject` is the passport. The `shared_ptr` is the actual traveler.
