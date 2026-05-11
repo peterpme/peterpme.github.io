@@ -5,7 +5,7 @@ date: 2026-05-11T06:00:00.000Z
 categories: React Native
 ---
 
-I was reading through the source of [react-native-nitro-fetch](https://github.com/peterpme/react-native-nitro-fetch) and hit this inside `nitroFetchOnWorklet`:
+I was reading through the source of [react-native-nitro-fetch](https://github.com/margelo/react-native-nitro-fetch) and hit this inside `nitroFetchOnWorklet`:
 
 ```ts
 return await runOnRuntimeAsync(rt, () => {
