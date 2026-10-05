@@ -1,26 +1,16 @@
 ---
 title: "Agent Harnesses & Workflows"
-description: "What I've learned using both harnesses and workflows in production."
+description: "After building agent harnesses & workflows the last few months, I have thoughts."
 date: 2026-10-05T13:30:00.000Z
 ---
 
 Everyone's talking about how harness engineering & dynamic workflows are the future. Static workflows work well too. After building a whole bunch, I think you need both.
 
-You built the harness. It crushed the demo. Then it hit production, burned a billion tokens and left you with nothing but a bill.
-
-So you went the other way: a tight pipeline with hardcoded steps, retries and validation. It was cheap and predictable until it confidently returned perfectly valid JSON that was completely wrong.
-
-Nothing errored or retried and you had no idea.
+A harness will crush the demo, hit production and leave you with nothing but a bill. A workflow with a tight pipeline & hardcoded steps is cheap & predictable, until it's not.
 
 Most folks seem to be talking about this in absolutes: build a harness or build a workflow. After using both in production for the last few months, I have opinions.
 
 Each one is good at exactly what the other is bad at and the real leverage comes from using them together.
-
-## **Agent Workflows vs Agent Harnesses**
-
-Picture a model that nails the analysis of a trade call: the thesis and position are spot on. The only problem is that it's tied to the wrong security. The source was ambiguous and the model confidently filled in the gap based on the info it was given.
-
-That failure is an example of what I've learned about building AI products. I've found there are two ways to do it and the interesting part is how they work together.
 
 ## **Agent Workflows: systems design with LLM calls**
 
