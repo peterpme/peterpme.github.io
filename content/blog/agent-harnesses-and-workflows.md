@@ -1,6 +1,6 @@
 ---
 title: "Agent Harnesses & Workflows"
-description: "You built the harness. It crushed the demo, then burned a billion tokens in production. A tight workflow was cheaper until it returned valid JSON that was completely wrong."
+description: "What I've learned using both harnesses and workflows in production."
 date: 2026-10-05T13:30:00.000Z
 ---
 
