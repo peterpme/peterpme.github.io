@@ -56,7 +56,7 @@ export default function BlogPost({ data, pageContext }) {
 }
 
 export const Head = ({ location, data }) => {
-  const { title, description, isoDate } = data.markdownRemark.frontmatter
+  const { title, description, isoDate, keywords } = data.markdownRemark.frontmatter
   const slug = data.markdownRemark.fields.slug
 
   const jsonLd = {
@@ -70,10 +70,17 @@ export const Head = ({ location, data }) => {
       url: "https://peterp.me",
     },
     url: `https://peterp.me${slug}`,
+    ...(description ? { description } : {}),
+    ...(keywords && keywords.length ? { keywords: keywords.join(", ") } : {}),
   }
 
   return (
-    <Seo location={location} title={title} description={description}>
+    <Seo
+      location={location}
+      title={title}
+      description={description}
+      keywords={keywords}
+    >
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
     </Seo>
   )
@@ -89,6 +96,7 @@ export const query = graphql`
       frontmatter {
         title
         description
+        keywords
         date(formatString: "MMMM DD, YYYY")
         isoDate: date
       }
