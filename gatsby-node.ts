@@ -30,7 +30,18 @@ exports.createPages = async ({ graphql, actions }) => {
     throw result.errors
   }
 
-  const posts = result.data.allMarkdownRemark.edges
+  const allPosts = result.data.allMarkdownRemark.edges
+  const isTranscript = post =>
+    post.node.fileAbsolutePath.includes("/transcripts/")
+  const posts = allPosts.filter(post => !isTranscript(post))
+
+  allPosts.filter(isTranscript).forEach(post => {
+    createPage({
+      path: post.node.fields.slug,
+      component: blogPost,
+      context: { slug: post.node.fields.slug, previous: null, next: null },
+    })
+  })
 
   posts.forEach((post, index) => {
     const previous = index === posts.length - 1 ? null : posts[index + 1].node
@@ -63,6 +74,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
   if (node.internal.type === `MarkdownRemark`) {
     const isIdea = node.fileAbsolutePath.includes("ideas")
+    const isTranscript = node.fileAbsolutePath.includes("/transcripts/")
     const value = createFilePath({
       node,
       getNode,
@@ -71,7 +83,11 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       name: `slug`,
       node,
-      value: isIdea ? `/ideas${value}` : `/articles${value}`,
+      value: isTranscript
+        ? `/transcripts${value}`
+        : isIdea
+        ? `/ideas${value}`
+        : `/articles${value}`,
     })
   }
 }

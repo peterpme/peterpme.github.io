@@ -27,6 +27,10 @@ const LINKS = [
     label: "Ideas",
     path: "/ideas",
   },
+  {
+    label: "Transcripts",
+    path: "/transcripts",
+  },
 ]
 
 function NavHeader({ title }: { title: string }) {
