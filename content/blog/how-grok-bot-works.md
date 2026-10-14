@@ -5,10 +5,6 @@ date: 2026-10-14T06:00:00.000Z
 categories: AI
 ---
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/L1OBRtfPS34" title="How always-on agents work, Lee Robinson" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-[Read the full transcript with slides](/transcripts/how-grok-bot-works/)
-
 For a while now, token maxis at frontier labs have been saying that systems and distributed engineering matter more than ever in the age of AI. I never really understood why until I watched Lee Robinson's talk on how Grok Bot works.
 
 It turns out a modern chat agent isn't some new kind of software paradigm. It's built from the same pieces we've always used to build scalable systems: queues, background workers, durable workflows, idempotency, caching, and eventual consistency. The model is the new part.
@@ -16,6 +12,8 @@ It turns out a modern chat agent isn't some new kind of software paradigm. It's 
 Everything that makes the agent useful to a real person is distributed systems work. That includes staying responsive while it works, surviving crashes, and running for hours without burning money.
 
 This post outlines what happens from the moment you press send until the agent goes back to sleep (and tries to point out the familiar patterns along the way). Most of it comes straight from Lee's talk, and I'd strongly recommend watching it. In the places the talk doesn't go into detail, I've filled in the gaps from my own experience with distributed systems.
+
+<p style="text-align: center; padding-top: 2pt;">Watch <a href="https://www.youtube.com/watch?v=L1OBRtfPS34">Lee's talk</a>. I created a tool that parsed the entire video, including screenshots, and laid it out in text form: <a href="/transcripts/how-grok-bot-works/">read the full transcript with slides</a>.</p>
 
 ## Hitting send
 
