@@ -4,6 +4,14 @@ const { createFilePath } = require(`gatsby-source-filesystem`)
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions
 
+  for (const fromPath of ["/articles/how-grok-bot-works/", "/articles/how-grok-bot-works", "/how-grok-bot-works/"]) {
+    createRedirect({
+      fromPath,
+      toPath: "/articles/always-on-ai-agents-are-distributed-systems/",
+      isPermanent: true,
+    })
+  }
+
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const result = await graphql(
     `
