@@ -1,8 +1,23 @@
 ---
-title: "How Grok Bot works: what happens when you hit send"
-description: "What happens inside Grok Bot from the moment you press send until the agent goes back to sleep, and the distributed systems patterns behind it."
+title: "The distributed system behind an always-on AI agent"
+description: "How Grok Bot works, from the moment you hit send until the agent goes back to sleep: queues, background workers, durable workflows with Temporal, idempotency, Firecracker VMs, prompt caching, and context compaction."
 date: 2026-10-14T06:00:00.000Z
 categories: AI
+keywords:
+  - Grok Bot
+  - AI agents
+  - always-on agents
+  - distributed systems
+  - queues
+  - background workers
+  - durable workflows
+  - Temporal
+  - idempotency
+  - eventual consistency
+  - Firecracker
+  - prompt caching
+  - context compaction
+  - Lee Robinson
 ---
 
 For a while now, token maxis at frontier labs have been saying that systems and distributed engineering matter more than ever in the age of AI. I never really understood why until I watched Lee Robinson's talk on how Grok Bot works.

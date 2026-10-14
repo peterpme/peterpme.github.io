@@ -7,6 +7,7 @@ type Props = {
   pathname?: string
   children?: React.ReactNode
   location?: any
+  keywords?: string[] | null
 }
 
 export function Seo({
@@ -15,6 +16,7 @@ export function Seo({
   pathname,
   children,
   location,
+  keywords: pageKeywords,
 }: Props): JSX.Element {
   const {
     title: defaultTitle,
@@ -30,7 +32,10 @@ export function Seo({
     description: description || defaultDescription,
     image: og.image.url,
     url: `${siteUrl}${pathname || ``}`,
-    keywords,
+    keywords:
+      pageKeywords && pageKeywords.length > 0
+        ? pageKeywords.join(", ")
+        : keywords,
   }
 
   const canonicalUrl = siteUrl + (location?.pathname ?? "")
