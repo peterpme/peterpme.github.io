@@ -35,12 +35,12 @@ export default function BlogPost({ data, pageContext }) {
   return (
     <Layout>
       <article className="mb-12">
-        <header>
-          <h1 className="subpixel-antialiased mb-4 text-xl font-sans font-bold">
+        <header className="mb-4">
+          <h1 className="subpixel-antialiased mb-1 text-xl font-sans font-bold">
             {post.frontmatter.title}
           </h1>
           {post.frontmatter.date && (
-            <time dateTime={post.frontmatter.isoDate} className="text-sm text-gray-500">
+            <time dateTime={post.frontmatter.isoDate} className="block text-sm text-gray-500">
               {post.frontmatter.date}
             </time>
           )}
