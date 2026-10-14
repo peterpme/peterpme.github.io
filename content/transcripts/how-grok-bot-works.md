@@ -6,7 +6,7 @@ date: 2026-10-14T06:00:00.000Z
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/L1OBRtfPS34" title="How always-on agents work, Lee Robinson" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-[Watch the talk on YouTube](https://www.youtube.com/watch?v=L1OBRtfPS34) · [Read my article on it](/articles/how-grok-bot-works/)
+[Watch the talk on YouTube](https://www.youtube.com/watch?v=L1OBRtfPS34) · [Read my article on it](/articles/always-on-ai-agents-are-distributed-systems/)
 
 **Video:** Stanford CS146S: How always-on agents work
 
