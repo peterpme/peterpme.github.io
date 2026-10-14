@@ -187,6 +187,14 @@ const config: GatsbyConfig = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
+        name: "transcripts",
+        path: "./content/transcripts",
+      },
+      __key: "transcripts",
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
         name: "assets",
         path: "./content/assets",
       },
