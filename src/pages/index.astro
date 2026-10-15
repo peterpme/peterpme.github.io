@@ -11,7 +11,7 @@ import {
   groupByYear,
   isoDate,
 } from "../lib/content";
-import { AUTHOR, DESCRIPTION, SITE_URL, TAGLINE, X_URL } from "../lib/site";
+import { AUTHOR, DESCRIPTION, SITE_URL, TAGLINE } from "../lib/site";
 
 const featured = getFeatured();
 const recent = groupByYear(getRecent());
@@ -30,23 +30,11 @@ const jsonLd = {
 ---
 
 <Base title={AUTHOR} description={TAGLINE} current="writing" jsonLd={jsonLd}>
-  <section class="intro" aria-label="About Peter">
-    <div class="wrap">
-      <a class="handle" href={X_URL} target="_blank" rel="noopener noreferrer"><span>@</span>peterpme</a>
-      <h1>{AUTHOR}</h1>
-      <div class="rule" aria-hidden="true"></div>
-      <div class="intro-copy">
-        <p>I'm building Backpack and products AI made possible.</p>
-        <p>I explain how AI agents actually work. I build them with TypeScript, Effect, and React Native.</p>
-      </div>
-    </div>
-  </section>
-
   <section class="hero">
     <div class="wrap">
       <p class="kicker">Deep dive{featured.categories[0] ? ` · ${featured.categories[0]}` : ""}</p>
       <div class="rule" aria-hidden="true"></div>
-      <h2><a href={featured.href}>{featured.title}</a></h2>
+      <h1><a href={featured.href}>{featured.title}</a></h1>
       <p class="dek">{featured.description}</p>
       <a class="read" href={featured.href}>Read the essay</a>
       <Byline eager>

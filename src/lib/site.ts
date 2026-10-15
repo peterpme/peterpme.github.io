@@ -21,5 +21,3 @@ export const NOW = [
   { label: "Effect", href: "https://effect.website/" },
   { label: "React Native", href: "https://reactnative.dev/" },
 ] as const;
-
-export const X_URL = "https://x.com/peterpme";
