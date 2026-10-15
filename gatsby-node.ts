@@ -4,13 +4,6 @@ const { createFilePath } = require(`gatsby-source-filesystem`)
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions
 
-  for (const fromPath of ["/articles/how-grok-bot-works/", "/articles/how-grok-bot-works", "/how-grok-bot-works/", "/articles/always-on-ai-agents-are-distributed-systems/", "/articles/always-on-ai-agents-are-distributed-systems", "/always-on-ai-agents-are-distributed-systems/"]) {
-    createRedirect({
-      fromPath,
-      toPath: "/articles/what-actually-happens-when-you-message-grok-bot/",
-      isPermanent: true,
-    })
-  }
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const result = await graphql(
