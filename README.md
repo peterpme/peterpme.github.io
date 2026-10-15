@@ -10,7 +10,7 @@ pnpm dev
 pnpm build
 ```
 
-`pnpm dev` prepares images, OG cards, and `public/_redirects`, then starts Astro. `pnpm build` does the same, builds the static site, and checks the live sitemap, internal links, and redirects.
+`pnpm dev` prepares images, OG cards, and `public/_redirects`, then starts Astro. `pnpm build` does the same, then builds the static site.
 
 | Setting | Value |
 | --- | --- |
@@ -29,4 +29,4 @@ The Workers Builds image preinstalls Node.js 22.23.2 and 24.18.0. `.nvmrc` selec
 
 ## URLs
 
-Pages use trailing slashes (`trailingSlash: "always"`, directory format). Path redirects in `dist/_redirects` send old `/<slug>` URLs to `/articles/<slug>/`. Workers static assets apply that `_redirects` file. Domain-level lines such as `https://peterp.me/*` are not applied by Workers; the apex host redirect belongs in a Cloudflare redirect rule.
+Pages use trailing slashes (`trailingSlash: "always"`, directory format). Path redirects in `dist/_redirects` send old `/<slug>` URLs to `/articles/<slug>/`. Workers static assets apply that `_redirects` file. The apex host redirect belongs in a Cloudflare redirect rule, because Workers does not apply domain-level redirects.
