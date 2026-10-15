@@ -14,9 +14,11 @@ npm run build
 | Root directory | `/` |
 | Build command | `npm run build` |
 | Output directory | `dist` |
-| Node | 22 |
+| Node | 22 (`.nvmrc`) |
 
 `npm run build` prepares images, OG cards, and `public/_redirects`, then runs `astro build`. The output is a directory of HTML and assets. `output` is `static`. There is no Cloudflare adapter and no SSR.
+
+`npm install` uses sharp's prebuilt `@img/sharp-*` binary when that package is present (on a Mac, `@img/sharp-darwin-arm64`). sharp's own install script otherwise compiles from source when it finds a Homebrew libvips, or when `build-from-source` is set, and that compile fails the install. `.npmrc` loads `peterpme-sharp-prebuild` so the compile is skipped.
 
 ## Cloudflare Pages
 
