@@ -1,6 +1,5 @@
 ---
 import Base from "../layouts/Base.astro";
-import Byline from "../components/Byline.astro";
 import {
   formatArchive,
   formatFull,
@@ -32,17 +31,16 @@ const jsonLd = {
 <Base title={AUTHOR} description={TAGLINE} current="writing" jsonLd={jsonLd}>
   <section class="hero">
     <div class="wrap">
-      <p class="kicker">Deep dive{featured.categories[0] ? ` · ${featured.categories[0]}` : ""}</p>
+      <p class="kicker">Deep Dive AI</p>
       <div class="rule" aria-hidden="true"></div>
       <h1><a href={featured.href}>{featured.title}</a></h1>
       <p class="dek">{featured.description}</p>
+      <p class="meta-line">
+        <time datetime={isoDate(featured.date)}>{formatFull(featured.date)}</time>
+        <span aria-hidden="true"> · </span>
+        <span>{featured.minutes} min read</span>
+      </p>
       <a class="read" href={featured.href}>Read the essay</a>
-      <Byline eager>
-        <p class="byline-meta">
-          <time datetime={isoDate(featured.date)}>{formatFull(featured.date)}</time>
-          <span>{featured.minutes} min read</span>
-        </p>
-      </Byline>
     </div>
   </section>
 

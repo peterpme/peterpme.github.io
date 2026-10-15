@@ -1,12 +1,16 @@
 ---
+import Avatar from "./Avatar.astro";
 import { AUTHOR, SOCIAL, TAGLINE } from "../lib/site";
 ---
 
 <footer class="site-footer">
   <div class="wrap footer-row">
-    <div>
-      <p class="footer-name">{AUTHOR}</p>
-      <p class="footer-role">{TAGLINE}</p>
+    <div class="footer-id">
+      <Avatar size={44} />
+      <div>
+        <p class="footer-name">{AUTHOR}</p>
+        <p class="footer-role">{TAGLINE}</p>
+      </div>
     </div>
     <ul class="footer-links">
       {

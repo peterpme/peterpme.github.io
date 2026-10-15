@@ -11,7 +11,7 @@ const INNER_H = HEIGHT - PADDING * 2
 const AVATAR = 88
 const AUTHOR = "Peter Piekarczyk"
 const SITE = "peterp.me"
-const TAGLINE = "Building Backpack and products AI made possible"
+const TAGLINE = "Building Backpack & products only possible with AI"
 
 // Advance widths for Inter Bold, in ems. Unknown glyphs fall back to the average.
 const BOLD_WIDTHS = {

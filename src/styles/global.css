@@ -264,14 +264,13 @@ html[data-theme="dark"] ::selection {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  padding: 0;
-  border: 1px solid var(--line);
+  padding: 0.15rem;
+  border: 0;
   background: transparent;
   color: var(--ink);
   cursor: pointer;
   flex: none;
+  line-height: 0;
 }
 
 .theme-toggle .icon-sun,
@@ -310,7 +309,6 @@ html[data-theme="light"] .theme-toggle .icon-moon {
 }
 
 .theme-toggle:hover {
-  border-color: var(--accent);
   color: var(--accent-ink);
 }
 
@@ -1072,10 +1070,18 @@ a.entry-title:hover {
   align-items: end;
 }
 
+.footer-id {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
 .footer-name {
   color: var(--ink);
   font-weight: 700;
   letter-spacing: -0.03em;
+  line-height: 1.2;
 }
 
 .footer-role {
@@ -1106,12 +1112,6 @@ a.entry-title:hover {
     grid-template-columns: 8.75rem minmax(0, 1fr);
     gap: 1.75rem;
     padding-top: 3.25rem;
-  }
-
-  .about-layout {
-    grid-template-columns: minmax(0, 68ch) minmax(13rem, 16rem);
-    gap: 4.5rem;
-    align-items: start;
   }
 }
 

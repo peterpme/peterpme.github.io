@@ -1,6 +1,5 @@
 ---
 import Base from "../layouts/Base.astro";
-import Byline from "./Byline.astro";
 import Comments from "./Comments.astro";
 import { neighbors, formatFull, isoDate, ogLeaf, type Doc } from "../lib/content";
 import { renderMarkdown } from "../lib/markdown";
@@ -55,7 +54,6 @@ const jsonLd = {
         <span aria-hidden="true"> · </span>
         <span>{doc.minutes} min read</span>
       </p>
-      <Byline eager />
       <div class="prose" set:html={html} />
       {
         previous || next ? (

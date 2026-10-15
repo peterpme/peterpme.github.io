@@ -1,5 +1,5 @@
 export const AUTHOR = "Peter Piekarczyk";
-export const TAGLINE = "Building Backpack and products AI made possible";
+export const TAGLINE = "Building Backpack & products only possible with AI";
 export const SITE_HOST = "www.peterp.me";
 export const SITE_URL = `https://${SITE_HOST}`;
 export const DESCRIPTION = `${AUTHOR}. ${TAGLINE}.`;
@@ -14,10 +14,4 @@ export const SOCIAL = [
   { label: "GitHub", href: "https://www.github.com/peterpme" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/peterpme" },
   { label: "Instagram", href: "https://www.instagram.com/peterpme" },
-] as const;
-
-export const NOW = [
-  { label: "TypeScript", href: "https://www.typescriptlang.org/" },
-  { label: "Effect", href: "https://effect.website/" },
-  { label: "React Native", href: "https://reactnative.dev/" },
 ] as const;

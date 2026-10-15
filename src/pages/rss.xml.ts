@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { getByKind } from "../lib/content";
 import { renderMarkdown } from "../lib/markdown";
-import { AUTHOR, DESCRIPTION, SITE_URL, TAGLINE } from "../lib/site";
+import { AUTHOR, DESCRIPTION, SITE_URL } from "../lib/site";
 
 function escapeXml(value: string): string {
   return value
@@ -49,7 +49,7 @@ export const GET: APIRoute = () => {
     <title>${escapeXml(AUTHOR)}</title>
     <link>${SITE_URL}/</link>
     <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml"/>
-    <description>${escapeXml(`${DESCRIPTION} ${TAGLINE}`)}</description>
+    <description>${escapeXml(DESCRIPTION)}</description>
     <language>en-us</language>
     ${items}
   </channel>
