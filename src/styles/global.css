@@ -369,10 +369,6 @@ html[data-theme="dark"] .theme-icon .theme-rays { opacity: 1; transform: none; }
   padding: 2.6rem 0 3.25rem;
 }
 
-.hero .kicker {
-  margin-bottom: 0.95rem;
-}
-
 .hero .rule {
   margin-bottom: 1.35rem;
 }
@@ -626,6 +622,12 @@ a.entry-title:hover {
 
 .article {
   padding: 2.4rem 0 4.5rem;
+}
+
+@media (max-width: 720px) {
+  .article {
+    padding-top: 1.25rem;
+  }
 }
 
 .article h1 {
@@ -1040,6 +1042,7 @@ a.entry-title:hover {
 .footer-role {
   color: var(--muted);
   font-size: 0.95rem;
+  line-height: 1.25;
   max-width: 28rem;
 }
 

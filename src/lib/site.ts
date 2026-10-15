@@ -4,7 +4,6 @@ export const SITE_HOST = "www.peterp.me";
 export const SITE_URL = `https://${SITE_HOST}`;
 export const DESCRIPTION = `${AUTHOR}. ${TAGLINE}.`;
 export const TWITTER = "@peterpme";
-export const FEATURED_SLUG = "what-actually-happens-when-you-message-grok-bot";
 export const ARCHIVE_BEFORE_YEAR = 2019;
 
 export type NavId = "writing" | "ideas" | "talks" | "about";
