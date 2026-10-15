@@ -69,7 +69,7 @@ function writeRedirects(): void {
     lines.push(`/${doc.slug}/ ${doc.href} 301`);
   }
   if (lines.length > REDIRECT_LIMIT) {
-    throw new Error(`${lines.length} redirect rules exceeds the ${REDIRECT_LIMIT} Cloudflare Pages limit`);
+    throw new Error(`${lines.length} redirect rules exceeds the ${REDIRECT_LIMIT} redirect limit`);
   }
   const file = path.join(PUBLIC, "_redirects");
   fs.writeFileSync(file, `${lines.join("\n")}\n`);

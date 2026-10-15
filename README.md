@@ -1,6 +1,6 @@
 # peterp.me
 
-Static Astro site. Cloudflare Workers Builds deploys `dist` on every push to `master`. There is no adapter and no server.
+Static Astro site. GitHub Actions deploys `dist` to the Cloudflare Worker `peterpme` on every push to `master`. There is no adapter and no server.
 
 ## Commands
 
@@ -14,17 +14,25 @@ pnpm build
 
 | Setting | Value |
 | --- | --- |
-| Root directory | `/` |
-| Build command | `pnpm run build` |
-| Deploy command | `npx wrangler deploy` |
-| Non-production command | `npx wrangler versions upload` |
+| Workflow | `.github/workflows/deploy.yml` |
+| Push to `master` | `wrangler deploy` |
+| Pull requests | `wrangler versions upload` |
 | Output | `dist` |
-| Node | 24.18.0 (`.nvmrc`) |
+| Node | 26 (`.nvmrc`), `engines.node` is `>=24` |
 | Package manager | pnpm 11.25.0 (`packageManager`) |
 
 The Worker is `peterpme`. `wrangler.jsonc` serves `./dist` as static assets with the custom 404 page. There is no Worker script.
 
 `pnpm install` skips sharp's install script (`allowBuilds.sharp: false`) and uses the prebuilt `@img/sharp-*` binary.
+
+## Deploy
+
+The workflow needs two repository secrets:
+
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
+Disconnect Cloudflare dashboard Git builds (Workers Builds) for this Worker. Leaving them connected deploys the same push twice.
 
 ## URLs
 
