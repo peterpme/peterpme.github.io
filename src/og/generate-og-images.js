@@ -8,7 +8,7 @@ const HEIGHT = 630
 const PADDING = 72
 const INNER_W = WIDTH - PADDING * 2
 const INNER_H = HEIGHT - PADDING * 2
-const AVATAR = 72
+const AVATAR = 88
 const AUTHOR = "Peter Piekarczyk"
 const SITE = "peterp.me"
 const TAGLINE = "Building Backpack and products AI made possible"
@@ -278,8 +278,10 @@ function OgCard({ title, date, avatar }) {
           {
             style: {
               display: "flex",
-              alignItems: "baseline",
+              flexDirection: "column",
+              justifyContent: "center",
               marginLeft: 18,
+              height: AVATAR,
             },
           },
           element(
@@ -290,6 +292,7 @@ function OgCard({ title, date, avatar }) {
                 fontWeight: 700,
                 color: "#fafafa",
                 letterSpacing: -0.4,
+                lineHeight: 1.1,
               },
             },
             AUTHOR
@@ -298,10 +301,11 @@ function OgCard({ title, date, avatar }) {
             "div",
             {
               style: {
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: 400,
                 color: "#a1a1aa",
-                marginLeft: 16,
+                marginTop: 4,
+                lineHeight: 1.1,
               },
             },
             SITE
