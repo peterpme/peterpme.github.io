@@ -1,8 +1,9 @@
 packages:
   - "."
 
-# One day, in minutes. pnpm 11 will not install a package published sooner.
-minimumReleaseAge: 1440
+# Astro 7.4.0 and other lockfile entries were published the same day.
+# pnpm 11's default one-day release delay rejects that install.
+minimumReleaseAge: 0
 
 # pnpm 11 does not run dependency build scripts unless they are listed here.
 # sharp stays off so install uses the prebuilt @img binary instead of compiling
