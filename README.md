@@ -1,37 +1,32 @@
 # peterp.me
 
-Static Astro site. Cloudflare Pages publishes `dist` with no adapter and no server.
+Static Astro site. Cloudflare Workers Builds deploys `dist` to the Worker `peterpme` on every push to `master`. There is no adapter and no server.
 
-## Build
+## Commands
 
 ```bash
 pnpm install
-pnpm run build
+pnpm dev
+pnpm build
 ```
+
+`pnpm dev` prepares images, OG cards, and `public/_redirects`, then starts Astro. `pnpm build` does the same, builds the static site, and checks the live sitemap, internal links, and redirects.
 
 | Setting | Value |
 | --- | --- |
-| Root directory | `/` |
 | Build command | `pnpm run build` |
-| Output directory | `dist` |
-| Node | 26 (`.nvmrc`) |
-| Package manager | pnpm 11.25.0 |
+| Deploy command | `npx wrangler deploy` |
+| Non-production command | `npx wrangler versions upload` |
+| Output | `dist` |
+| Node | `24.18.0` (`.nvmrc`). `engines.node` is `>=24`, so Node 26 locally does not warn. |
+| Package manager | pnpm 11.25.0 (`packageManager`) |
 
-`pnpm run build` prepares images, OG cards, and `public/_redirects`, then runs `astro build`. The output is a directory of HTML and assets. `output` is `static`. There is no Cloudflare adapter and no SSR.
+The Worker is `peterpme`. `wrangler.jsonc` serves `./dist` as static assets with the custom 404 page. There is no Worker script.
 
-`pnpm install` uses sharp's prebuilt `@img/sharp-*` binary when that package is present (on a Mac, `@img/sharp-darwin-arm64`). sharp's own install script otherwise compiles from source when it finds a Homebrew libvips, or when `build-from-source` is set, and that compile fails the install. `pnpm-workspace.yaml` sets `nodeOptions` so Node loads `peterpme-sharp-prebuild`, which sets `SHARP_IGNORE_GLOBAL_LIBVIPS=1` and skips that compile.
+`pnpm install` skips sharp's install script (`allowBuilds.sharp: false`) and uses the prebuilt `@img/sharp-*` binary.
 
-## Cloudflare Pages
-
-1. Create a Pages project from this GitHub repo.
-2. Set the production branch after this draft merges. Root directory `/`.
-3. Build command: `pnpm run build`. Node 26. Enable pnpm (the repo pins `packageManager` to pnpm 11.25.0).
-4. Build output directory: `dist`.
-5. Add custom domains `www.peterp.me` and `peterp.me`.
-6. The generated `dist/_redirects` sends `https://peterp.me/*` to `https://www.peterp.me/:splat` and old `/<slug>` URLs to `/articles/<slug>/`.
-
-Pages free plan is enough. The site does not use Workers, KV, or a server runtime.
+The Workers Builds image preinstalls Node.js 22.23.2 and 24.18.0. `.nvmrc` selects 24.18.0. If a build log still shows pnpm 10, set the build variable `PNPM_VERSION=11.25.0`.
 
 ## URLs
 
-Pages use trailing slashes (`trailingSlash: "always"`, directory format). Every path in the live `https://www.peterp.me/sitemap-index.xml` is checked against `dist` at the end of the build. Internal links are checked the same way.
+Pages use trailing slashes (`trailingSlash: "always"`, directory format). Path redirects in `dist/_redirects` send old `/<slug>` URLs to `/articles/<slug>/`. Workers static assets apply that `_redirects` file. Domain-level lines such as `https://peterp.me/*` are not applied by Workers; the apex host redirect belongs in a Cloudflare redirect rule.

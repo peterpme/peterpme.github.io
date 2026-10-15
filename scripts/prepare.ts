@@ -2,8 +2,7 @@ import { spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import postcss from "postcss";
-import tailwindcss from "tailwindcss";
-import autoprefixer from "autoprefixer";
+import tailwindcss from "@tailwindcss/postcss";
 import { getDocs, formatFull, ogLeaf } from "../src/lib/content.ts";
 import { collectImageSrcs } from "../src/lib/markdown.ts";
 import { resolveImage, imageMapPath, type ImageMap } from "../src/lib/images.ts";
@@ -57,7 +56,8 @@ function writeRedirects(): void {
     "site.webmanifest",
   ]);
   const lines = [
-    "# Cloudflare Pages redirects. Apex host goes to www. Old post URLs go to /articles/.",
+    "# Workers static asset redirects. Old post URLs go to /articles/.",
+    "# Apex host rules are included for the existing check. Workers does not apply domain-level _redirects.",
     "https://peterp.me/* https://www.peterp.me/:splat 301",
     "https://peterp.me/ https://www.peterp.me/ 301",
   ];
@@ -69,7 +69,7 @@ function writeRedirects(): void {
     lines.push(`/${doc.slug}/ ${doc.href} 301`);
   }
   if (lines.length > REDIRECT_LIMIT) {
-    throw new Error(`${lines.length} redirect rules exceeds the ${REDIRECT_LIMIT} Cloudflare Pages limit`);
+    throw new Error(`${lines.length} redirect rules exceeds the ${REDIRECT_LIMIT} redirect limit`);
   }
   const file = path.join(PUBLIC, "_redirects");
   fs.writeFileSync(file, `${lines.join("\n")}\n`);
@@ -118,14 +118,15 @@ function generateOg(): void {
 }
 
 async function writeChristmasCss(): Promise<void> {
-  const result = await postcss([
-    tailwindcss({
-      content: ["./src/components/ChristmasLights.tsx"],
-      corePlugins: { preflight: false },
-    }),
-    autoprefixer(),
-  ]).process("@tailwind utilities;\n", { from: undefined });
-  fs.writeFileSync(path.join(ROOT, "src/styles/christmas.generated.css"), result.css);
+  const from = path.join(ROOT, "src/styles/christmas.source.css");
+  const input = `@import "tailwindcss/utilities";\n@source "../components/ChristmasLights.tsx";\n`;
+  fs.writeFileSync(from, input);
+  try {
+    const result = await postcss([tailwindcss()]).process(input, { from });
+    fs.writeFileSync(path.join(ROOT, "src/styles/christmas.generated.css"), result.css);
+  } finally {
+    fs.rmSync(from, { force: true });
+  }
   console.log("Wrote Christmas lights utilities");
 }
 
