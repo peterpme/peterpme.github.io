@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import { ARCHIVE_BEFORE_YEAR, FEATURED_SLUG, SITE_URL } from "./site.ts";
+import { ARCHIVE_BEFORE_YEAR, SITE_URL } from "./site.ts";
 
 export type ContentKind = "article" | "idea" | "transcript";
 
@@ -95,11 +95,13 @@ function loadKind(kind: ContentKind): Doc[] {
   for (const file of files) {
     const raw = fs.readFileSync(file, "utf8");
     const parsed = matter(raw);
+    if (parsed.data.draft === true) continue;
     const title = parsed.data.title;
     const date = asDate(parsed.data.date);
     if (typeof title !== "string" || !title.trim() || !date) {
       throw new Error(`Missing title or date in ${file}`);
     }
+    if (date.getTime() > Date.now()) continue;
     const slug = slugFor(file, root);
     if (!slug) throw new Error(`Empty slug for ${file}`);
     const previous = seen.get(slug);
@@ -150,19 +152,23 @@ export function getDoc(kind: ContentKind, slug: string): Doc {
 }
 
 export function getFeatured(): Doc {
-  const doc = getByKind("article").find((item) => item.slug === FEATURED_SLUG);
-  if (!doc) throw new Error(`Missing featured article ${FEATURED_SLUG}`);
+  const doc = getByKind("article")[0];
+  if (!doc) throw new Error("No published article");
   return doc;
 }
 
 export function getRecent(): Doc[] {
+  const featured = getFeatured();
   return getByKind("article").filter(
-    (doc) => doc.slug !== FEATURED_SLUG && doc.year >= ARCHIVE_BEFORE_YEAR,
+    (doc) => doc.slug !== featured.slug && doc.year >= ARCHIVE_BEFORE_YEAR,
   );
 }
 
 export function getArchive(): Doc[] {
-  return getByKind("article").filter((doc) => doc.year < ARCHIVE_BEFORE_YEAR);
+  const featured = getFeatured();
+  return getByKind("article").filter(
+    (doc) => doc.slug !== featured.slug && doc.year < ARCHIVE_BEFORE_YEAR,
+  );
 }
 
 export function groupByYear(docs: Doc[]): { year: number; posts: Doc[] }[] {
