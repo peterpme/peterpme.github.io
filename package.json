@@ -4,12 +4,13 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": "22"
+    "node": ">=26"
   },
+  "packageManager": "pnpm@11.25.0",
   "scripts": {
     "prepare:site": "node --experimental-strip-types scripts/prepare.ts",
-    "dev": "npm run prepare:site && astro dev",
-    "build": "npm run prepare:site && astro build && node --experimental-strip-types scripts/check.ts",
+    "dev": "pnpm run prepare:site && astro dev",
+    "build": "pnpm run prepare:site && astro build && node --experimental-strip-types scripts/check.ts",
     "preview": "astro preview",
     "typecheck": "tsc --noEmit"
   },

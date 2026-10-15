@@ -2,6 +2,6 @@
   "name": "peterpme-sharp-prebuild",
   "version": "1.0.0",
   "private": true,
-  "description": "Keep sharp on its prebuilt binary during npm install.",
+  "description": "Keep sharp on its prebuilt binary during install.",
   "main": "index.js"
 }

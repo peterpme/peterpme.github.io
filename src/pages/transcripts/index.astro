@@ -7,12 +7,12 @@ const description = "Full transcripts of talks, with slides and timestamp links 
 ---
 
 <Base title="Transcripts" description={description}>
-  <section class="band">
+  <section class="band page-index">
     <div class="wrap">
-      <p class="kicker">Reference</p>
-      <div class="rule" aria-hidden="true"></div>
-      <h1>Transcripts</h1>
-      <p class="dek">{description}</p>
+      <header class="page-head">
+        <h1>Transcripts</h1>
+        <p class="dek">{description}</p>
+      </header>
       <ol>
         {
           transcripts.map((doc) => (

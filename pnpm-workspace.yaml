@@ -1,0 +1,15 @@
+packages:
+  - "."
+
+# pnpm 11 reads install settings here. onlyBuiltDependencies was removed;
+# allowBuilds is the switch that runs dependency lifecycle scripts.
+allowBuilds:
+  esbuild: true
+  sharp: true
+
+nodeOptions: "--require=peterpme-sharp-prebuild"
+
+publicHoistPattern:
+  - sharp
+  - "@img/*"
+  - peterpme-sharp-prebuild

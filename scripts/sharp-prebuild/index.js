@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-// Loaded for every Node process npm starts. sharp's install script exits 1
+// Loaded via NODE_OPTIONS during install. sharp's install script exits 1
 // and compiles from source when pkg-config finds a global libvips, or when
 // build-from-source is set. The matching @img/sharp-* package is enough.
 const names = [`sharp-${process.platform}-${process.arch}`];

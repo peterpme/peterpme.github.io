@@ -54,7 +54,7 @@ typings/
 # dotenv environment variable files
 .env*
 
-# Generated output. `public/` is copied from `static/` during `npm run build`.
+# Generated output. `public/` is copied from `static/` during `pnpm run build`.
 .cache/
 public
 dist/

@@ -34,7 +34,7 @@ export function loadImageMap(): ImageMap {
   if (mapCache) return mapCache;
   const file = imageMapPath();
   if (!fs.existsSync(file)) {
-    throw new Error(`Missing ${file}. Run npm run prepare:site first.`);
+    throw new Error(`Missing ${file}. Run pnpm run prepare:site first.`);
   }
   mapCache = JSON.parse(fs.readFileSync(file, "utf8")) as ImageMap;
   return mapCache;
@@ -82,7 +82,7 @@ export function renderLocalImage(src: string, alt: string, dir: string): string 
   if (!resolved) return null;
   const asset = loadImageMap()[resolved];
   if (!asset) {
-    throw new Error(`No optimized image for ${resolved}. Re-run npm run prepare:site.`);
+    throw new Error(`No optimized image for ${resolved}. Re-run pnpm run prepare:site.`);
   }
   return renderAsset(asset, alt);
 }
