@@ -37,22 +37,15 @@ const links = [
         </ul>
       </nav>
       <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch color theme">
-        <svg class="icon-sun" viewBox="0 0 16 16" width="18" height="18" aria-hidden="true">
-          <circle cx="8" cy="8" r="2.6" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
-          <path
-            d="M8 1.4v1.7M8 12.9v1.7M1.4 8h1.7M12.9 8h1.7M3.3 3.3l1.2 1.2M11.5 11.5l1.2 1.2M3.3 12.7l1.2-1.2M11.5 4.5l1.2-1.2"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linecap="round"></path>
-        </svg>
-        <svg class="icon-moon" viewBox="0 0 16 16" width="18" height="18" aria-hidden="true">
-          <path
-            d="M9.1 1.7a5.6 5.6 0 1 0 5.1 8.4A4.5 4.5 0 0 1 9.1 1.7z"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-            stroke-linejoin="round"></path>
+        <svg class="theme-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <mask id="theme-moon-mask">
+            <rect width="24" height="24" fill="#fff"></rect>
+            <circle class="moon-cut" cx="24" cy="4" r="7" fill="#000"></circle>
+          </mask>
+          <circle class="theme-core" cx="12" cy="12" r="5" fill="currentColor" mask="url(#theme-moon-mask)"></circle>
+          <g class="theme-rays" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M12 1.5v2M12 20.5v2M1.5 12h2M20.5 12h2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M4.6 19.4 6 18M18 6l1.4-1.4"></path>
+          </g>
         </svg>
       </button>
     </div>

@@ -5,7 +5,7 @@ packages:
 # allowBuilds is the switch that runs dependency lifecycle scripts.
 allowBuilds:
   esbuild: true
-  sharp: true
+  sharp: false
 
 nodeOptions: "--require=peterpme-sharp-prebuild"
 

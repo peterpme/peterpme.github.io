@@ -273,39 +273,42 @@ html[data-theme="dark"] ::selection {
   line-height: 0;
 }
 
-.theme-toggle .icon-sun,
-.theme-toggle .icon-moon {
-  display: none;
+.theme-toggle {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
 }
 
-.theme-toggle .icon-moon {
+.theme-icon {
   display: block;
+  overflow: visible;
 }
 
-html[data-theme="dark"] .theme-toggle .icon-moon {
-  display: none;
+.theme-icon .theme-core,
+.theme-icon .moon-cut,
+.theme-icon .theme-rays {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+  transition: transform 320ms cubic-bezier(.4,0,.2,1), opacity 220ms ease, r 320ms ease, cx 320ms ease, cy 320ms ease;
 }
 
-html[data-theme="dark"] .theme-toggle .icon-sun {
-  display: block;
-}
+/* light mode shows the moon (switch to dark) */
+.theme-icon .theme-core { r: 8.5px; }
+.theme-icon .moon-cut { cx: 16.5px; cy: 7.5px; }
+.theme-icon .theme-rays { opacity: 0; transform: rotate(-45deg) scale(.6); }
 
-html[data-theme="light"] .theme-toggle .icon-sun {
-  display: none;
-}
-
-html[data-theme="light"] .theme-toggle .icon-moon {
-  display: block;
-}
+html[data-theme="dark"] .theme-icon .theme-core { r: 5px; }
+html[data-theme="dark"] .theme-icon .moon-cut { cx: 26px; cy: 2px; }
+html[data-theme="dark"] .theme-icon .theme-rays { opacity: 1; transform: none; }
 
 @media (prefers-color-scheme: dark) {
-  html:not([data-theme]) .theme-toggle .icon-moon {
-    display: none;
-  }
+  html:not([data-theme]) .theme-icon .theme-core { r: 5px; }
+  html:not([data-theme]) .theme-icon .moon-cut { cx: 26px; cy: 2px; }
+  html:not([data-theme]) .theme-icon .theme-rays { opacity: 1; transform: none; }
+}
 
-  html:not([data-theme]) .theme-toggle .icon-sun {
-    display: block;
-  }
+@media (prefers-reduced-motion: reduce) {
+  .theme-icon * { transition: none !important; }
 }
 
 .theme-toggle:hover {

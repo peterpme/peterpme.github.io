@@ -230,15 +230,6 @@ function OgCard({ title, date, avatar }) {
       element(
         "div",
         { style: { display: "flex", flexDirection: "column", width: INNER_W } },
-        element("div", {
-          style: {
-            width: 56,
-            height: 4,
-            backgroundColor: "#818cf8",
-            borderRadius: 2,
-            marginBottom: 28,
-          },
-        }),
         ...lines.map(line =>
           element(
             "div",
