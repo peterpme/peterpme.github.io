@@ -235,6 +235,8 @@ html[data-theme="dark"] ::selection {
   nav[aria-label="Primary"] {
     grid-column: 1 / -1;
     grid-row: 2;
+    /* Keep the active underline clear of the header border. Desktop stays centered. */
+    padding-bottom: 0.7rem;
   }
 
   .nav-list {
