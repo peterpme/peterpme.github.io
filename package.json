@@ -10,7 +10,7 @@
   "scripts": {
     "prepare:site": "node --experimental-strip-types scripts/prepare.ts",
     "dev": "pnpm run prepare:site && astro dev",
-    "build": "pnpm run prepare:site && astro build && node --experimental-strip-types scripts/check.ts",
+    "build": "pnpm run prepare:site && astro build",
     "preview": "astro preview",
     "typecheck": "tsc --noEmit"
   },

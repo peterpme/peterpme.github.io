@@ -57,9 +57,6 @@ function writeRedirects(): void {
   ]);
   const lines = [
     "# Workers static asset redirects. Old post URLs go to /articles/.",
-    "# Apex host rules are included for the existing check. Workers does not apply domain-level _redirects.",
-    "https://peterp.me/* https://www.peterp.me/:splat 301",
-    "https://peterp.me/ https://www.peterp.me/ 301",
   ];
   for (const doc of getDocs()) {
     if (doc.kind !== "article") continue;
