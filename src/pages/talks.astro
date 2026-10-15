@@ -23,12 +23,12 @@ function hrefFor(talk: Talk): string | null {
 ---
 
 <Base title="Talks" description={description} current="talks">
-  <section class="band">
+  <section class="band page-index">
     <div class="wrap">
-      <p class="kicker">Speaking</p>
-      <div class="rule" aria-hidden="true"></div>
-      <h1>Talks</h1>
-      <p class="dek">{description}</p>
+      <header class="page-head">
+        <h1>Talks</h1>
+        <p class="dek">{description}</p>
+      </header>
       <ol>
         {
           visible.map((talk) => {

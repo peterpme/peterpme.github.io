@@ -564,6 +564,18 @@ a.entry-title:hover {
   margin-top: 1rem;
 }
 
+.page-index .page-head {
+  margin-bottom: 2rem;
+}
+
+.page-index .page-head h1 {
+  margin-top: 0;
+}
+
+.page-index .page-head .dek {
+  margin-top: 0.45rem;
+}
+
 .archive-grid {
   display: grid;
   grid-template-columns: 1fr;
