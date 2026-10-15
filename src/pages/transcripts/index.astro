@@ -1,0 +1,33 @@
+---
+import Base from "../../layouts/Base.astro";
+import { formatFull, getByKind, isoDate } from "../../lib/content";
+
+const transcripts = getByKind("transcript");
+const description = "Full transcripts of talks, with slides and timestamp links back to the video.";
+---
+
+<Base title="Transcripts" description={description}>
+  <section class="band">
+    <div class="wrap">
+      <p class="kicker">Reference</p>
+      <div class="rule" aria-hidden="true"></div>
+      <h1>Transcripts</h1>
+      <p class="dek">{description}</p>
+      <ol>
+        {
+          transcripts.map((doc) => (
+            <li class="entry">
+              <time datetime={isoDate(doc.date)}>{formatFull(doc.date)}</time>
+              <div>
+                <a class="entry-title" href={doc.href}>
+                  {doc.title}
+                </a>
+                {doc.description ? <p class="entry-dek">{doc.description}</p> : null}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+</Base>

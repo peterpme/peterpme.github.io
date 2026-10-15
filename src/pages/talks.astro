@@ -1,0 +1,54 @@
+---
+import Base from "../layouts/Base.astro";
+import talks from "../data/talks.json";
+
+type Talk = {
+  id: string;
+  title: string;
+  venue: string;
+  year: string;
+  visible?: boolean;
+  youtubeUrl?: string;
+  slideUrl?: string;
+};
+
+const visible = (talks as Talk[]).filter((talk) => talk.visible !== false);
+const description = "Talks, podcasts, and appearances.";
+
+function hrefFor(talk: Talk): string | null {
+  if (talk.youtubeUrl) return talk.youtubeUrl;
+  if (talk.slideUrl) return talk.slideUrl;
+  return null;
+}
+---
+
+<Base title="Talks" description={description} current="talks">
+  <section class="band">
+    <div class="wrap">
+      <p class="kicker">Speaking</p>
+      <div class="rule" aria-hidden="true"></div>
+      <h1>Talks</h1>
+      <p class="dek">{description}</p>
+      <ol class="talk-list">
+        {
+          visible.map((talk) => {
+            const href = hrefFor(talk);
+            return (
+              <li class="talk">
+                <p class="talk-meta">
+                  <span>{talk.year}</span>
+                  {talk.venue}
+                </p>
+                {href ? (
+                  <a href={href}>{talk.title}</a>
+                ) : (
+                  <p class="talk-title">{talk.title}</p>
+                )}
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,32 @@
+---
+import Base from "../../layouts/Base.astro";
+import { formatFull, getByKind, isoDate } from "../../lib/content";
+const ideas = getByKind("idea");
+const description = "A place for ideas I don't have time to build yet. I update them when they change.";
+---
+
+<Base title="Ideas" description={description} current="ideas">
+  <section class="band">
+    <div class="wrap">
+      <p class="kicker">Notes</p>
+      <div class="rule" aria-hidden="true"></div>
+      <h1>Ideas</h1>
+      <p class="dek">{description}</p>
+      <ol class="idea-list">
+        {
+          ideas.map((idea) => (
+            <li class="entry">
+              <time datetime={isoDate(idea.date)}>{formatFull(idea.date)}</time>
+              <div>
+                <a class="entry-title" href={idea.href}>
+                  {idea.title}
+                </a>
+                {idea.description ? <p class="entry-dek">{idea.description}</p> : null}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+</Base>

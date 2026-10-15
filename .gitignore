@@ -54,9 +54,12 @@ typings/
 # dotenv environment variable files
 .env*
 
-# gatsby files
+# Generated output. `public/` is copied from `static/` during `npm run build`.
 .cache/
 public
+dist/
+.astro/
+src/generated/
 
 # Mac files
 .DS_Store

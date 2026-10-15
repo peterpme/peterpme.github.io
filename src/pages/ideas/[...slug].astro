@@ -1,0 +1,14 @@
+---
+import DocView from "../../components/Doc.astro";
+import { getByKind, getDoc } from "../../lib/content";
+
+export function getStaticPaths() {
+  return getByKind("idea").map((doc) => ({ params: { slug: doc.slug } }));
+}
+
+const slug = Astro.params.slug;
+if (!slug) throw new Error("Missing idea slug");
+const doc = getDoc("idea", slug);
+---
+
+<DocView doc={doc} />

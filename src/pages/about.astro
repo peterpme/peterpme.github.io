@@ -1,0 +1,77 @@
+---
+import Base from "../layouts/Base.astro";
+import Avatar from "../components/Avatar.astro";
+import { AUTHOR, COMMUNITY, DESCRIPTION, FAVORITES, NOW, SITE_URL, TAGLINE } from "../lib/site";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: AUTHOR,
+  url: `${SITE_URL}/about/`,
+  description: DESCRIPTION,
+  jobTitle: TAGLINE,
+  sameAs: [
+    "https://www.twitter.com/peterpme",
+    "https://www.github.com/peterpme",
+    "https://www.linkedin.com/in/peterpme",
+  ],
+};
+---
+
+<Base title="About" description={DESCRIPTION} current="about" jsonLd={jsonLd}>
+  <div class="wrap">
+    <header class="about-hero">
+      <Avatar size={132} eager />
+      <div>
+        <p class="kicker">About</p>
+        <h1>{AUTHOR}</h1>
+        <p class="pronounce">Pronounced PIE-CAR-CHICK</p>
+        <div class="rule" aria-hidden="true"></div>
+        <p class="tagline">{TAGLINE}.</p>
+      </div>
+    </header>
+
+    <div class="about-layout">
+      <div class="about-prose">
+        <p>
+          I'm building the best mobile wallet at <a href="https://backpack.app">Backpack</a>. Before that, I was
+          co-founder and CTO of <a href="https://draftbit.com">Draftbit</a>, a
+          <a href="https://ycombinator.com">Y Combinator</a> company that lets teams ship fully native apps.
+        </p>
+        <p>
+          I always knew I wanted to build things. At 12 I started a business selling templated logos and websites
+          on eBay. Client phone calls did not go as planned.
+        </p>
+        <p>
+          These days I write about how AI agents actually work: the queues, durable workflows, and TypeScript
+          underneath the chat. I build with TypeScript, Effect, and React Native.
+        </p>
+        <p>
+          People and relationships made me who I am. A strong tech community in Chicago is something I keep working
+          toward. <a href="https://chicagojs.org">ChicagoJS</a> is part of that.
+        </p>
+      </div>
+
+      <aside class="facts" aria-label="Links">
+        <h2>Now</h2>
+        <ul class="fact-list">
+          {NOW.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+        <h2>Favorites</h2>
+        <ul class="fact-list">
+          {FAVORITES.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+        <h2>Community</h2>
+        <ul class="fact-list">
+          {COMMUNITY.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </aside>
+    </div>
+  </div>
+</Base>
