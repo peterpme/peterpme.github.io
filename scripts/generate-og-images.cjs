@@ -1,7 +1,13 @@
+const crypto = require("crypto")
 const fs = require("fs")
 const path = require("path")
 const React = require("react")
 const sharp = require("sharp")
+const { Resvg } = require("@resvg/resvg-js")
+const satoriModule = require("satori")
+
+const TEMPLATE_VERSION = 1
+const OG_CACHE = path.join(process.cwd(), "node_modules", ".astro", "og-cache")
 
 const WIDTH = 1200
 const HEIGHT = 630
@@ -108,8 +114,7 @@ const BOLD_WIDTHS = {
 }
 
 function loadSatori() {
-  const mod = require("satori")
-  return typeof mod === "function" ? mod : mod.default
+  return typeof satoriModule === "function" ? satoriModule : satoriModule.default
 }
 
 function loadFonts() {
@@ -330,7 +335,6 @@ async function renderOgPng({ title, date, avatar, fonts }) {
     React.createElement(OgCard, { title, date, avatar }),
     { width: WIDTH, height: HEIGHT, fonts }
   )
-  const { Resvg } = require("@resvg/resvg-js")
   const resvg = new Resvg(svg, {
     fitTo: { mode: "width", value: WIDTH },
   })
@@ -343,23 +347,38 @@ function ogSlug(slug) {
   return parts[parts.length - 1]
 }
 
+function fileHash(file) {
+  return crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex")
+}
+
+function cardKey(input, fonts, avatar) {
+  return crypto.createHash("sha256").update(JSON.stringify({
+    template: TEMPLATE_VERSION,
+    title: input.title,
+    date: input.date ?? null,
+    fonts,
+    avatar,
+  })).digest("hex")
+}
+
 async function generateOgImages(posts) {
-  const avatar = await circleAvatar(AVATAR)
-  const fonts = loadFonts()
-  const publicDir = path.join(process.cwd(), "public")
+  const root = process.cwd()
+  const publicDir = path.join(root, "public")
   const ogDir = path.join(publicDir, "og")
   fs.mkdirSync(ogDir, { recursive: true })
 
-  const defaultPng = await renderOgPng({
+  const fontHash = [
+    fileHash(path.join(root, "src/og/fonts/Inter-Regular.ttf")),
+    fileHash(path.join(root, "src/og/fonts/Inter-Bold.ttf")),
+  ].join(":")
+  const avatarHash = fileHash(path.join(root, "content/assets/profile-pic.jpg"))
+
+  const jobs = [{
     title: TAGLINE,
-    avatar,
-    fonts,
-  })
-  fs.writeFileSync(path.join(publicDir, "og.png"), defaultPng)
-
+    date: null,
+    out: path.join(publicDir, "og.png"),
+  }]
   const seen = new Map()
-  let count = 0
-
   for (const post of posts) {
     const leaf = post.leaf
     const title = post.title
@@ -369,18 +388,46 @@ async function generateOgImages(posts) {
       throw new Error(`OG image slug collision for "${leaf}": ${previous} and ${post.href}`)
     }
     seen.set(leaf, post.href)
-    const png = await renderOgPng({
+    jobs.push({
       title,
       date: post.date,
-      avatar,
-      fonts,
+      out: path.join(ogDir, `${leaf}.png`),
     })
-    fs.writeFileSync(path.join(ogDir, `${leaf}.png`), png)
-    count += 1
   }
 
-  console.log(`Wrote ${count} OG images and public/og.png`)
-  return count
+  let regenerated = 0
+  let reused = 0
+  const misses = []
+  for (const job of jobs) {
+    const key = cardKey(job, fontHash, avatarHash)
+    const cached = path.join(OG_CACHE, `${key}.png`)
+    if (fs.existsSync(cached)) {
+      fs.copyFileSync(cached, job.out)
+      reused += 1
+      continue
+    }
+    misses.push({ ...job, cached })
+  }
+
+  if (misses.length > 0) {
+    const avatar = await circleAvatar(AVATAR)
+    const fonts = loadFonts()
+    fs.mkdirSync(OG_CACHE, { recursive: true })
+    for (const job of misses) {
+      const png = await renderOgPng({
+        title: job.title,
+        date: job.date ?? undefined,
+        avatar,
+        fonts,
+      })
+      fs.writeFileSync(job.cached, png)
+      fs.writeFileSync(job.out, png)
+      regenerated += 1
+    }
+  }
+
+  console.log(`OG cache: regenerated=${regenerated} reused=${reused}`)
+  return regenerated
 }
 
 module.exports = {

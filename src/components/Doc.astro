@@ -9,7 +9,7 @@ interface Props {
 }
 
 const { doc } = Astro.props;
-const html = renderMarkdown(doc.body, doc.dir);
+const html = await renderMarkdown(doc.body, doc.dir);
 const { previous, next } = neighbors(doc);
 const current = doc.kind === "idea" ? "ideas" : doc.kind === "article" ? "writing" : undefined;
 const description = doc.description || doc.title;

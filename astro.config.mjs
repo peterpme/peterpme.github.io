@@ -10,6 +10,11 @@ export default defineConfig({
   trailingSlash: "always",
   publicDir: "public",
   integrations: [react()],
+  image: {
+    service: {
+      entrypoint: "astro/assets/services/sharp",
+    },
+  },
   build: {
     format: "directory",
   },

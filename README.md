@@ -10,7 +10,7 @@ pnpm dev
 pnpm build
 ```
 
-`pnpm dev` prepares images, OG cards, and `public/_redirects`, then starts Astro. `pnpm build` does the same, then builds the static site.
+`pnpm dev` prepares OG cards and `public/_redirects`, then starts Astro. `pnpm build` does the same, then builds the static site. Astro's sharp service optimizes content images into `node_modules/.astro`, and OG cards are copied from `node_modules/.astro/og-cache` when their inputs have not changed. Cloudflare's build cache should keep that directory.
 
 | Setting | Value |
 | --- | --- |
