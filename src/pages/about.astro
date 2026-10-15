@@ -1,7 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Avatar from "../components/Avatar.astro";
-import { AUTHOR, COMMUNITY, DESCRIPTION, FAVORITES, NOW, SITE_URL, TAGLINE } from "../lib/site";
+import { AUTHOR, DESCRIPTION, NOW, SITE_URL, TAGLINE } from "../lib/site";
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -46,28 +46,12 @@ const jsonLd = {
           These days I write about how AI agents actually work: the queues, durable workflows, and TypeScript
           underneath the chat. I build with TypeScript, Effect, and React Native.
         </p>
-        <p>
-          People and relationships made me who I am. A strong tech community in Chicago is something I keep working
-          toward. <a href="https://chicagojs.org">ChicagoJS</a> is part of that.
-        </p>
       </div>
 
-      <aside class="facts" aria-label="Links">
+      <aside class="facts" aria-label="Now">
         <h2>Now</h2>
         <ul class="fact-list">
           {NOW.map((item) => (
-            <li><a href={item.href}>{item.label}</a></li>
-          ))}
-        </ul>
-        <h2>Favorites</h2>
-        <ul class="fact-list">
-          {FAVORITES.map((item) => (
-            <li><a href={item.href}>{item.label}</a></li>
-          ))}
-        </ul>
-        <h2>Community</h2>
-        <ul class="fact-list">
-          {COMMUNITY.map((item) => (
             <li><a href={item.href}>{item.label}</a></li>
           ))}
         </ul>

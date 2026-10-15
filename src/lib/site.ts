@@ -22,11 +22,4 @@ export const NOW = [
   { label: "React Native", href: "https://reactnative.dev/" },
 ] as const;
 
-export const FAVORITES = [
-  { label: "Expo", href: "https://expo.io/" },
-  { label: "React Native", href: "https://reactnative.dev/" },
-  { label: "ChatGPT", href: "https://chat.openai.com" },
-  { label: "Stable Diffusion", href: "https://stable.ai/" },
-] as const;
-
-export const COMMUNITY = [{ label: "ChicagoJS", href: "https://chicagojs.org" }] as const;
+export const X_URL = "https://x.com/peterpme";
