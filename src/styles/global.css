@@ -610,14 +610,6 @@ a.entry-title:hover {
   padding: 2.4rem 0 4.5rem;
 }
 
-.article .kicker {
-  margin-bottom: 0.9rem;
-}
-
-.article .rule {
-  margin-bottom: 1.25rem;
-}
-
 .article h1 {
   max-width: 12em;
   font-size: clamp(2.45rem, 5.6vw, 4.9rem);
@@ -626,17 +618,6 @@ a.entry-title:hover {
   line-height: 0.96;
   color: var(--ink);
   text-wrap: balance;
-}
-
-.standfirst {
-  max-width: 68ch;
-  margin-top: 1.35rem;
-  font-size: 1.32rem;
-  font-weight: 520;
-  letter-spacing: -0.02em;
-  line-height: 1.45;
-  color: var(--ink);
-  text-wrap: pretty;
 }
 
 .meta-line {
@@ -840,18 +821,6 @@ a.entry-title:hover {
 
 .pager a:hover {
   color: var(--accent-ink);
-}
-
-.comments {
-  max-width: 68ch;
-  margin-top: 2.6rem;
-  min-height: 8rem;
-}
-
-.comments h2 {
-  margin-bottom: 0.8rem;
-  font-size: 1.15rem;
-  letter-spacing: -0.03em;
 }
 
 .talk-list {

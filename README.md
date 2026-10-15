@@ -31,19 +31,6 @@ npm run build
 
 Pages free plan is enough. The site does not use Workers, KV, or a server runtime.
 
-## Comments
-
-Article pages load [Giscus](https://giscus.app) when the comments section nears the viewport. The theme follows the site theme. The ids in `src/lib/giscus.ts` are placeholders. The widget will not attach to a discussion until they are real.
-
-Peter has to do this. Nothing in this repo turns it on.
-
-1. On `peterpme/peterpme.github.io`, open Settings, General, Features, and enable Discussions.
-2. Install the GitHub app at <https://github.com/apps/giscus> on that repository.
-3. Open <https://giscus.app>. Repository: `peterpme/peterpme.github.io`. Page-to-discussion mapping: pathname. Discussion category: Announcements (or another public category).
-4. Copy `data-repo-id` and `data-category-id` from the generated script tag.
-5. Paste them into `repoId` and `categoryId` in `src/lib/giscus.ts`.
-6. Rebuild and deploy.
-
 ## URLs
 
 Pages use trailing slashes (`trailingSlash: "always"`, directory format). Every path in the live `https://www.peterp.me/sitemap-index.xml` is checked against `dist` at the end of the build. Internal links are checked the same way.

@@ -1,6 +1,5 @@
 ---
 import Base from "../layouts/Base.astro";
-import Comments from "./Comments.astro";
 import { neighbors, formatFull, isoDate, ogLeaf, type Doc } from "../lib/content";
 import { renderMarkdown } from "../lib/markdown";
 import { AUTHOR, SITE_URL } from "../lib/site";
@@ -13,9 +12,6 @@ const { doc } = Astro.props;
 const html = renderMarkdown(doc.body, doc.dir);
 const { previous, next } = neighbors(doc);
 const current = doc.kind === "idea" ? "ideas" : doc.kind === "article" ? "writing" : undefined;
-const kicker =
-  doc.kind === "idea" ? "Ideas" : doc.kind === "transcript" ? "Transcript" : (doc.categories[0] ?? "Essay");
-const kickerHref = doc.kind === "idea" ? "/ideas/" : doc.kind === "transcript" ? "/transcripts/" : "/";
 const description = doc.description || doc.title;
 const image = `/og/${ogLeaf(doc.slug)}.png`;
 
@@ -45,10 +41,7 @@ const jsonLd = {
 >
   <article class="article">
     <div class="wrap">
-      <p class="kicker"><a href={kickerHref}>{kicker}</a></p>
-      <div class="rule" aria-hidden="true"></div>
       <h1>{doc.title}</h1>
-      {doc.description ? <p class="standfirst">{doc.description}</p> : null}
       <p class="meta-line">
         <time datetime={isoDate(doc.date)}>{formatFull(doc.date)}</time>
         <span aria-hidden="true"> · </span>
@@ -75,7 +68,6 @@ const jsonLd = {
           </nav>
         ) : null
       }
-      {doc.kind === "article" ? <Comments /> : null}
       <footer class="colophon">
         <div class="rule" aria-hidden="true"></div>
         <p>
