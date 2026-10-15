@@ -5,8 +5,107 @@ const sharp = require("sharp")
 
 const WIDTH = 1200
 const HEIGHT = 630
+const PADDING = 72
+const INNER_W = WIDTH - PADDING * 2
+const INNER_H = HEIGHT - PADDING * 2
+const AVATAR = 72
 const AUTHOR = "Peter Piekarczyk"
+const SITE = "peterp.me"
 const TAGLINE = "Building Backpack and products AI made possible"
+
+// Advance widths for Inter Bold, in ems. Unknown glyphs fall back to the average.
+const BOLD_WIDTHS = {
+  " ": 0.2368,
+  "!": 0.3379,
+  '"': 0.5518,
+  "#": 0.6489,
+  $: 0.6548,
+  "%": 1.0156,
+  "&": 0.6719,
+  "'": 0.3389,
+  "(": 0.377,
+  ")": 0.377,
+  "*": 0.5591,
+  "+": 0.6787,
+  ",": 0.334,
+  "-": 0.4678,
+  ".": 0.334,
+  "/": 0.3882,
+  0: 0.6743,
+  1: 0.4312,
+  2: 0.6299,
+  3: 0.6455,
+  4: 0.6763,
+  5: 0.6221,
+  6: 0.6494,
+  7: 0.5815,
+  8: 0.6509,
+  9: 0.6494,
+  ":": 0.334,
+  ";": 0.3428,
+  "<": 0.6787,
+  "=": 0.6787,
+  ">": 0.6787,
+  "?": 0.5596,
+  "@": 1.0161,
+  A: 0.7466,
+  B: 0.6616,
+  C: 0.7397,
+  D: 0.7222,
+  E: 0.6074,
+  F: 0.5869,
+  G: 0.7505,
+  H: 0.7471,
+  I: 0.2808,
+  J: 0.5845,
+  K: 0.7192,
+  L: 0.5654,
+  M: 0.9316,
+  N: 0.7622,
+  O: 0.7705,
+  P: 0.6479,
+  Q: 0.7769,
+  R: 0.6567,
+  S: 0.6548,
+  T: 0.6675,
+  U: 0.7319,
+  V: 0.7466,
+  W: 1.0376,
+  X: 0.7383,
+  Y: 0.731,
+  Z: 0.6641,
+  a: 0.5806,
+  b: 0.6304,
+  c: 0.5884,
+  d: 0.6304,
+  e: 0.5957,
+  f: 0.3979,
+  g: 0.6318,
+  h: 0.6226,
+  i: 0.271,
+  j: 0.271,
+  k: 0.5801,
+  l: 0.271,
+  m: 0.9126,
+  n: 0.6226,
+  o: 0.6133,
+  p: 0.6304,
+  q: 0.6304,
+  r: 0.4072,
+  s: 0.5601,
+  t: 0.3662,
+  u: 0.6226,
+  v: 0.5996,
+  w: 0.8501,
+  x: 0.5801,
+  y: 0.6021,
+  z: 0.5728,
+  "\u2018": 0.3105,
+  "\u2019": 0.3105,
+  "\u2013": 0.5,
+  "\u2014": 1,
+  "\u2026": 1.002,
+}
 
 function loadSatori() {
   const mod = require("satori")
@@ -31,27 +130,47 @@ function loadFonts() {
   ]
 }
 
-async function circleAvatar(size) {
-  const avatarPath = path.join(process.cwd(), "content/assets/profile-pic.jpg")
-  const circle = Buffer.from(
-    `<svg width="${size}" height="${size}"><circle cx="${size / 2}" cy="${
-      size / 2
-    }" r="${size / 2}" fill="#fff"/></svg>`
-  )
-  const png = await sharp(avatarPath)
-    .resize(size, size)
-    .composite([{ input: circle, blend: "dest-in" }])
-    .png()
-    .toBuffer()
-  return `data:image/png;base64,${png.toString("base64")}`
+function textWidth(text, fontSize) {
+  const tracking = -0.025 * fontSize
+  let width = 0
+  for (const char of text) {
+    width += (BOLD_WIDTHS[char] ?? 0.62) * fontSize
+  }
+  if (text.length > 1) width += tracking * (text.length - 1)
+  return width
 }
 
-function titleFontSize(title) {
-  const length = title.length
-  if (length > 90) return 46
-  if (length > 70) return 52
-  if (length > 48) return 58
-  return 66
+function wrapLines(title, fontSize, maxWidth) {
+  const words = title.trim().split(/\s+/)
+  const lines = []
+  let current = ""
+
+  for (const word of words) {
+    const next = current ? `${current} ${word}` : word
+    if (textWidth(next, fontSize) <= maxWidth) {
+      current = next
+      continue
+    }
+    if (current) lines.push(current)
+    current = word
+  }
+  if (current) lines.push(current)
+  return lines
+}
+
+function layoutTitle(title) {
+  const maxWidth = INNER_W
+  for (let fontSize = 78; fontSize >= 32; fontSize -= 2) {
+    const lines = wrapLines(title, fontSize, maxWidth)
+    const overflows = lines.some(line => textWidth(line, fontSize) > maxWidth)
+    if (lines.length <= 3 && !overflows) {
+      return { fontSize, lines }
+    }
+  }
+
+  const fontSize = 32
+  const lines = wrapLines(title, fontSize, maxWidth).slice(0, 3)
+  return { fontSize, lines }
 }
 
 function element(type, props, ...children) {
@@ -62,146 +181,166 @@ function element(type, props, ...children) {
   )
 }
 
-function OgCard({ title, date, subtitle, avatar, footer = AUTHOR }) {
+async function circleAvatar(displaySize) {
+  const size = displaySize * 3
+  const avatarPath = path.join(process.cwd(), "content/assets/profile-pic.jpg")
+  const photo = await sharp(avatarPath)
+    .resize(size, size, { fit: "cover", position: "centre" })
+    .png()
+    .toBuffer()
+  const mask = Buffer.from(
+    `<svg width="${size}" height="${size}"><circle cx="${size / 2}" cy="${
+      size / 2
+    }" r="${size / 2}" fill="#fff"/></svg>`
+  )
+  const png = await sharp(photo)
+    .composite([{ input: mask, blend: "dest-in" }])
+    .png()
+    .toBuffer()
+  return `data:image/png;base64,${png.toString("base64")}`
+}
+
+function OgCard({ title, date, avatar }) {
+  const { fontSize, lines } = layoutTitle(title)
+  const lineHeight = 1.12
+
   return element(
     "div",
     {
       style: {
-        width: `${WIDTH}px`,
-        height: `${HEIGHT}px`,
+        width: WIDTH,
+        height: HEIGHT,
         display: "flex",
-        flexDirection: "column",
-        backgroundColor: "#f6f6f4",
-        color: "#111111",
-        fontFamily: "Inter",
-        padding: "56px 68px 52px",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "#09090b",
       },
     },
     element(
       "div",
       {
         style: {
+          width: INNER_W,
+          height: INNER_H,
           display: "flex",
+          flexDirection: "column",
           justifyContent: "space-between",
-          alignItems: "center",
         },
       },
+      element(
+        "div",
+        { style: { display: "flex", flexDirection: "column", width: INNER_W } },
+        element("div", {
+          style: {
+            width: 56,
+            height: 4,
+            backgroundColor: "#818cf8",
+            borderRadius: 2,
+            marginBottom: 28,
+          },
+        }),
+        ...lines.map(line =>
+          element(
+            "div",
+            {
+              style: {
+                display: "flex",
+                width: INNER_W,
+                height: Math.ceil(fontSize * lineHeight),
+                fontSize,
+                fontWeight: 700,
+                lineHeight,
+                letterSpacing: -0.025 * fontSize,
+                color: "#fafafa",
+              },
+            },
+            line
+          )
+        )
+      ),
       element(
         "div",
         {
           style: {
             display: "flex",
             alignItems: "center",
-            fontSize: 22,
-            fontWeight: 700,
-            letterSpacing: -0.2,
+            width: INNER_W,
+            height: AVATAR,
           },
         },
-        element("div", {
-          style: {
-            width: 12,
-            height: 12,
-            borderRadius: 6,
-            backgroundColor: "#4f46e5",
-            marginRight: 12,
-          },
+        element("img", {
+          src: avatar,
+          width: AVATAR,
+          height: AVATAR,
         }),
-        "peterp.me"
-      ),
-      date
-        ? element(
-            "div",
-            { style: { fontSize: 22, color: "#6b7280" } },
-            date
-          )
-        : null
-    ),
-    element(
-      "div",
-      {
-        style: {
-          display: "flex",
-          flex: 1,
-          flexDirection: "column",
-          justifyContent: "center",
-          width: 1064,
-        },
-      },
-      element(
-        "div",
-        {
-          style: {
-            fontSize: titleFontSize(title),
-            fontWeight: 700,
-            lineHeight: 1.12,
-            letterSpacing: -1.6,
-            color: "#111111",
+        element(
+          "div",
+          {
+            style: {
+              display: "flex",
+              alignItems: "baseline",
+              marginLeft: 18,
+            },
           },
-        },
-        title
-      ),
-      subtitle
-        ? element(
+          element(
             "div",
             {
               style: {
-                marginTop: 22,
-                fontSize: 32,
-                lineHeight: 1.35,
-                color: "#3f3f46",
+                fontSize: 26,
+                fontWeight: 700,
+                color: "#fafafa",
                 letterSpacing: -0.4,
               },
             },
-            subtitle
+            AUTHOR
+          ),
+          element(
+            "div",
+            {
+              style: {
+                fontSize: 20,
+                fontWeight: 400,
+                color: "#a1a1aa",
+                marginLeft: 16,
+              },
+            },
+            SITE
           )
-        : null
-    ),
-    element(
-      "div",
-      {
-        style: {
-          display: "flex",
-          alignItems: "center",
-          borderTop: "1px solid #e4e4e7",
-          paddingTop: 28,
-        },
-      },
-      element("img", {
-        src: avatar,
-        width: 84,
-        height: 84,
-        style: { marginRight: 20 },
-      }),
-      element(
-        "div",
-        {
-          style: {
-            display: "flex",
-            width: 920,
-            fontSize: footer === AUTHOR ? 30 : 28,
-            fontWeight: footer === AUTHOR ? 700 : 400,
-            letterSpacing: -0.3,
-            color: footer === AUTHOR ? "#111111" : "#3f3f46",
-            lineHeight: 1.25,
-          },
-        },
-        footer
+        ),
+        element("div", { style: { display: "flex", flexGrow: 1 } }),
+        date
+          ? element(
+              "div",
+              {
+                style: {
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  width: 280,
+                  fontSize: 22,
+                  fontWeight: 400,
+                  color: "#a1a1aa",
+                },
+              },
+              date
+            )
+          : null
       )
     )
   )
 }
 
-async function renderOgPng({ title, date, subtitle, avatar, fonts }) {
+async function renderOgPng({ title, date, avatar, fonts }) {
   const satori = loadSatori()
   const svg = await satori(
-    React.createElement(OgCard, { title, date, subtitle, avatar }),
+    React.createElement(OgCard, { title, date, avatar }),
     { width: WIDTH, height: HEIGHT, fonts }
   )
   const { Resvg } = require("@resvg/resvg-js")
   const resvg = new Resvg(svg, {
     fitTo: { mode: "width", value: WIDTH },
   })
-  return resvg.render().asPng()
+  const rendered = resvg.render()
+  return rendered.asPng()
 }
 
 function ogSlug(slug) {
@@ -210,16 +349,14 @@ function ogSlug(slug) {
 }
 
 async function generateOgImages({ graphql, reporter }) {
-  const avatar = await circleAvatar(168)
+  const avatar = await circleAvatar(AVATAR)
   const fonts = loadFonts()
-  const root = process.cwd()
-  const publicDir = path.join(root, "public")
+  const publicDir = path.join(process.cwd(), "public")
   const ogDir = path.join(publicDir, "og")
   fs.mkdirSync(ogDir, { recursive: true })
 
   const defaultPng = await renderOgPng({
-    title: AUTHOR,
-    footer: TAGLINE,
+    title: TAGLINE,
     avatar,
     fonts,
   })
@@ -258,7 +395,9 @@ async function generateOgImages({ graphql, reporter }) {
     const leaf = ogSlug(slug)
     const previous = seen.get(leaf)
     if (previous && previous !== slug) {
-      throw new Error(`OG image slug collision for "${leaf}": ${previous} and ${slug}`)
+      throw new Error(
+        `OG image slug collision for "${leaf}": ${previous} and ${slug}`
+      )
     }
     seen.set(leaf, slug)
 
@@ -281,42 +420,60 @@ async function generateOgImages({ graphql, reporter }) {
 
 module.exports = {
   AUTHOR,
+  AVATAR,
   HEIGHT,
+  INNER_W,
+  PADDING,
   TAGLINE,
   WIDTH,
   generateOgImages,
+  layoutTitle,
   ogSlug,
   renderOgPng,
 }
 
 if (require.main === module) {
   async function preview() {
-    const avatar = await circleAvatar(168)
+    const avatar = await circleAvatar(AVATAR)
     const fonts = loadFonts()
-    const out = path.join(process.cwd(), "static")
-    fs.mkdirSync(out, { recursive: true })
-    const post = await renderOgPng({
-      title: "What actually happens when you message Grok Bot",
-      date: "October 14, 2026",
-      avatar,
-      fonts,
-    })
-    const fallback = await renderOgPng({
-      title: AUTHOR,
-      footer: TAGLINE,
-      avatar,
-      fonts,
-    })
-    const long = await renderOgPng({
-      title: "Working Through cannot find module unicode/category/So in Keystone",
-      date: "March 12, 2017",
-      avatar,
-      fonts,
-    })
-    fs.writeFileSync(path.join(out, "og.png"), fallback)
-    fs.writeFileSync("/tmp/og-post.png", post)
-    fs.writeFileSync("/tmp/og-long.png", long)
-    console.log("preview written")
+    const samples = [
+      {
+        file: "/tmp/og-grok.png",
+        title: "What actually happens when you message Grok Bot",
+        date: "October 14, 2026",
+      },
+      {
+        file: "/tmp/og-long.png",
+        title:
+          "Working Through cannot find module unicode/category/So in Keystone",
+        date: "March 12, 2017",
+      },
+      {
+        file: "/tmp/og-short.png",
+        title: "Joining Backpack",
+        date: "December 05, 2022",
+      },
+    ]
+
+    for (const sample of samples) {
+      const png = await renderOgPng({
+        title: sample.title,
+        date: sample.date,
+        avatar,
+        fonts,
+      })
+      fs.writeFileSync(sample.file, png)
+      const fitted = layoutTitle(sample.title)
+      console.log(
+        sample.file,
+        `${fitted.fontSize}px`,
+        fitted.lines.length,
+        "lines"
+      )
+    }
+
+    const fallback = await renderOgPng({ title: TAGLINE, avatar, fonts })
+    fs.writeFileSync(path.join(process.cwd(), "static", "og.png"), fallback)
   }
 
   preview().catch(error => {
