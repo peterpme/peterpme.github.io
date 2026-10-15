@@ -110,6 +110,14 @@ These are Firecracker microVMs, the same ones AWS Lambda and Fly.io use IIRC. A 
 
 Skills work the same way. Built-in and plugin skills come from the Grok Bot platform itself. Your custom skills are markdown files that live on the VM, the same way you'd store them on your laptop, and they're backed up to object storage. Your memory works the same way, and the agent uses grep to search it.
 
+## Many bots, one computer
+
+You can create as many Grok Bots as you want, but they don't each get their own VM. All of your bots share one computer. They share the same files, the same installed tools, and the same browser logins, so if one bot installs something or logs into a site, every other bot can use it.
+
+What each bot gets is its own desktop: its own screen and its own browser window on that shared computer. One bot can't see or drive another bot's screen, so two bots can each use a browser at the same time without fighting over the mouse.
+
+It's a lot like several people sharing one laptop, where each person has their own user session but the hard drive is shared. Each bot keeps its own conversation, memory, and routines on the server, so the shared computer is just the workspace.
+
 ## Keeping it safe
 
 Similar to ChatGPT's or Claude's auto-review step, Grok Bot has a separate model that reviews the agent's actions before they run, mostly shell commands. It reviews what the agent is about to do, not your prompt.
@@ -195,7 +203,6 @@ I have more questions, and I'd love to hear from you. Also lmk if I got anything
 - I'm assuming I get the same VM every time because of the snapshot. Am I right?
 - How long does waking from a snapshot actually take?
 - Is there an internal VM manager? How does it pick a host?
-- Does each Grok Bot I create get its own VM? From what I can tell, all my bots share one computer and each gets its own screen and browser, while files and logins are shared. Is that right, and why did you design it that way?
 
 **Storage & context**
 
