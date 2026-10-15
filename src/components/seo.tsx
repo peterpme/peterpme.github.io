@@ -1,13 +1,43 @@
 import React from "react"
 import { useSiteMetadata } from "../hooks/use-site-metadata"
 
+type OpenGraphType = "website" | "article"
+
 type Props = {
   title?: string
   description?: string
   pathname?: string
   children?: React.ReactNode
-  location?: any
-  keywords?: string[] | null
+  location?: { pathname?: string }
+  image?: string
+  imageAlt?: string
+  type?: OpenGraphType
+  publishedTime?: string
+  tags?: string[]
+}
+
+function joinUrl(siteUrl: string, pathname: string): string {
+  if (!pathname) return siteUrl
+  if (pathname.startsWith("http://") || pathname.startsWith("https://")) {
+    return pathname
+  }
+  const path = pathname.startsWith("/") ? pathname : `/${pathname}`
+  return `${siteUrl}${path}`
+}
+
+function articleTags(type: OpenGraphType, tags: string[] | undefined): React.ReactNode {
+  switch (type) {
+    case "website":
+      return null
+    case "article":
+      return tags?.map(tag => (
+        <meta property="article:tag" content={tag} key={tag} />
+      ))
+    default: {
+      const exhaustive: never = type
+      return exhaustive
+    }
+  }
 }
 
 export function Seo({
@@ -16,35 +46,35 @@ export function Seo({
   pathname,
   children,
   location,
-  keywords: pageKeywords,
+  image,
+  imageAlt,
+  type = "website",
+  publishedTime,
+  tags,
 }: Props): JSX.Element {
   const {
     title: defaultTitle,
     siteUrl,
     description: defaultDescription,
-    keywords,
     twitterUsername,
     og,
   } = useSiteMetadata()
 
+  const pagePath = pathname ?? location?.pathname ?? ""
+  const pageUrl = joinUrl(siteUrl, pagePath)
+  const imageUrl = image ? joinUrl(siteUrl, image) : og.image.url
+  const alt = imageAlt || og.image.alt || defaultTitle
+
   const seo = {
     title: title ? `${title} | ${defaultTitle}` : defaultTitle,
     description: description || defaultDescription,
-    image: og.image.url,
-    url: `${siteUrl}${pathname || ``}`,
-    keywords:
-      pageKeywords && pageKeywords.length > 0
-        ? pageKeywords.join(", ")
-        : keywords,
   }
-
-  const canonicalUrl = siteUrl + (location?.pathname ?? "")
 
   return (
     <>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <title>{seo.title}</title>
-      <link rel="canonical" href={canonicalUrl} />
+      <link rel="canonical" href={pageUrl} />
       <link
         rel="alternate"
         type="application/rss+xml"
@@ -52,26 +82,32 @@ export function Seo({
         href={`${siteUrl}/rss.xml`}
       />
       <meta name="description" content={seo.description} />
-      <meta name="keywords" content={seo.keywords} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:site" content={twitterUsername} />
       <meta name="twitter:title" content={seo.title} />
-      <meta name="twitter:url" content={seo.url} />
+      <meta name="twitter:url" content={pageUrl} />
       <meta name="twitter:description" content={seo.description} />
-      <meta name="twitter:image" content={seo.image} />
+      <meta name="twitter:image" content={imageUrl} />
+      <meta name="twitter:image:alt" content={alt} />
       <meta name="twitter:creator" content={twitterUsername} />
 
-      {/* Open Graph */}
-      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:url" content={pageUrl} />
       <meta property="og:title" content={seo.title} />
       <meta property="og:description" content={seo.description} />
       <meta property="og:site_name" content={defaultTitle} />
-      <meta property="og:type" content={og.type} />
-      <meta property="og:image" content={seo.image} />
-      <meta property="og:image:alt" content={og.image.alt} />
+      <meta property="og:type" content={type} />
+      <meta property="og:image" content={imageUrl} />
+      <meta property="og:image:alt" content={alt} />
       <meta property="og:image:type" content={og.image.type} />
       <meta property="og:image:width" content={og.image.width} />
       <meta property="og:image:height" content={og.image.height} />
+      {type === "article" && publishedTime ? (
+        <meta property="article:published_time" content={publishedTime} />
+      ) : null}
+      {type === "article" ? (
+        <meta property="article:author" content={siteUrl} />
+      ) : null}
+      {articleTags(type, tags)}
       {children}
     </>
   )

@@ -55,31 +55,71 @@ export default function BlogPost({ data, pageContext }) {
   )
 }
 
+function tagList(keywords) {
+  if (!keywords) return []
+  return Array.isArray(keywords) ? keywords.filter(Boolean) : [keywords]
+}
+
+function absoluteUrl(siteUrl, value) {
+  if (!value) return `${siteUrl}/og.png`
+  if (value.startsWith("http://") || value.startsWith("https://")) return value
+  return `${siteUrl}${value.startsWith("/") ? value : `/${value}`}`
+}
+
+function ogImagePath(slug, ogImage) {
+  if (ogImage) return ogImage
+  const leaf = slug.split("/").filter(Boolean).pop()
+  return `/og/${leaf}.png`
+}
+
 export const Head = ({ location, data }) => {
-  const { title, description, isoDate, keywords } = data.markdownRemark.frontmatter
+  const { title, description, isoDate, keywords, ogImage } =
+    data.markdownRemark.frontmatter
   const slug = data.markdownRemark.fields.slug
+  const siteUrl = data.site.siteMetadata.siteUrl
+  const authorName = data.site.siteMetadata.author.name
+  const pageUrl = `${siteUrl}${slug}`
+  const imageUrl = absoluteUrl(siteUrl, ogImagePath(slug, ogImage))
+  const tags = tagList(keywords)
+  const author = {
+    "@type": "Person",
+    name: authorName,
+    url: siteUrl,
+  }
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "TechArticle",
+    "@type": "BlogPosting",
     headline: title,
-    datePublished: isoDate,
-    author: {
-      "@type": "Person",
-      name: "Peter Piekarczyk",
-      url: "https://peterp.me",
+    image: {
+      "@type": "ImageObject",
+      url: imageUrl,
+      width: 1200,
+      height: 630,
     },
-    url: `https://peterp.me${slug}`,
+    datePublished: isoDate,
+    dateModified: isoDate,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": pageUrl,
+    },
+    author,
+    publisher: author,
+    url: pageUrl,
     ...(description ? { description } : {}),
-    ...(keywords && keywords.length ? { keywords: keywords.join(", ") } : {}),
   }
 
   return (
     <Seo
+      pathname={slug}
       location={location}
       title={title}
       description={description}
-      keywords={keywords}
+      image={imageUrl}
+      imageAlt={title}
+      type="article"
+      publishedTime={isoDate}
+      tags={tags}
     >
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
     </Seo>
@@ -88,6 +128,14 @@ export const Head = ({ location, data }) => {
 
 export const query = graphql`
   query BlogPostPage($slug: String!) {
+    site {
+      siteMetadata {
+        siteUrl
+        author {
+          name
+        }
+      }
+    }
     markdownRemark(fields: { slug: { eq: $slug } }) {
       id
       fields {
@@ -97,6 +145,7 @@ export const query = graphql`
         title
         description
         keywords
+        ogImage
         date(formatString: "MMMM DD, YYYY")
         isoDate: date
       }

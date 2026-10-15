@@ -1,8 +1,23 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const { generateOgImages } = require(`./src/og/generate-og-images`)
+
+exports.createSchemaCustomization = ({ actions }) => {
+  actions.createTypes(`
+    type MarkdownRemarkFrontmatter {
+      ogImage: String
+    }
+  `)
+}
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage, createRedirect } = actions
+
+  createRedirect({
+    fromPath: `/sitemap.xml`,
+    toPath: `/sitemap-index.xml`,
+    isPermanent: true,
+  })
 
 
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
@@ -67,6 +82,10 @@ exports.createPages = async ({ graphql, actions }) => {
       })
     }
   })
+}
+
+exports.onPostBuild = async ({ graphql, reporter }) => {
+  await generateOgImages({ graphql, reporter })
 }
 
 // Creates under node { fields { slug }} and not frontmatter

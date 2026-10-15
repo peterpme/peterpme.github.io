@@ -62,7 +62,9 @@ export default function TalksPage({ data, location }) {
   )
 }
 
-export const Head = () => <Seo title="Speaking & Appearances" />
+export const Head = ({ location }) => (
+  <Seo title="Speaking & Appearances" location={location} />
+)
 
 export const pageQuery = graphql`
   query TalksPage {

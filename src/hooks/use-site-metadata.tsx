@@ -8,7 +8,6 @@ export const useSiteMetadata = () => {
           title
           siteUrl
           description
-          keywords
           twitterUsername
           titlePrefix
           titleSuffix

@@ -124,7 +124,9 @@ export default function AboutPage({ data, location }) {
   )
 }
 
-export const Head = () => <Seo title="About Peter" />
+export const Head = ({ location }) => (
+  <Seo title="About Peter" location={location} />
+)
 
 export const pageQuery = graphql`
   query {

@@ -3,9 +3,9 @@ import type { GatsbyConfig } from "gatsby"
 const config: GatsbyConfig = {
   siteMetadata: {
     title: `Peter Piekarczyk`,
-    siteUrl: "https://peterp.me",
+    siteUrl: "https://www.peterp.me",
     description:
-      "Peter Piekarczyk - Engineer, Investor, Advisor. Building Backpack for mobile",
+      "Peter Piekarczyk - Engineer, Investor, Advisor. Building Backpack and products AI made possible",
     twitterUsername: "@peterpme",
     keywords:
       "Startups, Engineering, Software Development, Investing, Advising, React, Node, Leadership, Automation",
@@ -13,7 +13,7 @@ const config: GatsbyConfig = {
     titleSuffix: " | Peter Piekarczyk",
     author: {
       name: `Peter Piekarczyk`,
-      summary: `Building Backpack for mobile`,
+      summary: `Building Backpack and products AI made possible`,
     },
     og: {
       type: "website",
@@ -22,7 +22,7 @@ const config: GatsbyConfig = {
         height: "630",
         width: "1200",
         type: "image/png",
-        url: "https://peterp.me/og.png",
+        url: "https://www.peterp.me/og.png",
       },
     },
     social: {
@@ -92,8 +92,8 @@ const config: GatsbyConfig = {
             `,
             output: "/rss.xml",
             title: "Peter Piekarczyk RSS Feed",
-            site_url: "https://peterp.me",
-            feed_url: "https://peterp.me/rss.xml",
+            site_url: "https://www.peterp.me",
+            feed_url: "https://www.peterp.me/rss.xml",
           },
         ],
       },
@@ -120,12 +120,6 @@ const config: GatsbyConfig = {
       },
     },
     {
-      resolve: "gatsby-plugin-manifest",
-      options: {
-        icon: "src/images/icon.png",
-      },
-    },
-    {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `Peter Piekarczyk`,
@@ -134,19 +128,7 @@ const config: GatsbyConfig = {
         background_color: `#fff`,
         theme_color: `#000`,
         display: `minimal-ui`,
-        icon: `./src/images/android-chrome-512x512.png`,
-        icons: [
-          {
-            src: `./src/images/android-chrome-192x192.png`,
-            sizes: `192x192`,
-            type: `image/png`,
-          },
-          {
-            src: `./src/images/android-chrome-512x512.png`,
-            sizes: `512x512`,
-            type: `image/png`,
-          },
-        ],
+        icon: `src/images/android-chrome-512x512.png`,
       },
     },
     "gatsby-plugin-mdx",
