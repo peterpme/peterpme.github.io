@@ -624,6 +624,12 @@ a.entry-title:hover {
   padding: 2.4rem 0 4.5rem;
 }
 
+@media (max-width: 720px) {
+  .article {
+    padding-top: 1.25rem;
+  }
+}
+
 .article h1 {
   max-width: 12em;
   font-size: clamp(2.45rem, 5.6vw, 4.9rem);
