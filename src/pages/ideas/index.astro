@@ -1,6 +1,6 @@
 ---
 import Base from "../../layouts/Base.astro";
-import { formatFull, getByKind, isoDate } from "../../lib/content";
+import { formatShort, getByKind, isoDate } from "../../lib/content";
 const ideas = getByKind("idea");
 const description = "A place for ideas I don't have time to build yet. I update them when they change.";
 ---
@@ -16,7 +16,7 @@ const description = "A place for ideas I don't have time to build yet. I update 
         {
           ideas.map((idea) => (
             <li class="entry">
-              <time datetime={isoDate(idea.date)}>{formatFull(idea.date)}</time>
+              <time datetime={isoDate(idea.date)}>{formatShort(idea.date)}</time>
               <div>
                 <a class="entry-title" href={idea.href}>
                   {idea.title}

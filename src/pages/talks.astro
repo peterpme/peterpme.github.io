@@ -29,21 +29,23 @@ function hrefFor(talk: Talk): string | null {
       <div class="rule" aria-hidden="true"></div>
       <h1>Talks</h1>
       <p class="dek">{description}</p>
-      <ol class="talk-list">
+      <ol>
         {
           visible.map((talk) => {
             const href = hrefFor(talk);
             return (
-              <li class="talk">
-                <p class="talk-meta">
-                  <span>{talk.year}</span>
-                  {talk.venue}
-                </p>
-                {href ? (
-                  <a href={href}>{talk.title}</a>
-                ) : (
-                  <p class="talk-title">{talk.title}</p>
-                )}
+              <li class="entry">
+                <time datetime={talk.year}>{talk.year}</time>
+                <div>
+                  {href ? (
+                    <a class="entry-title" href={href}>
+                      {talk.title}
+                    </a>
+                  ) : (
+                    <p class="entry-title">{talk.title}</p>
+                  )}
+                  {talk.venue ? <p class="entry-dek">{talk.venue}</p> : null}
+                </div>
               </li>
             );
           })
