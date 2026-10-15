@@ -1042,6 +1042,7 @@ a.entry-title:hover {
 .footer-role {
   color: var(--muted);
   font-size: 0.95rem;
+  line-height: 1.25;
   max-width: 28rem;
 }
 
