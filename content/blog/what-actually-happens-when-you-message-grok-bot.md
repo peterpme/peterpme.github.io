@@ -20,7 +20,7 @@ keywords:
   - Lee Robinson
 ---
 
-Token maxis at frontier labs have been saying that systems and distributed engineering matter more than ever in the age of AI. I never really understood why until I watched Lee Robinson's talk on how Grok Bot works.
+Token maxis at frontier labs have been saying that systems/distributed engineering matter more than ever in the age of AI. I never really understood why until I watched [Lee Robinson's talk on how Grok Bot works](https://www.youtube.com/watch?v=L1OBRtfPS34).
 
 It turns out a modern chat agent isn't some new kind of software paradigm. It's built from the same pieces we've always used to build scalable systems: queues, background workers, durable workflows, idempotency, caching, and eventual consistency. The model is the new part.
 
@@ -28,7 +28,9 @@ Everything that makes the agent useful to a real person is distributed systems w
 
 This post outlines what happens from the moment you press send until the agent goes back to sleep (and tries to point out the familiar patterns along the way). Most of it comes straight from Lee's talk, and I'd strongly recommend watching it. In the places the talk doesn't go into detail, I've filled in the gaps from my own experience with distributed systems.
 
-<p style="padding: 1em 0;">Watch <a href="https://www.youtube.com/watch?v=L1OBRtfPS34">Lee's talk</a>. I created a tool that parsed the entire video, including screenshots, and laid it out in text form: <a href="/transcripts/how-grok-bot-works/">read the full transcript with slides</a>.</p>
+FYI: I created a Grok Bot that parsed the entire video, including screenshots and laid it out in text form if you don't like watching videos.
+
+[Read the full transcript with slides here](/transcripts/how-grok-bot-works/)
 
 ## Hitting send
 
