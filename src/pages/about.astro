@@ -1,0 +1,57 @@
+---
+import Base from "../layouts/Base.astro";
+import Avatar from "../components/Avatar.astro";
+import { AUTHOR, SITE_URL, TAGLINE } from "../lib/site";
+
+const description =
+  "Hi there! I'm working on building the best mobile wallet at Backpack. Prior to that, I was the co-founder and CTO of Draftbit.";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: AUTHOR,
+  url: `${SITE_URL}/about/`,
+  description,
+  jobTitle: TAGLINE,
+  sameAs: [
+    "https://www.twitter.com/peterpme",
+    "https://www.github.com/peterpme",
+    "https://www.linkedin.com/in/peterpme",
+  ],
+};
+---
+
+<Base title="About" description={description} current="about" jsonLd={jsonLd}>
+  <div class="wrap">
+    <header class="about-hero">
+      <Avatar size={132} eager />
+      <div>
+        <p class="kicker">About</p>
+        <h1>{AUTHOR}</h1>
+      </div>
+    </header>
+
+    <div class="about-layout">
+      <div class="about-prose">
+        <p>
+          Hi there! I'm working on building the best mobile wallet at <a href="https://backpack.app">Backpack</a>.
+          Prior to that, I was the co-founder &amp; CTO of <a href="https://draftbit.com">Draftbit</a>.
+        </p>
+        <p>
+          I always knew I wanted to build things. At the age of 12 I started my first business selling templated
+          logos and websites on Ebay. As you could imagine, client phone calls didn't go as planned.
+        </p>
+        <p>
+          Several companies and *lots* of learning, experiences and mistakes later, I'm working on a new way to
+          build apps.
+        </p>
+        <p>
+          <a href="https://draftbit.com">Draftbit</a> is a platform backed by
+          <a href="https://ycombinator.com">Y-Combinator</a> that gives teams the ability to build fully native
+          experiences without having to worry about writing any code, giving anyone the opportunity to build anything
+          they imagine.
+        </p>
+      </div>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,53 @@
+---
+import Avatar from "./Avatar.astro";
+import type { NavId } from "../lib/site";
+
+interface Props {
+  current?: NavId;
+}
+
+const { current } = Astro.props;
+
+const links = [
+  { id: "writing", label: "Writing", href: "/" },
+  { id: "ideas", label: "Ideas", href: "/ideas/" },
+  { id: "talks", label: "Talks", href: "/talks/" },
+  { id: "about", label: "About", href: "/about/" },
+] as const;
+---
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="brand" href="/">
+      <Avatar size={32} eager />
+      <span>peterp.me</span>
+    </a>
+    <div class="header-tools">
+      <nav aria-label="Primary">
+        <ul class="nav-list">
+          {
+            links.map((link) => (
+              <li>
+                <a class="nav-link" href={link.href} aria-current={link.id === current ? "page" : undefined}>
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch color theme">
+        <svg class="theme-icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <mask id="theme-moon-mask">
+            <rect width="24" height="24" fill="#fff"></rect>
+            <circle class="moon-cut" cx="24" cy="4" r="7" fill="#000"></circle>
+          </mask>
+          <circle class="theme-core" cx="12" cy="12" r="5" fill="currentColor" mask="url(#theme-moon-mask)"></circle>
+          <g class="theme-rays" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M12 1.5v2M12 20.5v2M1.5 12h2M20.5 12h2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M4.6 19.4 6 18M18 6l1.4-1.4"></path>
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>

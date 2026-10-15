@@ -1,0 +1,17 @@
+export const AUTHOR = "Peter Piekarczyk";
+export const TAGLINE = "Building Backpack & products only possible with AI";
+export const SITE_HOST = "www.peterp.me";
+export const SITE_URL = `https://${SITE_HOST}`;
+export const DESCRIPTION = `${AUTHOR}. ${TAGLINE}.`;
+export const TWITTER = "@peterpme";
+export const FEATURED_SLUG = "what-actually-happens-when-you-message-grok-bot";
+export const ARCHIVE_BEFORE_YEAR = 2019;
+
+export type NavId = "writing" | "ideas" | "talks" | "about";
+
+export const SOCIAL = [
+  { label: "Twitter", href: "https://www.twitter.com/peterpme" },
+  { label: "GitHub", href: "https://www.github.com/peterpme" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/peterpme" },
+  { label: "Instagram", href: "https://www.instagram.com/peterpme" },
+] as const;

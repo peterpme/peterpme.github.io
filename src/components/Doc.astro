@@ -1,0 +1,79 @@
+---
+import Base from "../layouts/Base.astro";
+import { neighbors, formatFull, isoDate, ogLeaf, type Doc } from "../lib/content";
+import { renderMarkdown } from "../lib/markdown";
+import { AUTHOR, SITE_URL } from "../lib/site";
+
+interface Props {
+  doc: Doc;
+}
+
+const { doc } = Astro.props;
+const html = renderMarkdown(doc.body, doc.dir);
+const { previous, next } = neighbors(doc);
+const current = doc.kind === "idea" ? "ideas" : doc.kind === "article" ? "writing" : undefined;
+const description = doc.description || doc.title;
+const image = `/og/${ogLeaf(doc.slug)}.png`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": doc.kind === "article" ? "TechArticle" : "Article",
+  headline: doc.title,
+  datePublished: doc.date.toISOString(),
+  author: { "@type": "Person", name: AUTHOR, url: SITE_URL },
+  url: `${SITE_URL}${doc.href}`,
+  image: `${SITE_URL}${image}`,
+  ...(description ? { description } : {}),
+  ...(doc.keywords.length ? { keywords: doc.keywords.join(", ") } : {}),
+};
+---
+
+<Base
+  title={doc.title}
+  description={description}
+  current={current}
+  image={image}
+  imageAlt={doc.title}
+  type="article"
+  publishedTime={doc.date.toISOString()}
+  tags={doc.keywords}
+  jsonLd={jsonLd}
+>
+  <article class="article">
+    <div class="wrap">
+      <h1>{doc.title}</h1>
+      <p class="meta-line">
+        <time datetime={isoDate(doc.date)}>{formatFull(doc.date)}</time>
+        <span aria-hidden="true"> · </span>
+        <span>{doc.minutes} min read</span>
+      </p>
+      <div class="prose" set:html={html} />
+      {
+        previous || next ? (
+          <nav class="pager" aria-label="More">
+            {previous ? (
+              <a href={previous.href} rel="prev">
+                <span>Previous</span>
+                {previous.title}
+              </a>
+            ) : (
+              <span></span>
+            )}
+            {next ? (
+              <a href={next.href} rel="next">
+                <span>Next</span>
+                {next.title}
+              </a>
+            ) : null}
+          </nav>
+        ) : null
+      }
+      <footer class="colophon">
+        <div class="rule" aria-hidden="true"></div>
+        <p>
+          {AUTHOR} · <time datetime={isoDate(doc.date)}>{formatFull(doc.date)}</time>
+        </p>
+      </footer>
+    </div>
+  </article>
+</Base>

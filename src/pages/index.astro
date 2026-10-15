@@ -1,0 +1,92 @@
+---
+import Base from "../layouts/Base.astro";
+import {
+  formatArchive,
+  formatFull,
+  formatShort,
+  getArchive,
+  getFeatured,
+  getRecent,
+  groupByYear,
+  isoDate,
+} from "../lib/content";
+import { AUTHOR, DESCRIPTION, SITE_URL, TAGLINE } from "../lib/site";
+
+const featured = getFeatured();
+const recent = groupByYear(getRecent());
+const archive = getArchive();
+const archiveYears =
+  archive.length > 0 ? `${archive[archive.length - 1].year}–${archive[0].year}` : "";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: AUTHOR,
+  url: SITE_URL,
+  description: DESCRIPTION,
+  author: { "@type": "Person", name: AUTHOR, url: `${SITE_URL}/about/` },
+};
+---
+
+<Base title={AUTHOR} description={TAGLINE} current="writing" jsonLd={jsonLd}>
+  <section class="hero">
+    <div class="wrap">
+      <p class="kicker">Deep Dive AI</p>
+      <h1><a href={featured.href}>{featured.title}</a></h1>
+      <p class="meta-line">
+        <time datetime={isoDate(featured.date)}>{formatFull(featured.date)}</time>
+        <span aria-hidden="true"> · </span>
+        <span>{featured.minutes} min read</span>
+      </p>
+      <a class="read" href={featured.href}>Read the essay</a>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="recent-heading">
+    <div class="wrap">
+      <div class="band-head">
+        <h2 id="recent-heading">Recent</h2>
+      </div>
+      {
+        recent.map((group) => (
+          <div class="year-group">
+            <h3>{group.year}</h3>
+            <ol>
+              {group.posts.map((post) => (
+                <li>
+                  <div class="entry">
+                    <time datetime={isoDate(post.date)}>{formatShort(post.date)}</time>
+                    <a class="entry-title" href={post.href}>
+                      {post.title}
+                    </a>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="archive-heading">
+    <div class="wrap">
+      <div class="band-head">
+        <h2 id="archive-heading">Archive</h2>
+        <p>{archiveYears}</p>
+      </div>
+      <ol class="archive-grid">
+        {
+          archive.map((post) => (
+            <li class="entry entry-archive">
+              <time datetime={isoDate(post.date)}>{formatArchive(post.date)}</time>
+              <a class="entry-title" href={post.href}>
+                {post.title}
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+</Base>

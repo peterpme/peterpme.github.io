@@ -26,7 +26,7 @@ Run the following to get yourself started with Next.js and Emotion:
 
 #### Yarn
 
-`yarn` is an alternative package manager to `npm` that strives for high performance and security. You can read more about it at [yarnpkg.com](<[https://yarnpkg.com](https://yarnpkg.com)>) or get started with it right away by running `brew update && brew install yarn` in your terminal.
+`yarn` is an alternative package manager to `npm` that strives for high performance and security. You can read more about it at [yarnpkg.com](https://yarnpkg.com) or get started with it right away by running `brew update && brew install yarn` in your terminal.
 
 #### Configuration
 

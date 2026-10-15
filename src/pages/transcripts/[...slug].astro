@@ -1,0 +1,14 @@
+---
+import DocView from "../../components/Doc.astro";
+import { getByKind, getDoc } from "../../lib/content";
+
+export function getStaticPaths() {
+  return getByKind("transcript").map((doc) => ({ params: { slug: doc.slug } }));
+}
+
+const slug = Astro.params.slug;
+if (!slug) throw new Error("Missing transcript slug");
+const doc = getDoc("transcript", slug);
+---
+
+<DocView doc={doc} />

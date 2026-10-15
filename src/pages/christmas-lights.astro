@@ -1,0 +1,11 @@
+---
+import Base from "../layouts/Base.astro";
+import ChristmasLights from "../components/ChristmasLights";
+import "../styles/christmas.generated.css";
+
+const description = "Plan Christmas light spacing around a window frame.";
+---
+
+<Base title="Christmas lights" description={description}>
+  <ChristmasLights client:load />
+</Base>
