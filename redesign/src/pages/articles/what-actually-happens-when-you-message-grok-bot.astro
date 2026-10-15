@@ -1,0 +1,31 @@
+---
+import Base from "../../layouts/Base.astro";
+import { AUTHOR } from "../../lib/site";
+import { renderMarkdown } from "../../lib/markdown";
+import { formatFull, getFeatured, isoDate } from "../../lib/posts";
+
+const post = getFeatured();
+const html = renderMarkdown(post.body);
+const category = post.categories[0] ?? "Essay";
+---
+
+<Base title={`${post.title} | ${AUTHOR}`} description={post.description} current="writing">
+  <article class="article">
+    <div class="wrap">
+      <p class="kicker"><a href="/">Writing</a> / {category}</p>
+      <div class="rule" aria-hidden="true"></div>
+      <h1>{post.title}</h1>
+      <p class="standfirst">{post.description}</p>
+      <p class="meta-line">
+        <time datetime={isoDate(post.date)}>{formatFull(post.date)}</time>
+        <span aria-hidden="true"> · </span>
+        <span>{post.minutes} min read</span>
+      </p>
+      <div class="prose" set:html={html} />
+      <footer class="colophon">
+        <div class="rule" aria-hidden="true"></div>
+        <p>{AUTHOR} · <time datetime={isoDate(post.date)}>{formatFull(post.date)}</time></p>
+      </footer>
+    </div>
+  </article>
+</Base>

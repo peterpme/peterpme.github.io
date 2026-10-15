@@ -1,0 +1,23 @@
+---
+import { Image } from "astro:assets";
+import source from "../assets/profile-pic.jpg";
+
+interface Props {
+  size: number;
+  eager?: boolean;
+}
+
+const { size, eager = false } = Astro.props;
+---
+
+<Image
+  src={source}
+  alt=""
+  width={size}
+  height={size}
+  densities={[2]}
+  quality={86}
+  class="avatar"
+  loading={eager ? "eager" : "lazy"}
+  decoding="async"
+/>
