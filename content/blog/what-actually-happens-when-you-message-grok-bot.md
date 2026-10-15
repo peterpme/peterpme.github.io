@@ -26,7 +26,9 @@ It turns out a modern chat agent isn't some new kind of software paradigm. It's 
 
 Everything that makes the agent useful to a real person is distributed systems work. That includes staying responsive while it works, surviving crashes, and running for hours without burning money.
 
-This post outlines what happens from the moment you press send until the agent goes back to sleep (and tries to point out the familiar patterns along the way). Most of it comes straight from Lee's talk, and I'd strongly recommend watching it. In the places the talk doesn't go into detail, I've filled in the gaps from my own experience with distributed systems.
+This post outlines what happens from the moment you press send until the agent goes back to sleep (and tries to point out the familiar patterns along the way).
+
+Most of it comes straight from Lee's talk, and I'd strongly recommend watching it. In the places the talk doesn't go into detail, I've filled in the gaps from my own experience with distributed systems.
 
 FYI: I created a Grok Bot that parsed the entire video, including screenshots and laid it out in text form if you don't like watching videos.
 
