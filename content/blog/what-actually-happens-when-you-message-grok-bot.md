@@ -1,6 +1,6 @@
 ---
-title: "Always-on AI agents are distributed systems"
-description: "An always-on AI agent is a distributed system. Follow one Grok Bot message from send to sleep: queues, background workers, durable workflows with Temporal, idempotency, Firecracker VMs, prompt caching, and context compaction."
+title: "What actually happens when you message Grok Bot"
+description: "Always-on AI agents are distributed systems. Follow one Grok Bot message from send to sleep: queues, background workers, durable workflows with Temporal, idempotency, Firecracker VMs, prompt caching, and context compaction."
 date: 2026-10-14T06:00:00.000Z
 categories: AI
 keywords:
