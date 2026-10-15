@@ -30,8 +30,7 @@ This post outlines what happens from the moment you press send until the agent g
 
 Most of it comes straight from Lee's talk, and I'd strongly recommend watching it. In the places the talk doesn't go into detail, I've filled in the gaps from my own experience with distributed systems.
 
-FYI: I created a Grok Bot that parsed the entire video, including screenshots and laid it out in text form if you don't like watching videos.
-
+FYI: I created a Grok Bot that parsed the entire video, including screenshots and laid it out in text form if you don't like watching videos.\
 [Read the full transcript with slides here](/transcripts/how-grok-bot-works/)
 
 ## Hitting send
