@@ -195,6 +195,7 @@ I have more questions, and I'd love to hear from you. Also lmk if I got anything
 - I'm assuming I get the same VM every time because of the snapshot. Am I right?
 - How long does waking from a snapshot actually take?
 - Is there an internal VM manager? How does it pick a host?
+- Does each Grok Bot I create get its own VM? From what I can tell, all my bots share one computer and each gets its own screen and browser, while files and logins are shared. Is that right, and why did you design it that way?
 
 **Storage & context**
 
