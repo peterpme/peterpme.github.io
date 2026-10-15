@@ -6,6 +6,7 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
   site: "https://www.peterp.me",
+  // Cloudflare Pages publishes `dist`. No adapter, no server runtime.
   output: "static",
   trailingSlash: "always",
   vite: {

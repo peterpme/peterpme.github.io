@@ -1,4 +1,6 @@
 ---
+import Avatar from "./Avatar.astro";
+
 interface Props {
   current: "writing" | "about";
 }
@@ -13,7 +15,10 @@ const links = [
 
 <header class="site-header">
   <div class="wrap header-row">
-    <a class="brand" href="/">peterp.me</a>
+    <a class="brand" href="/">
+      <Avatar size={32} eager />
+      <span>peterp.me</span>
+    </a>
     <div class="header-tools">
       <nav aria-label="Primary">
         <ul class="nav-list">

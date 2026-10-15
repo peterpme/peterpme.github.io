@@ -181,6 +181,9 @@ html[data-theme="dark"] ::selection {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-weight: 700;
   letter-spacing: -0.045em;
   font-size: 1.05rem;
@@ -200,6 +203,24 @@ html[data-theme="dark"] ::selection {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+@media (max-width: 720px) {
+  .header-row {
+    gap: 0.65rem;
+  }
+
+  .brand {
+    gap: 0.4rem;
+  }
+
+  .header-tools {
+    gap: 0.5rem;
+  }
+
+  .nav-list {
+    gap: 0.7rem;
+  }
 }
 
 .nav-link {
@@ -266,12 +287,28 @@ html[data-theme="light"] .show-in-light {
   }
 }
 
-.avatar {
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 0 1px var(--line);
+.avatar-frame {
   display: block;
+  flex: none;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--line);
   background: var(--code);
+}
+
+.avatar-frame picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-frame .avatar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  border-radius: 0;
 }
 
 .kicker {
@@ -365,7 +402,6 @@ html[data-theme="light"] .show-in-light {
 
 .byline > a {
   display: block;
-  width: 3.5rem;
   line-height: 0;
   flex: none;
 }
@@ -559,9 +595,42 @@ html[data-theme="light"] .show-in-light {
   font-variant-numeric: tabular-nums;
 }
 
+.article .byline {
+  max-width: 68ch;
+  margin-top: 1.35rem;
+}
+
+.figure {
+  max-width: 68ch;
+  margin: 0.4rem 0 1.6rem;
+}
+
+.figure picture {
+  display: block;
+  max-width: 100%;
+}
+
+.figure .content-img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.figure figcaption {
+  margin-top: 0.55rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.figure figcaption a {
+  color: var(--accent-ink);
+  text-underline-offset: 0.16em;
+}
+
 .prose {
   max-width: 68ch;
-  margin-top: 2.15rem;
+  margin-top: 1.5rem;
   font-size: 1.125rem;
   line-height: 1.7;
   color: var(--text);

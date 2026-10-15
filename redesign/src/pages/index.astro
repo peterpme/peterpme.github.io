@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
-import Avatar from "../components/Avatar.astro";
+import Byline from "../components/Byline.astro";
 import { AUTHOR, TAGLINE } from "../lib/site";
 import {
   formatArchive,
@@ -30,19 +30,12 @@ const archiveYears =
       <h1><a href={featured.href}>{featured.title}</a></h1>
       <p class="dek">{featured.description}</p>
       <a class="read" href={featured.href}>Read the essay</a>
-      <div class="byline">
-        <a href="/about/">
-          <Avatar size={56} eager />
-        </a>
-        <div class="byline-copy">
-          <a class="byline-name" href="/about/">{AUTHOR}</a>
-          <p class="byline-role">{TAGLINE}</p>
-        </div>
+      <Byline eager>
         <p class="byline-meta">
           <time datetime={isoDate(featured.date)}>{formatFull(featured.date)}</time>
           <span>{featured.minutes} min read</span>
         </p>
-      </div>
+      </Byline>
     </div>
   </section>
 

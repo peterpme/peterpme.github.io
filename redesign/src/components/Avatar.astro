@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Picture } from "astro:assets";
 import source from "../assets/profile-pic.jpg";
 
 interface Props {
@@ -8,16 +8,25 @@ interface Props {
 }
 
 const { size, eager = false } = Astro.props;
+if (size > source.width) {
+  throw new Error(`Avatar CSS size ${size}px exceeds the ${source.width}px source`);
+}
+// 2x and 3x of the CSS size, but never a bitmap larger than the source.
+const densities = [2, 3].filter((density) => density * size <= source.width);
 ---
 
-<Image
-  src={source}
-  alt=""
-  width={size}
-  height={size}
-  densities={[2]}
-  quality={86}
-  class="avatar"
-  loading={eager ? "eager" : "lazy"}
-  decoding="async"
-/>
+<span class="avatar-frame" style={`width:${size}px;height:${size}px`}>
+  <Picture
+    src={source}
+    formats={["avif", "webp"]}
+    fallbackFormat="jpg"
+    densities={densities.length > 0 ? densities : [1]}
+    width={size}
+    height={size}
+    quality={90}
+    alt=""
+    class="avatar"
+    loading={eager ? "eager" : "lazy"}
+    decoding="async"
+  />
+</span>
