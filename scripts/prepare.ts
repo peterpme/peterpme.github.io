@@ -4,9 +4,6 @@ import path from "node:path";
 import postcss from "postcss";
 import tailwindcss from "@tailwindcss/postcss";
 import { getDocs, formatFull, ogLeaf } from "../src/lib/content.ts";
-import { collectImageSrcs } from "../src/lib/markdown.ts";
-import { resolveImage, imageMapPath, type ImageMap } from "../src/lib/images.ts";
-import { optimizeFile } from "../src/lib/optimize.ts";
 import { SITE_URL } from "../src/lib/site.ts";
 
 const ROOT = process.cwd();
@@ -73,27 +70,6 @@ function writeRedirects(): void {
   console.log(`Wrote ${lines.length} redirect rules to public/_redirects`);
 }
 
-async function writeImages(): Promise<void> {
-  const outDir = path.join(PUBLIC, "_img");
-  const map: ImageMap = {};
-  const files = new Set<string>();
-  for (const doc of getDocs()) {
-    for (const src of collectImageSrcs(doc.body)) {
-      const resolved = resolveImage(src, doc.dir);
-      if (resolved) files.add(resolved);
-    }
-  }
-  let count = 0;
-  for (const file of files) {
-    map[file] = await optimizeFile(file, outDir);
-    count += 1;
-  }
-  const dest = imageMapPath();
-  fs.mkdirSync(path.dirname(dest), { recursive: true });
-  fs.writeFileSync(dest, `${JSON.stringify(map)}\n`);
-  console.log(`Optimized ${count} content images`);
-}
-
 function writeOgPosts(): void {
   const posts = getDocs().map((doc) => ({
     href: doc.href,
@@ -132,7 +108,6 @@ async function main(): Promise<void> {
   writeManifest();
   writeRedirects();
   await writeChristmasCss();
-  await writeImages();
   writeOgPosts();
   generateOg();
 }

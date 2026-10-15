@@ -1,5 +1,5 @@
 import { Marked, type Tokens } from "marked";
-import { renderLocalImage } from "./images.ts";
+import { renderLocalImage } from "./content-images.ts";
 
 const KEYWORDS = new Set([
   "async",
@@ -82,18 +82,20 @@ function slugify(value: string): string {
     .replace(/^-|-$/g, "");
 }
 
-function dressHtml(html: string, dir: string): string {
+async function dressHtml(html: string, dir: string): Promise<string> {
   const withoutStyle = html.replace(/\sstyle="[^"]*"/g, "");
-  const withImages = withoutStyle.replace(
-    /<img\b([^>]*?)>/g,
-    (tag, attrs: string) => {
-      const srcMatch = attrs.match(/\ssrc="([^"]+)"/);
-      const altMatch = attrs.match(/\salt="([^"]*)"/);
-      if (!srcMatch) return tag;
-      const local = renderLocalImage(srcMatch[1], altMatch?.[1] ?? "", dir);
-      return local ?? tag;
-    },
-  );
+  const tags = [...withoutStyle.matchAll(/<img\b([^>]*?)>/g)];
+  const rendered = new Map<string, string>();
+  for (const match of tags) {
+    const tag = match[0];
+    const attrs = match[1];
+    const srcMatch = attrs.match(/\ssrc="([^"]+)"/);
+    const altMatch = attrs.match(/\salt="([^"]*)"/);
+    if (!srcMatch || rendered.has(tag)) continue;
+    const local = await renderLocalImage(srcMatch[1], altMatch?.[1] ?? "", dir);
+    if (local) rendered.set(tag, local);
+  }
+  const withImages = withoutStyle.replace(/<img\b([^>]*?)>/g, (tag) => rendered.get(tag) ?? tag);
   const withExternal = withImages.replace(
     /<a href="(https?:\/\/[^"]+)"(?![^>]*\btarget=)/g,
     '<a href="$1" target="_blank" rel="noopener noreferrer"',
@@ -104,7 +106,14 @@ function dressHtml(html: string, dir: string): string {
   });
 }
 
-export function renderMarkdown(source: string, dir: string): string {
+export async function renderMarkdown(source: string, dir: string): Promise<string> {
+  const images = new Map<string, (alt: string) => string>();
+  for (const src of collectImageSrcs(source)) {
+    const local = await renderLocalImage(src, "", dir);
+    if (!local) continue;
+    images.set(src, (alt: string) => local.replace('alt=""', `alt="${escapeHtml(alt)}"`));
+  }
+
   const marked = new Marked();
   marked.use({
     gfm: true,
@@ -114,8 +123,8 @@ export function renderMarkdown(source: string, dir: string): string {
       },
       image(token: Tokens.Image) {
         const alt = token.text ?? "";
-        const local = renderLocalImage(token.href, alt, dir);
-        if (local) return local;
+        const cached = images.get(token.href);
+        if (cached) return cached(alt);
         const href = escapeHtml(token.href);
         return `<img src="${href}" alt="${escapeHtml(alt)}" loading="lazy" decoding="async">`;
       },

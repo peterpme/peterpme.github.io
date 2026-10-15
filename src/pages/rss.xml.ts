@@ -26,11 +26,12 @@ function absoluteHtml(html: string): string {
     });
 }
 
-export const GET: APIRoute = () => {
-  const items = getByKind("article")
-    .map((doc) => {
-      const link = `${SITE_URL}${doc.href}`;
-      const html = absoluteHtml(renderMarkdown(doc.body, doc.dir));
+export const GET: APIRoute = async () => {
+  const items = (
+    await Promise.all(
+      getByKind("article").map(async (doc) => {
+        const link = `${SITE_URL}${doc.href}`;
+        const html = absoluteHtml(await renderMarkdown(doc.body, doc.dir));
       return `<item>
         <title>${escapeXml(doc.title)}</title>
         <link>${link}</link>
@@ -40,8 +41,9 @@ export const GET: APIRoute = () => {
         <description>${escapeXml(doc.description || doc.title)}</description>
         <content:encoded><![CDATA[${html.replaceAll("]]>", "]]]]><![CDATA[>")}]]></content:encoded>
       </item>`;
-    })
-    .join("\n");
+      }),
+    )
+  ).join("\n");
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom">
