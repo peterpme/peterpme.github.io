@@ -62,6 +62,10 @@ function writeRedirects(): void {
     lines.push(`/${doc.slug} ${doc.href} 301`);
     lines.push(`/${doc.slug}/ ${doc.href} 301`);
   }
+  lines.push(
+    "/articles/dont-build-a-software-factory /articles/personal-software-factories-are-a-waste-of-time/ 301",
+    "/articles/dont-build-a-software-factory/ /articles/personal-software-factories-are-a-waste-of-time/ 301",
+  );
   if (lines.length > REDIRECT_LIMIT) {
     throw new Error(`${lines.length} redirect rules exceeds the ${REDIRECT_LIMIT} redirect limit`);
   }

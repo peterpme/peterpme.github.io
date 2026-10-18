@@ -1,5 +1,5 @@
 ---
-title: "Don't build a software factory"
+title: "Personal software factories are a waste of time"
 description: "Why the last thing you should spend time on is your own software factory."
 date: 2026-10-18T06:00:00.000Z
 categories: AI
