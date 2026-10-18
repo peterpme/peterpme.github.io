@@ -11,3 +11,7 @@ allowBuilds:
   esbuild: true
   sharp: false
   workerd: true
+
+# GHSA-px8p-9vwx-vf98. satori and @shuding/opentype.js still request 0.7.3.
+overrides:
+  fflate: 0.7.5
