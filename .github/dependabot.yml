@@ -1,0 +1,19 @@
+# Dependabot treats pnpm as the npm ecosystem and picks it up from
+# package.json plus pnpm-lock.yaml. packageManager is pnpm@11.25.0.
+# No github-actions ecosystem: this repo has no workflows.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 1
+    groups:
+      minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
