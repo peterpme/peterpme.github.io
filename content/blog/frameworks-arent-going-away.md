@@ -14,7 +14,7 @@ Is Postgres going away? Is Redis going away? Is React going away? No. And I'd be
 
 ## The best version of the other side
 
-I want to be fair here, because the other side has real points.
+The other side has real points.
 
 Anish Acharya at a16z wrote about [disposable software](https://a16z.com/disposable-software/): little apps built for you and a couple of friends, because the cost of building them collapsed. His example is a mini Instagram for his kids' cat photos. As he puts it, "You wouldn’t write a thousand lines of code just to share photos with three people." Now you would, because an agent writes it in an hour.
 
@@ -28,8 +28,6 @@ That's the strongest case. Code is cheap now, so why carry someone else's abstra
 
 ## Read the fine print
 
-Here's what I notice when I actually read these.
-
 Shopify didn't go framework-free. They tested whether agents could build "directly in SwiftUI and Jetpack Compose." Those are frameworks. Then, for the bigger Shopify app, they built a tool called [Helix](https://shopify.engineering/helix) so agents follow "a highly opinionated architecture we designed for the new native apps." They swapped one abstraction for another and wrote down even more rules for the agents. That's the opposite of frameworks going away.
 
 Ronacher draws the same line himself. In the same post: "There are the important libraries that solve hard problems." He names HTTP and QUIC and says, "I won’t be able to get rid of tokio and I have no desire to."
@@ -40,9 +38,9 @@ And that Claude Code study? When it does pick a tool, it picks decisively: Strip
 
 ## Agents need shared vocabulary
 
-When I write less code by hand and agents write more, the shared parts get more valuable.
+The more code agents write, the more the shared parts are worth.
 
-If ten agents are working in my repo, I want all of them speaking React, Postgres and Redis. Not ten slightly different homemade state systems that each agent invented on a Tuesday. A framework is a contract. It tells the agent where things go and what "correct" looks like.
+If ten agents are working in my repo, I want all of them speaking React, Postgres and Redis. Not ten homemade state systems that each agent invented on a Tuesday. A framework is a contract. It tells the agent where things go and what "correct" looks like.
 
 Martin Fowler said it well in his note on [vibe coding](https://martinfowler.com/bliki/VibeCoding.html): "well-structured software makes life easier for LLMs too."
 
@@ -64,7 +62,7 @@ Hand-rolled auth is the same story. JWT plus bcrypt from scratch works great rig
 
 ## The boring reasons still matter
 
-Ecosystems matter. React has a library for basically everything, and those libraries work together.
+Ecosystems matter. React has a library for basically everything, and they work together.
 
 Hiring matters. I can hire someone who knows Postgres tomorrow. I can't hire someone who knows the database my agent invented last month.
 
