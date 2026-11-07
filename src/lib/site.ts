@@ -1,5 +1,5 @@
 export const AUTHOR = "Peter Piekarczyk";
-export const TAGLINE = "Building Backpack & products only possible with AI";
+export const TAGLINE = "Making things people use";
 export const SITE_HOST = "www.peterp.me";
 export const SITE_URL = `https://${SITE_HOST}`;
 export const DESCRIPTION = `${AUTHOR}. ${TAGLINE}.`;
