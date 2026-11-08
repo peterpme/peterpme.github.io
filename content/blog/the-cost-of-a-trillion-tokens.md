@@ -23,7 +23,7 @@ So I did what any aspiring ai maxi would do: I [tweeted about it](https://x.com/
 
 Watching that video hurt but getting it wrong and misunderstanding hurt more so I went on a mission to figure out how tokens are actually billed across providers.
 
-TLDR: the real number is closer to $500k a month.
+**TLDR: the real number is closer to $500k a month.**
 
 I was off by 20x because I wasn't accounting for cache. It turns out around 97% of an agent's tokens only cost five cents on the dollar, and I had priced every one of them at full price (I did leave this caveat but the headline is what sells).
 
