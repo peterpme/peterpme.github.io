@@ -17,7 +17,7 @@ keywords:
   - context compaction
 ---
 
-I stumbled over a [Cursor profile](https://cursor.com/@lauren) that processed 1.5T tokens in 30 days and I couldn't wrap my head around it. That is literally 55x more than my best month of 27B on a handful of Claude and Codex plans.
+I stumbled over a [Cursor profile](https://cursor.com/@lauren) that processed 1.5T tokens in 30 days and I couldn't wrap my head around it. That is literally 55x more than my best month of 27B and I'm running agents 24/7!
 
 So I did what any aspiring ai maxi would do: I [tweeted about it](https://x.com/peterpme/status/2107847615463219252). After doing some sloppy math I said those tokens cost $132M a year. The post went viral. So viral that Theo made a [30m video](https://www.youtube.com/watch?v=FHGfSjDGUIw) about how wrong I was ([and I was](https://x.com/theo/status/2107924138094703084)).
 
