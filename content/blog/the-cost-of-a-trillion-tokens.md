@@ -33,7 +33,7 @@ There is a class of engineer running agents at scale I can't even begin to compr
 
 That productivity gap between lab engineers and the rest of us is the question I care about and I think it's a lot more interesting than the $132M number because hopefully our day of token maxing will soon come too.
 
-But until then, let's learn about how the labs calculate the cost of your tokens.
+But until then, let's learn about how the labs calculate the cost of your slop.
 
 ## A token count is four different numbers added together
 
