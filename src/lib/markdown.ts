@@ -111,7 +111,9 @@ export async function renderMarkdown(source: string, dir: string): Promise<strin
   for (const src of collectImageSrcs(source)) {
     const local = await renderLocalImage(src, "", dir);
     if (!local) continue;
-    images.set(src, (alt: string) => local.replace('alt=""', `alt="${escapeHtml(alt)}"`));
+    images.set(src, (alt: string) =>
+      local.replace(/(alt|aria-label)=""/g, (_, attr: string) => `${attr}="${escapeHtml(alt)}"`),
+    );
   }
 
   const marked = new Marked();
@@ -145,7 +147,9 @@ export async function renderMarkdown(source: string, dir: string): Promise<strin
 
   const html = marked.parse(source, { async: false });
   if (typeof html !== "string") throw new Error("Expected synchronous markdown");
-  return dressHtml(html, dir);
+  // Wide tables scroll inside their own box instead of the page.
+  const wrapped = html.replace(/<table>/g, '<div class="table-wrap"><table>').replace(/<\/table>/g, "</table></div>");
+  return dressHtml(wrapped, dir);
 }
 
 export function collectImageSrcs(source: string): string[] {

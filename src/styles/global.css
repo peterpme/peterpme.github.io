@@ -701,8 +701,6 @@ a.entry-title:hover {
 
 .prose h2 {
   margin: 2.15em 0 0.45em;
-  padding-top: 0.75em;
-  border-top: 1px solid var(--line);
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: -0.038em;
@@ -778,6 +776,191 @@ a.entry-title:hover {
 
 .prose figure {
   margin: 1.4rem 0;
+}
+
+/* Inline SVG charts are drawn in light colors. These rules map the
+   neutral ones to the theme; series colors and on-bar labels stay. */
+.chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.chart .chart-narrow {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .chart .chart-wide:has(+ .chart-narrow) {
+    display: none;
+  }
+
+  .chart .chart-narrow {
+    display: block;
+  }
+}
+
+.chart rect[fill="#fcfcfb"] {
+  fill: light-dark(#fcfcfb, #131317);
+}
+
+.chart [fill="#0b0b0b"] {
+  fill: var(--ink);
+}
+
+.chart [fill="#52514e"] {
+  fill: var(--muted);
+}
+
+.chart [stroke="#52514e"] {
+  stroke: var(--muted);
+}
+
+.chart [fill="#8a8985"] {
+  fill: light-dark(#8a8985, #71717a);
+}
+
+.chart [stroke="#e6e4df"] {
+  stroke: var(--line);
+}
+
+.formula {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.45rem 0.6rem;
+  margin: 1.6rem 0;
+  padding: 1.4rem 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: light-dark(#fcfcfb, #131317);
+  color: var(--ink);
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.formula var {
+  font-style: italic;
+}
+
+.formula sub {
+  font-size: 0.62em;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.formula-lhs {
+  font-weight: 600;
+}
+
+.formula-term {
+  white-space: nowrap;
+}
+
+.formula-op,
+.formula-times {
+  color: var(--accent);
+}
+
+.formula-times {
+  margin: 0 0.3em;
+}
+
+.table-wrap {
+  margin: 1.6rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: light-dark(#fcfcfb, #131317);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+
+.prose th,
+.prose td {
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose thead th {
+  background: color-mix(in srgb, var(--ink) 3%, transparent);
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  line-height: 1.3;
+  text-transform: uppercase;
+  vertical-align: bottom;
+}
+
+.prose th[align="right"],
+.prose td[align="right"] {
+  text-align: right;
+}
+
+.prose td[align="right"] {
+  white-space: nowrap;
+}
+
+.prose td:first-child {
+  color: var(--ink);
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+/* A row whose label is bold is a total: set it apart. */
+.prose tbody tr:has(> td:first-child > strong) td {
+  border-top: 1px solid color-mix(in srgb, var(--ink) 25%, transparent);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+}
+
+@media (hover: hover) {
+  .prose tbody tr:hover td {
+    background: color-mix(in srgb, var(--ink) 4%, transparent);
+  }
+}
+
+@media (max-width: 720px) {
+  .prose table {
+    font-size: 0.85rem;
+  }
+
+  .prose th,
+  .prose td {
+    padding: 0.5rem 0.55rem;
+  }
+
+  .prose th:first-child,
+  .prose td:first-child {
+    padding-left: 0.8rem;
+  }
+
+  .prose th:last-child,
+  .prose td:last-child {
+    padding-right: 0.8rem;
+  }
+
+  .prose thead th {
+    font-size: 0.64rem;
+    letter-spacing: 0.03em;
+  }
+}
+
+.prose td a {
+  color: var(--accent-ink);
+  text-underline-offset: 0.16em;
 }
 
 .prose figcaption {
