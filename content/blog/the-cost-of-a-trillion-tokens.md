@@ -64,7 +64,7 @@ The first request writes the whole 500k to the cache: $2.50 (or $4.00 on the 1-h
 
 Every turn after that re-reads it for $0.10, plus a couple of cents to file the new tool result, and each read resets the timer, so a busy session never expires.
 
-Then you go to sleep. The timer runs out, your next turn finds the cache empty and the whole 500k is written again: another $2.50.
+Then you go to lunch. You're gone for an hour. The timer runs out, your next turn finds the cache empty and the whole 500k is written again: another $2.50.
 
 The expensive event in an agent session isn't the reading. It's the rebuild.
 
