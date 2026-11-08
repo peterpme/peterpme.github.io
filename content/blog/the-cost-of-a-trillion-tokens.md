@@ -17,9 +17,9 @@ keywords:
   - context compaction
 ---
 
-I stumbled over a Cursor profile that processed 1.5T tokens in 30 days and I couldn't wrap my head around it. That is literally 55x more than my best month of 27B on a handful of Claude and Codex plans.
+I stumbled over a [Cursor profile](https://cursor.com/@lauren) that processed 1.5T tokens in 30 days and I couldn't wrap my head around it. That is literally 55x more than my best month of 27B on a handful of Claude and Codex plans.
 
-So I did what any aspiring ai maxi would do: I tweeted about it. After doing some sloppy math I said those tokens cost $132M a year. The post went viral. So viral that Theo made a 30m video about how wrong I was (and I was).
+So I did what any aspiring ai maxi would do: I [tweeted about it](https://x.com/peterpme/status/2107847615463219252). After doing some sloppy math I said those tokens cost $132M a year. The post went viral. So viral that Theo made a [30m video](https://www.youtube.com/watch?v=FHGfSjDGUIw) about how wrong I was ([and I was](https://x.com/theo/status/2107924138094703084)).
 
 Watching that video hurt but getting it wrong and misunderstanding hurt more so I went on a mission to figure out how tokens are actually billed across providers.
 
@@ -109,7 +109,7 @@ Cursor Teams and Enterprise pay an extra $0.25/M on top of the list price which 
 There's no public evidence of a discount in either direction, and as the rest of this shows, you don't need one to explain the gap.
 
 | Model | Input | Cache write | Cache read | Output |
-| --- | --- | --- | --- | --- |
+| --- | ---: | ---: | ---: | ---: |
 | [Claude Opus 5.5](https://platform.claude.com/docs/en/about-claude/pricing) | 4.00 | 5.00 | 0.20 | 20.00 |
 | [Claude Sonnet 5.5](https://platform.claude.com/docs/en/about-claude/pricing) | 2.00 | 2.50 | 0.10 | 10.00 |
 | [Claude Fable 5.1](https://platform.claude.com/docs/en/about-claude/pricing) | 10.00 | 12.50 | 0.25 | 50.00 |
@@ -126,7 +126,7 @@ At Opus 5.5 prices that's 93,934 × $0.20 + 642 × $5 + 2 × $4 + 2,486 × $20, 
 ## What 27 billion tokens of my own usage looks like
 
 | Tool | Tokens (30d) | Cache reads | List price | $/M |
-| --- | --- | --- | --- | --- |
+| --- | ---: | ---: | ---: | ---: |
 | Claude Code | 16.1B | 97% | $5,368 | 0.33 |
 | Codex | 5.4B | 96% | $1,091 | 0.20 |
 | Cursor | 4.7B | 93% | $3,164 | 0.68 |
@@ -144,7 +144,7 @@ Three things fall out of my own data:
 Same formula, with 1.5 trillion tokens split the way agent sessions split: about 98% cache reads, under 2% cache writes and 0.3% output. Priced on Opus 5.5, one of the models on her profile:
 
 | Scenario | $/M blended | Per month | Per year |
-| --- | --- | --- | --- |
+| --- | ---: | ---: | ---: |
 | What I posted | 8.00 | $12.0M | $144M |
 | Opus 5.5 | 0.34 | $511k | $6.1M |
 | My own blend, scaled up | 0.38 | $570k | $6.8M |

@@ -812,6 +812,68 @@ a.entry-title:hover {
   stroke: var(--line);
 }
 
+.table-wrap {
+  margin: 1.6rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: light-dark(#fcfcfb, #131317);
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+
+.prose th,
+.prose td {
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 720px) {
+  .prose table {
+    font-size: 0.88rem;
+  }
+
+  .prose th,
+  .prose td {
+    padding: 0.55rem 0.7rem;
+  }
+}
+
+.prose th[align="right"],
+.prose td[align="right"] {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.prose tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.prose tbody tr:hover {
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
+
+.prose td a {
+  color: var(--accent-ink);
+  text-underline-offset: 0.16em;
+}
+
 .prose figcaption {
   margin-top: 0.45rem;
   color: var(--muted);
