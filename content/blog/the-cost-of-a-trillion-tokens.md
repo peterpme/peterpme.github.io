@@ -233,7 +233,7 @@ Lol.
 
 Sending a one-character message every 4 minutes 59 seconds keeps a 500k Opus 5.5 cache warm for 10 cents a ping, against $2.50 to rebuild it. It takes 25 pings, about two hours, before the rebuild is cheaper.
 
-## The part I should have seen: it's marketing, and it's kind of cheap
+## What I missed: she ran the best dev marketing of the year
 
 A public profile showing 1.5 trillion tokens a month, 115k agents and a 215 day streak is not just engineering output. It's the most effective developer-marketing campaign of the year, and it costs, at list, half a million dollars a month that the company was going to spend on internal R&D anyway.
 
