@@ -166,8 +166,6 @@ Where the money goes in the Opus 5.5 case: cache reads $294k (57%), cache writes
 
 Reads are 98% of the tokens and 57% of the dollars. Output is 0.3% of the tokens and 18% of the dollars.
 
-![1.5 trillion tokens a month: 98% of the tokens are cache reads, 57% of the dollars](/images/the-cost-of-a-trillion-tokens/tokens-vs-dollars.svg)
-
 The cache-read price decides the answer, because almost every token is a read. Opus 5.5 reads at 20 cents a million. A model that reads at 50 cents, like Grok 4.7, lands closer to $800k.
 
 Grok 4.7 does not seem like a model worth using anymore but that’s a different story.
