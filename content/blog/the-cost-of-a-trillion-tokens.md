@@ -1,5 +1,5 @@
 ---
-title: "The cost of a trillion tokens"
+title: "What 1.5 trillion tokens a month actually costs"
 description: "I said 1.5T tokens a month costs $132M a year. It's closer to $500k a month. How prompt caching, cache reads and writes actually bill you, what 27B tokens of my own usage looks like, and why the gap still matters."
 date: 2026-11-07T06:00:00.000Z
 categories: AI
