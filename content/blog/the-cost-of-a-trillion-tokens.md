@@ -43,10 +43,14 @@ Caching is the provider agreeing to keep a copy of that data for a few minutes s
 
 So when a dashboard says you used a trillion tokens, it's summing four categories that are billed at different rates:
 
-1. **Uncached input.** Text the model has never processed before. Full price.
-2. **Cache writes.** Text the provider stores in its prompt cache so later turns can reuse it. You pay a premium to store it: 1.25x the input price for a 5-minute cache and 2x for a 1-hour cache for Claude.
-3. **Cache reads.** Text replayed from that cache instead of being processed again. This is the important one. 5% of the input price on Opus 5.5 and Sonnet 5.5, 10% on most other models, 25% on Grok 4.7 inside Cursor.
-4. **Output.** What the model writes back, including its thinking. The most expensive.
+| Category | What it is | Price |
+| --- | --- | --- |
+| Uncached input | Text the model has never processed before | Full input price |
+| Cache writes | Text stored in the prompt cache so later turns can reuse it | 1.25x input for a 5-minute cache, 2x for 1 hour (Claude) |
+| **Cache reads** | Text replayed from that cache instead of processed again | 5% of input on Opus and Sonnet 5.5, 10% on most others, 25% on Grok 4.7 in Cursor |
+| Output | What the model writes back, thinking included | The most expensive |
+
+Cache reads are the important one.
 
 Cursor's dashboard and public profiles report the sum of all four according to Cursor's Kevin Neilson on their [forum](https://forum.cursor.com/t/discrepancies-between-cursor-cli-usage-and-billing/164471).
 
