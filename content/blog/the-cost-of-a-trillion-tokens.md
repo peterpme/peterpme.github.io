@@ -199,7 +199,9 @@ Theo's strongest point is that this number is temporary. The cost of a fixed lev
 
 On that curve, he argues, today's $500k of Opus 5.5 is $3,000 a month in a few months and $100–$1,000 within a year. He's right about the curve.
 
-But the people running 1.5 trillion tokens aren't buying last year's intelligence. They move to the next model the day it ships, and the next model costs roughly what the last one did. Theo says this himself: you can't complain iPhones aren't getting cheaper when you refuse to buy last year's. So the dollar figure for a frontier user stays about flat while what it buys goes up, and the gap I keep pointing at is a gap in *access to the frontier*.
+But the people running 1.5 trillion tokens aren't buying last year's intelligence. They move to the next model the day it ships, and the next model costs roughly what the last one did.
+
+[Theo says this himself](https://www.youtube.com/watch?v=FHGfSjDGUIw&t=915s): you can't complain iPhones aren't getting cheaper when you refuse to buy last year's. So the dollar figure for a frontier user stays about flat while what it buys goes up, and the gap I keep pointing at is a gap in *access to the frontier*.
 
 Falling prices don't close it. They just move it.
 
