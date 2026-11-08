@@ -104,9 +104,7 @@ This is the whole mistake in one sentence: I took a number that was 97% cache re
 
 The formula is one line, with token counts in millions:
 
-```
-Cost = reads × p_read + writes × p_write + input × p_in + output × p_out
-```
+<div class="formula" role="math" aria-label="Cost equals reads times read price plus writes times write price plus input times input price plus output times output price"><span class="formula-lhs">Cost</span><span class="formula-op">=</span><span class="formula-term"><var>reads</var><span class="formula-times">×</span><var>p<sub>read</sub></var></span><span class="formula-op">+</span><span class="formula-term"><var>writes</var><span class="formula-times">×</span><var>p<sub>write</sub></var></span><span class="formula-op">+</span><span class="formula-term"><var>input</var><span class="formula-times">×</span><var>p<sub>in</sub></var></span><span class="formula-op">+</span><span class="formula-term"><var>output</var><span class="formula-times">×</span><var>p<sub>out</sub></var></span></div>
 
 Cursor Teams and Enterprise pay an extra $0.25/M on top of the list price which is how they’re probably worth $60B.
 
