@@ -191,7 +191,7 @@ Ya. That's what I was really trying to say.
 - 225x more than Cursor Ultra
 - 25x more than Jensen’s token factory suggestions we spend
 
-![Tokens per month on a log scale: me at 27B, OpenAI's top user at 100B, poteto at 1.5T](/images/the-cost-of-a-trillion-tokens/tokens-ladder.svg)
+![Tokens per month on a linear scale: me at 27B, OpenAI's top user at 100B, poteto at 1.5T](/images/the-cost-of-a-trillion-tokens/tokens-ladder.svg)
 
 **The counterargument**
 
