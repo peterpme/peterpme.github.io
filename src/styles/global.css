@@ -786,6 +786,20 @@ a.entry-title:hover {
   height: auto;
 }
 
+.chart .chart-narrow {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  .chart .chart-wide:has(+ .chart-narrow) {
+    display: none;
+  }
+
+  .chart .chart-narrow {
+    display: block;
+  }
+}
+
 .chart rect[fill="#fcfcfb"] {
   fill: light-dark(#fcfcfb, #131317);
 }

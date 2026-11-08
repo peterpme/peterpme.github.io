@@ -112,7 +112,7 @@ export async function renderMarkdown(source: string, dir: string): Promise<strin
     const local = await renderLocalImage(src, "", dir);
     if (!local) continue;
     images.set(src, (alt: string) =>
-      local.replace(/(alt|aria-label)=""/, (_, attr: string) => `${attr}="${escapeHtml(alt)}"`),
+      local.replace(/(alt|aria-label)=""/g, (_, attr: string) => `${attr}="${escapeHtml(alt)}"`),
     );
   }
 
