@@ -116,14 +116,25 @@ There's no public evidence of a discount in either direction, and as the rest of
 | [Claude Sonnet 5.5](https://platform.claude.com/docs/en/about-claude/pricing) | 2.00 | 2.50 | 0.10 | 10.00 |
 | [Claude Fable 5.1](https://platform.claude.com/docs/en/about-claude/pricing) | 10.00 | 12.50 | 0.25 | 50.00 |
 | [GPT-6.1 Sol](https://developers.openai.com/api/docs/pricing) | 2.00 | 2.50 | 0.10 | 10.00 |
-| [Gemini 3.1 Pro](https://ai.google.dev/gemini-api/docs/pricing) | 2.00 | n/a | 0.20 | 12.00 |
-| [Grok 4.7](https://cursor.com/docs/models) (in Cursor) | 2.00 | none | 0.50 | 6.00 |
+| [Gemini 3.1 Pro](https://ai.google.dev/gemini-api/docs/pricing) | 2.00 | 2.00 | 0.20 | 12.00 |
+| [Grok 4.7](https://cursor.com/docs/models) (in Cursor) | 2.00 | 2.00 | 0.50 | 6.00 |
+
+Gemini and Grok don't charge a premium to write the cache. The first pass bills as normal input.
 
 **An example from my own Cursor export**
 
-One Opus 5.5 request: 93,934 cache reads, 642 cache writes, 2 uncached input tokens and 2,486 output tokens.
+One Opus 5.5 request, line by line:
 
-At Opus 5.5 prices that's 93,934 × $0.20 + 642 × $5 + 2 × $4 + 2,486 × $20, divided by a million: about 7 cents for 97,064 tokens, or $0.74/M. Priced the way I priced the tweet, at $8/M, the same request comes out to 78 cents.
+| | Tokens | Price per 1M | Cost |
+| --- | ---: | ---: | ---: |
+| Cache reads | 93,934 | $0.20 | 1.88¢ |
+| Cache writes | 642 | $5.00 | 0.32¢ |
+| Uncached input | 2 | $4.00 | 0.00¢ |
+| Output | 2,486 | $20.00 | 4.97¢ |
+| **Total** | **97,064** | **$0.74** | **7.17¢** |
+| Priced like my tweet | 97,064 | $8.00 | 77.65¢ |
+
+About 7 cents, or $0.74/M. Priced the way I priced the tweet, the same request comes out to 78 cents.
 
 ## What 27 billion tokens of my own usage looks like
 
