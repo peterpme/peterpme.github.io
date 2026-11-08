@@ -165,7 +165,7 @@ Which model you pick matters more than anything else in the formula.
 
 Ya. That's what I was really trying to say.
 
-| Yardstick (all from the last six months) | Figure |
+| Last 6 months | Figure |
 | --- | --- |
 | Jensen Huang's benchmark ([All-In, March 2026](https://www.rdworldonline.com/nvidia-ceo-jensen-huang-says-spend-250k-on-ai-tokens-annually-or-hell-go-ape/)) | a $500k engineer should burn at least $250k a year in tokens, or he'd be "deeply alarmed" |
 | OpenAI's heaviest internal user ([Altman, June 2026](https://finance.yahoo.com/sectors/technology/articles/sam-altman-says-openais-top-163224801.html)) | about 100 billion tokens a month |
