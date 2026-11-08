@@ -199,6 +199,8 @@ Theo's strongest point is that this number is temporary. The cost of a fixed lev
 
 On that curve, he argues, today's $500k of Opus 5.5 is $3,000 a month in a few months and $100–$1,000 within a year. He's right about the curve.
 
+But will I be spending less or more by next year? Who's to say!
+
 ## What I'm changing about how I run my own agents
 
 Once you see the bill as reads plus rebuilds, a few habits follow.
