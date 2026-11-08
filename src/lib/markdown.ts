@@ -111,7 +111,9 @@ export async function renderMarkdown(source: string, dir: string): Promise<strin
   for (const src of collectImageSrcs(source)) {
     const local = await renderLocalImage(src, "", dir);
     if (!local) continue;
-    images.set(src, (alt: string) => local.replace('alt=""', `alt="${escapeHtml(alt)}"`));
+    images.set(src, (alt: string) =>
+      local.replace(/(alt|aria-label)=""/, (_, attr: string) => `${attr}="${escapeHtml(alt)}"`),
+    );
   }
 
   const marked = new Marked();

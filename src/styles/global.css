@@ -780,6 +780,38 @@ a.entry-title:hover {
   margin: 1.4rem 0;
 }
 
+/* Inline SVG charts are drawn in light colors. These rules map the
+   neutral ones to the theme; series colors and on-bar labels stay. */
+.chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.chart rect[fill="#fcfcfb"] {
+  fill: light-dark(#fcfcfb, #131317);
+}
+
+.chart [fill="#0b0b0b"] {
+  fill: var(--ink);
+}
+
+.chart [fill="#52514e"] {
+  fill: var(--muted);
+}
+
+.chart [stroke="#52514e"] {
+  stroke: var(--muted);
+}
+
+.chart [fill="#8a8985"] {
+  fill: light-dark(#8a8985, #71717a);
+}
+
+.chart [stroke="#e6e4df"] {
+  stroke: var(--line);
+}
+
 .prose figcaption {
   margin-top: 0.45rem;
   color: var(--muted);

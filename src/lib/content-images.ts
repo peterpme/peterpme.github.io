@@ -1,3 +1,4 @@
+import fs from "node:fs";
 import path from "node:path";
 import { getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
@@ -100,8 +101,18 @@ function htmlFor(asset: Prepared, alt: string): string {
   }
 }
 
+// SVG charts are inlined so global.css can recolor them for the active theme.
+function inlineSvg(file: string, alt: string): string {
+  const svg = fs
+    .readFileSync(file, "utf8")
+    .replace(/<\?xml[^>]*>\s*/, "")
+    .replace(/<svg\b/, `<svg role="img" aria-label="${escapeAttr(alt)}"`);
+  return `<figure class="chart">${svg}</figure>`;
+}
+
 export async function renderLocalImage(src: string, alt: string, dir: string): Promise<string | null> {
   const resolved = resolveImage(src, dir);
   if (!resolved) return null;
+  if (path.extname(resolved).toLowerCase() === ".svg") return inlineSvg(resolved, alt);
   return htmlFor(await prepare(resolved), alt);
 }
