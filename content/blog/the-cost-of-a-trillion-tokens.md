@@ -201,16 +201,35 @@ On that curve, he argues, today's $500k of Opus 5.5 is $3,000 a month in a few m
 
 ## What I'm changing about how I run my own agents
 
-Once you see the bill as reads plus rebuilds, a few things follow. These are the ones I'm actually doing now.
+Once you see the bill as reads plus rebuilds, a few habits follow.
 
-- **Treat the rebuild as the expensive event.** A 500k context on Opus 5.5 is 10 cents to re-read and $2.50 to re-write. Everything below is about avoiding rebuilds.
-- **Don't switch models mid-session.** A different model means a different cache; the whole context gets written again. Switch when you come back from a break, not in the middle of a task.
-- **Compact right after an idle gap, before the next turn, and ideally before the cache expires.** Compaction breaks the cache no matter when you do it: the summary is a new, shorter prefix that has to be written once. But *producing* the summary means sending the whole context one more time, and that's 10 cents if the cache is still warm and $2.50 if it isn't. So the cheapest moment is after the user walks away and before the shelf life runs out: no quality cost from interrupting mid-thought, the summarization read is cheap, and the next turn starts small. That's exactly what Grok Bot does; in [what actually happens when you message Grok Bot](https://peterp.me/articles/what-actually-happens-when-you-message-grok-bot/) I found it compacts in the background when the context is over 100K tokens and you've been gone 10 to 60 minutes. I thought that was a latency trick. It's a billing trick too.
-- **Don't read a screenshot into a long session.** The image sits in the context and gets re-read on every turn after it. Start a fresh session for visual work.
-- **Pick the model by its cache-read price, not its input price.** For agent work the read price is 57% of the bill. Opus 5.5 and Sonnet 5.5 at 5% are the efficient ones. Grok 4.7 at 25% is not, whatever the input column says.
-- Stop using Grok? Lol
+### Treat the rebuild as the expensive event
 
-**A dumb trick that works, for fun.** If you didn't want the cache to expire while you were at lunch, you could just keep poking it. Every request re-reads the whole context, and every read resets the 5-minute timer, so a one-character message with a one-token reply is a keep-alive. On a 500k-token Opus 5.5 context that ping costs 500k × $0.20 / 1M = 10 cents. The rebuild you're avoiding costs $2.50. So a ping every 4 minutes 59 seconds keeps the cache warm for $1.20 an hour, and you don't break even against a rebuild until ping number 25, which is about two hours away. For any lunch shorter than that, pinging is cheaper than coming back cold. The ratio is just write price over read price, so it's the same 25 pings on Sonnet 5.5 and only 4 pings, or 20 minutes, on Grok 4.7, where the read is 50 cents and the write is $2. None of this is better than compacting while the cache is warm, which is what Grok Bot does. But it's a nice way to feel the shape of the pricing: reading is so cheap that re-reading everything twelve times an hour costs less than writing it once.
+A 500k context on Opus 5.5 costs 10 cents to re-read and $2.50 to re-write. Everything below is about avoiding rebuilds.
+
+### Don't switch models mid-session
+
+A new model means a new cache, so the whole context gets written again. Switch after a break, not mid-task.
+
+### Compact after you walk away, before the cache expires
+
+Compacting sends the whole context one more time: 10 cents if the cache is warm, $2.50 if it isn't. [Grok Bot](https://peterp.me/articles/what-actually-happens-when-you-message-grok-bot/) does exactly this once you've been gone 10 to 60 minutes. I thought that was a latency trick. It's a billing trick too.
+
+### Keep screenshots out of long sessions
+
+An image gets re-read on every turn after it. Do visual work in a fresh session.
+
+### Pick models by cache-read price, not input price
+
+Reads are 57% of an agent's bill. Opus and Sonnet 5.5 read at 5% of the input price, Grok 4.7 at 25%.
+
+### Stop using Grok?
+
+Lol.
+
+### A dumb trick, for fun
+
+Sending a one-character message every 4 minutes 59 seconds keeps a 500k Opus 5.5 cache warm for 10 cents a ping, against $2.50 to rebuild it. It takes 25 pings, about two hours, before the rebuild is cheaper.
 
 ## The part I should have seen: it's marketing, and it's kind of cheap
 
