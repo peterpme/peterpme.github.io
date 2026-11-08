@@ -701,8 +701,6 @@ a.entry-title:hover {
 
 .prose h2 {
   margin: 2.15em 0 0.45em;
-  padding-top: 0.75em;
-  border-top: 1px solid var(--line);
   font-size: 1.7rem;
   font-weight: 700;
   letter-spacing: -0.038em;
