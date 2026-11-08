@@ -47,7 +47,7 @@ So when a dashboard says you used a trillion tokens, it's summing four categorie
 | --- | --- | --- |
 | Uncached input | Text the model has never processed before | Full input price |
 | Cache writes | Text stored in the prompt cache so later turns can reuse it | 1.25x input for a 5-minute cache, 2x for 1 hour (Claude) |
-| **Cache reads** | Text replayed from that cache instead of processed again | 5% of input on Opus and Sonnet 5.5, 10% on most others, 25% on Grok 4.7 in Cursor |
+| Cache reads | Text replayed from that cache instead of processed again | 5% of input on Opus and Sonnet 5.5, 10% on most others, 25% on Grok 4.7 in Cursor |
 | Output | What the model writes back, thinking included | The most expensive |
 
 Cache reads are the important one.
@@ -112,9 +112,9 @@ There's no public evidence of a discount in either direction, and as the rest of
 
 | Model | Input | Cache write | Cache read | Output |
 | --- | ---: | ---: | ---: | ---: |
-| [Claude Opus 5.5](https://platform.claude.com/docs/en/about-claude/pricing) | 4.00 | 5.00 | 0.20 | 20.00 |
-| [Claude Sonnet 5.5](https://platform.claude.com/docs/en/about-claude/pricing) | 2.00 | 2.50 | 0.10 | 10.00 |
-| [Claude Fable 5.1](https://platform.claude.com/docs/en/about-claude/pricing) | 10.00 | 12.50 | 0.25 | 50.00 |
+| [Opus 5.5](https://platform.claude.com/docs/en/about-claude/pricing) | 4.00 | 5.00 | 0.20 | 20.00 |
+| [Sonnet 5.5](https://platform.claude.com/docs/en/about-claude/pricing) | 2.00 | 2.50 | 0.10 | 10.00 |
+| [Fable 5.1](https://platform.claude.com/docs/en/about-claude/pricing) | 10.00 | 12.50 | 0.25 | 50.00 |
 | [GPT-6.1 Sol](https://developers.openai.com/api/docs/pricing) | 2.00 | 2.50 | 0.10 | 10.00 |
 | [Gemini 3.1 Pro](https://ai.google.dev/gemini-api/docs/pricing) | 2.00 | 2.00 | 0.20 | 12.00 |
 | [Grok 4.7](https://cursor.com/docs/models) (in Cursor) | 2.00 | 2.00 | 0.50 | 6.00 |
